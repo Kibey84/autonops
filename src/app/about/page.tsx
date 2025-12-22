@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Target, Shield, Users, Zap, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import { Target, Shield, Users, Zap, ArrowRight, Linkedin } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'About',
@@ -35,13 +36,49 @@ const values = [
   },
 ];
 
+const leadership = [
+  {
+    name: 'TBD',
+    role: 'Chief Executive Officer',
+    title: 'CEO',
+    bio: 'Leading AutonOps with a vision for professional drone operations excellence.',
+    image: null,
+  },
+  {
+    name: 'TBD',
+    role: 'Chief Financial Officer',
+    title: 'CFO',
+    bio: 'Driving financial strategy and sustainable growth.',
+    image: null,
+  },
+  {
+    name: 'TBD',
+    role: 'Chief Technology Officer',
+    title: 'CTO',
+    bio: 'Overseeing technology innovation and operational systems.',
+    image: null,
+  },
+  {
+    name: 'TBD',
+    role: 'Chief Operating Officer',
+    title: 'COO',
+    bio: 'Managing day-to-day operations and mission execution.',
+    image: null,
+  },
+];
+
 export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-slate-900 text-white py-20 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
+      <section className="relative bg-slate-900 text-white py-20 sm:py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-red-500 rounded-full blur-[120px] animate-pulse" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '1s' }} />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl animate-fade-in">
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
               About AutonOps
             </h1>
@@ -58,7 +95,7 @@ export default function AboutPage() {
       <section className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <div className="animate-slide-in-left">
               <h2 className="text-3xl font-bold text-slate-900 mb-6">
                 Who We Are
               </h2>
@@ -82,17 +119,81 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
-            <div className="bg-slate-100 rounded-lg aspect-square flex items-center justify-center">
-              <div className="w-32 h-32 bg-slate-900 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-4xl">AO</span>
+            <div className="relative animate-slide-in-right">
+              <div className="aspect-video bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden shadow-2xl">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Image
+                    src="/logo.png"
+                    alt="AutonOps"
+                    width={200}
+                    height={60}
+                    className="opacity-50"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <p className="text-white/60 text-sm">Mission-Ready Operations</p>
+                </div>
               </div>
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-red-500/10 rounded-full blur-xl" />
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-blue-500/10 rounded-full blur-xl" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* What We Do */}
+      {/* Leadership Team */}
       <section className="py-16 sm:py-20 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+              Leadership Team
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Experienced professionals dedicated to operational excellence.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {leadership.map((person, index) => (
+              <div
+                key={person.role}
+                className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {/* Photo placeholder */}
+                <div className="aspect-square bg-gradient-to-br from-slate-200 to-slate-300 relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-24 h-24 rounded-full bg-slate-400/50 flex items-center justify-center">
+                      <span className="text-3xl font-bold text-white/80">{person.title}</span>
+                    </div>
+                  </div>
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <a href="#" className="inline-flex items-center text-white text-sm hover:text-red-400 transition-colors">
+                      <Linkedin className="w-4 h-4 mr-1" />
+                      Connect
+                    </a>
+                  </div>
+                </div>
+                {/* Info */}
+                <div className="p-5">
+                  <h3 className="font-semibold text-slate-900 group-hover:text-red-600 transition-colors">
+                    {person.name}
+                  </h3>
+                  <p className="text-sm text-red-600 font-medium mb-2">{person.role}</p>
+                  <p className="text-sm text-slate-600">{person.bio}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* What We Do */}
+      <section className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h2 className="text-3xl font-bold text-slate-900 mb-4">
@@ -104,7 +205,10 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white border border-slate-200 rounded-lg p-6">
+            <div className="group bg-white border border-slate-200 rounded-xl p-6 hover:border-red-200 hover:shadow-lg transition-all duration-300">
+              <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 transition-colors">
+                <Users className="w-6 h-6 text-red-600" />
+              </div>
               <h3 className="text-lg font-semibold text-slate-900 mb-3">
                 Provide Operators
               </h3>
@@ -114,7 +218,10 @@ export default function AboutPage() {
                 personnel as your mission requires.
               </p>
             </div>
-            <div className="bg-white border border-slate-200 rounded-lg p-6">
+            <div className="group bg-white border border-slate-200 rounded-xl p-6 hover:border-red-200 hover:shadow-lg transition-all duration-300">
+              <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 transition-colors">
+                <Shield className="w-6 h-6 text-red-600" />
+              </div>
               <h3 className="text-lg font-semibold text-slate-900 mb-3">
                 Supply Equipment
               </h3>
@@ -123,7 +230,10 @@ export default function AboutPage() {
                 equipment. You don&apos;t need to build or maintain a fleet—we handle it.
               </p>
             </div>
-            <div className="bg-white border border-slate-200 rounded-lg p-6">
+            <div className="group bg-white border border-slate-200 rounded-xl p-6 hover:border-red-200 hover:shadow-lg transition-all duration-300">
+              <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 transition-colors">
+                <Target className="w-6 h-6 text-red-600" />
+              </div>
               <h3 className="text-lg font-semibold text-slate-900 mb-3">
                 Execute Missions
               </h3>
@@ -137,7 +247,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-16 sm:py-20">
+      <section className="py-16 sm:py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-slate-900 mb-4">
@@ -149,12 +259,14 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value) => (
+            {values.map((value, index) => (
               <div
                 key={value.title}
-                className="bg-white border border-slate-200 rounded-lg p-6 hover:border-slate-300 transition-colors"
+                className="group bg-white border border-slate-200 rounded-xl p-6 hover:border-red-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
               >
-                <value.icon className="w-10 h-10 text-red-600 mb-4" />
+                <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 group-hover:scale-110 transition-all duration-300">
+                  <value.icon className="w-6 h-6 text-red-600" />
+                </div>
                 <h3 className="text-lg font-semibold text-slate-900 mb-2">
                   {value.title}
                 </h3>
@@ -166,8 +278,12 @@ export default function AboutPage() {
       </section>
 
       {/* Location */}
-      <section className="py-16 sm:py-20 bg-slate-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 bg-slate-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-500 rounded-full blur-[150px]" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-[150px]" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold mb-6">Based in Ohio</h2>
@@ -180,16 +296,22 @@ export default function AboutPage() {
                 operations wherever the mission takes us.
               </p>
             </div>
-            <div className="bg-slate-800 rounded-lg p-8 text-center">
-              <div className="text-6xl font-bold text-slate-600 mb-4">OH</div>
-              <p className="text-slate-400">Ohio, United States</p>
+            <div className="relative">
+              <div className="bg-slate-800/50 backdrop-blur rounded-2xl p-8 text-center border border-slate-700">
+                <div className="text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-4">OH</div>
+                <p className="text-slate-400">Ohio, United States</p>
+                <div className="mt-6 flex justify-center gap-2">
+                  <span className="px-3 py-1 bg-slate-700/50 rounded-full text-xs text-slate-400">Central Time</span>
+                  <span className="px-3 py-1 bg-slate-700/50 rounded-full text-xs text-slate-400">Nationwide Service</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-16 sm:py-20 bg-slate-50 border-t border-slate-200">
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-slate-50 to-white border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
             Want to work with us?
@@ -199,10 +321,10 @@ export default function AboutPage() {
           </p>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white font-medium rounded hover:bg-red-700 transition-colors"
+            className="group inline-flex items-center justify-center px-8 py-4 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25"
           >
             Contact Us
-            <ArrowRight className="ml-2 w-4 h-4" />
+            <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
       </section>
