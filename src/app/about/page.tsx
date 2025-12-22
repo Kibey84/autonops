@@ -38,31 +38,31 @@ const values = [
 
 const leadership = [
   {
-    name: 'TBD',
+    name: 'Robert Lee',
     role: 'Chief Executive Officer',
     title: 'CEO',
-    bio: 'Leading AutonOps with a vision for professional drone operations excellence.',
+    bio: '',
     image: null,
   },
   {
-    name: 'TBD',
+    name: 'Joshua Kibe',
     role: 'Chief Financial Officer',
     title: 'CFO',
-    bio: 'Driving financial strategy and sustainable growth.',
+    bio: '',
     image: null,
   },
   {
-    name: 'TBD',
+    name: 'Jaderic Dawson',
     role: 'Chief Technology Officer',
     title: 'CTO',
-    bio: 'Overseeing technology innovation and operational systems.',
+    bio: '',
     image: null,
   },
   {
-    name: 'TBD',
+    name: 'Matthew Sunday',
     role: 'Chief Operating Officer',
     title: 'COO',
-    bio: 'Managing day-to-day operations and mission execution.',
+    bio: '',
     image: null,
   },
 ];
