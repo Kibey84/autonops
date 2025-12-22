@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Mail, Phone, MapPin } from 'lucide-react';
 
 const footerLinks = {
@@ -22,11 +23,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company info */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
-                <span className="text-slate-900 font-bold text-sm">AO</span>
-              </div>
-              <span className="font-semibold text-white text-lg">AutonOps</span>
+            <div className="mb-4">
+              <Image
+                src="/logo.png"
+                alt="AutonOps"
+                width={140}
+                height={40}
+                className="h-10 w-auto brightness-0 invert"
+              />
             </div>
             <p className="text-sm text-slate-400 mb-4 max-w-md">
               Professional drone flight operations for emergency response, reconnaissance,

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
@@ -19,11 +20,15 @@ export default function Header() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-slate-900 rounded flex items-center justify-center">
-              <span className="text-white font-bold text-sm">AO</span>
-            </div>
-            <span className="font-semibold text-slate-900 text-lg">AutonOps</span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.png"
+              alt="AutonOps"
+              width={140}
+              height={40}
+              className="h-10 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop navigation */}
