@@ -24,6 +24,11 @@ export const metadata: Metadata = {
   title: 'Industries & Use Cases',
   description:
     'Professional drone operations for emergency response, government, municipal, and enterprise applications. Fire response, search and rescue, reconnaissance, and disaster assessment.',
+  openGraph: {
+    title: 'Industries & Use Cases | AutonOps',
+    description: 'Drone operations for emergency services, government, defense, utilities, and enterprise organizations.',
+    images: [{ url: '/aircraft-fire.jpg', width: 1200, height: 630, alt: 'AutonOps Fire Response Operations' }],
+  },
 };
 
 const primaryUseCases = [
