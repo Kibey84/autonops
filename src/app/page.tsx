@@ -16,6 +16,7 @@ import {
   Radio,
   MapPin,
 } from 'lucide-react';
+import ScrollAnimation from '@/components/ScrollAnimation';
 
 const proofPoints = [
   {
@@ -228,20 +229,22 @@ export default function Home() {
               Built on discipline, training, and proven processes.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {proofPoints.map((point, index) => (
-              <div
-                key={point.title}
-                className="group bg-white p-6 rounded-xl border border-slate-200 hover:border-red-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 group-hover:scale-110 transition-all duration-300">
-                  <point.icon className="w-6 h-6 text-red-600" />
+          <ScrollAnimation animation="stagger">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+              {proofPoints.map((point, index) => (
+                <div
+                  key={point.title}
+                  className="group bg-white p-6 rounded-xl border border-slate-200 hover:border-red-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 group-hover:scale-110 transition-all duration-300">
+                    <point.icon className="w-6 h-6 text-red-600" />
+                  </div>
+                  <h3 className="font-semibold text-slate-900 mb-2">{point.title}</h3>
+                  <p className="text-sm text-slate-600">{point.description}</p>
                 </div>
-                <h3 className="font-semibold text-slate-900 mb-2">{point.title}</h3>
-                <p className="text-sm text-slate-600">{point.description}</p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </ScrollAnimation>
         </div>
       </section>
 
@@ -263,30 +266,32 @@ export default function Home() {
               <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {services.map((service, index) => (
-              <Link
-                key={service.title}
-                href={service.href}
-                className="group relative p-8 bg-white border border-slate-200 rounded-2xl hover:border-red-200 hover:shadow-xl transition-all duration-300 overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-50 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative">
-                  <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 transition-colors">
-                    <service.icon className="w-6 h-6 text-red-600" />
+          <ScrollAnimation animation="fade-in">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {services.map((service, index) => (
+                <Link
+                  key={service.title}
+                  href={service.href}
+                  className="group relative p-8 bg-white border border-slate-200 rounded-2xl hover:border-red-200 hover:shadow-xl transition-all duration-300 overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-50 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="relative">
+                    <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 transition-colors">
+                      <service.icon className="w-6 h-6 text-red-600" />
+                    </div>
+                    <h3 className="font-semibold text-xl text-slate-900 mb-3 group-hover:text-red-600 transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="text-slate-600">{service.description}</p>
+                    <div className="mt-4 inline-flex items-center text-red-600 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                      Learn more
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-xl text-slate-900 mb-3 group-hover:text-red-600 transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-slate-600">{service.description}</p>
-                  <div className="mt-4 inline-flex items-center text-red-600 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                    Learn more
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          </ScrollAnimation>
         </div>
       </section>
 
