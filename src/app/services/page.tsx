@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Plane,
   ClipboardCheck,
@@ -8,6 +9,10 @@ import {
   Wrench,
   Database,
   ArrowRight,
+  Flame,
+  Search,
+  Shield,
+  Crosshair,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -103,12 +108,57 @@ const services = [
   },
 ];
 
+const missionCategories = [
+  {
+    icon: Flame,
+    title: 'Fire Response',
+    description: 'Aerial assessment of active fires, hotspot identification, perimeter mapping, and real-time situational awareness for incident commanders.',
+    color: 'from-orange-500 to-red-600',
+    bgColor: 'bg-orange-50',
+    iconColor: 'text-orange-600',
+  },
+  {
+    icon: Search,
+    title: 'Search & Rescue',
+    description: 'Thermal imaging and visual search across difficult terrain, victim location, and coordination support for rescue operations.',
+    color: 'from-blue-500 to-cyan-600',
+    bgColor: 'bg-blue-50',
+    iconColor: 'text-blue-600',
+  },
+  {
+    icon: Shield,
+    title: 'Law Enforcement',
+    description: 'Tactical overwatch, suspect tracking, perimeter security, and scene documentation for law enforcement operations.',
+    color: 'from-purple-500 to-indigo-600',
+    bgColor: 'bg-purple-50',
+    iconColor: 'text-purple-600',
+  },
+  {
+    icon: Crosshair,
+    title: 'Reconnaissance',
+    description: 'Intelligence gathering, area surveillance, infrastructure inspection, and situational awareness for planning and operations.',
+    color: 'from-green-500 to-emerald-600',
+    bgColor: 'bg-green-50',
+    iconColor: 'text-green-600',
+  },
+];
+
 export default function ServicesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-slate-900 text-white py-20 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-slate-900 text-white py-20 sm:py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/aircraft-fire.jpg"
+            alt="Aircraft performing fire suppression"
+            fill
+            className="object-cover opacity-30"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-900/70" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
               Our Services
@@ -121,9 +171,47 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Mission Categories */}
+      <section className="py-16 sm:py-20 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+              Mission Categories
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto text-lg">
+              Specialized capabilities for your operational requirements.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {missionCategories.map((category) => (
+              <div
+                key={category.title}
+                className="group bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className={`w-14 h-14 bg-gradient-to-br ${category.color} rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform`}>
+                  <category.icon className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                  {category.title}
+                </h3>
+                <p className="text-sm text-slate-600">{category.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Services List */}
       <section className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+              Full Service Capabilities
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto text-lg">
+              Everything you need for successful drone operations.
+            </p>
+          </div>
           <div className="space-y-16">
             {services.map((service, index) => (
               <div

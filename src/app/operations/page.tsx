@@ -9,6 +9,10 @@ import {
   AlertTriangle,
   CheckCircle,
   ArrowRight,
+  Wifi,
+  MapPin,
+  Users,
+  Clock,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -165,6 +169,98 @@ export default function OperationsPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Remote Operations Model */}
+      <section className="py-16 sm:py-20 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+              Remote Operations Model
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Nationwide coverage from our Ohio operations center.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <p className="text-lg text-slate-600 mb-8">
+                Our unique operational model positions aircraft at client locations while
+                pilots operate remotely from our Ohio headquarters. This enables rapid
+                response without requiring on-site personnel.
+              </p>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-6 h-6 text-red-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">Pre-Positioned Aircraft</h3>
+                    <p className="text-slate-600">
+                      Aircraft stationed at client fire stations and facilities for immediate deployment when incidents occur.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Wifi className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">Satellite-Linked Control</h3>
+                    <p className="text-slate-600">
+                      Starlink connectivity enables reliable remote piloting from Ohio to aircraft anywhere in the country.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-6 h-6 text-green-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">24/7 Availability</h3>
+                    <p className="text-slate-600">
+                      Centralized operations enable round-the-clock mission capability without staffing multiple locations.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Users className="w-6 h-6 text-purple-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">Scalable Coverage</h3>
+                    <p className="text-slate-600">
+                      One pilot can support multiple regions, scaling efficiently as client base grows.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 text-white">
+                <div className="text-center mb-8">
+                  <div className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-2">OH</div>
+                  <p className="text-slate-400">Operations Center</p>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                    <span className="text-slate-300">Remote Pilot Station</span>
+                    <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Active</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                    <span className="text-slate-300">Mission Control</span>
+                    <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Online</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                    <span className="text-slate-300">Starlink Uplink</span>
+                    <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Connected</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

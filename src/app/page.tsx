@@ -185,31 +185,28 @@ export default function Home() {
 
             {/* Hero visual */}
             <div className="relative hidden lg:block animate-slide-in-right">
-              <div className="relative aspect-square">
-                {/* Drone illustration placeholder */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative w-64 h-64 animate-float">
-                    <div className="absolute inset-0 bg-gradient-to-br from-slate-700 to-slate-800 rounded-3xl rotate-12 shadow-2xl" />
-                    <div className="absolute inset-4 bg-gradient-to-br from-slate-600 to-slate-700 rounded-2xl -rotate-6 flex items-center justify-center">
-                      <Image
-                        src="/logo.png"
-                        alt="AutonOps"
-                        width={120}
-                        height={40}
-                        className="opacity-60"
-                      />
+              <div className="relative">
+                <div className="rounded-2xl overflow-hidden shadow-2xl">
+                  <Image
+                    src="/aircraft.jpg"
+                    alt="AutonOps VTOL Aircraft"
+                    width={600}
+                    height={400}
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+                {/* Floating badge */}
+                <div className="absolute -bottom-4 -left-4 bg-white rounded-xl p-4 shadow-xl border border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                      <Plane className="w-5 h-5 text-red-600" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-500">Aircraft Status</p>
+                      <p className="font-semibold text-slate-900">Mission Ready</p>
                     </div>
                   </div>
-                </div>
-                {/* Orbiting elements */}
-                <div className="absolute top-10 right-10 w-16 h-16 bg-red-500/20 rounded-xl flex items-center justify-center backdrop-blur animate-float" style={{ animationDelay: '0.5s' }}>
-                  <Plane className="w-8 h-8 text-red-400" />
-                </div>
-                <div className="absolute bottom-20 left-10 w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center backdrop-blur animate-float" style={{ animationDelay: '1s' }}>
-                  <Radio className="w-6 h-6 text-blue-400" />
-                </div>
-                <div className="absolute top-1/2 right-0 w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center backdrop-blur animate-float" style={{ animationDelay: '1.5s' }}>
-                  <Shield className="w-5 h-5 text-green-400" />
                 </div>
               </div>
             </div>
