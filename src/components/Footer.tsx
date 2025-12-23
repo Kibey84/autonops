@@ -11,8 +11,8 @@ const footerLinks = {
   ],
   operations: [
     { name: 'How We Operate', href: '/operations' },
-    { name: 'Safety Standards', href: '/operations#safety' },
-    { name: 'Mission Planning', href: '/operations#planning' },
+    { name: 'Technology', href: '/technology' },
+    { name: 'FAQ', href: '/faq' },
   ],
 };
 
