@@ -85,6 +85,35 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* DNS prefetch for potential future connections */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        {/* Organization Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'AutonOps LLP',
+              url: 'https://autonops.com',
+              logo: 'https://autonops.com/logo.png',
+              description: 'Professional drone flight operations for emergency response, reconnaissance, and mission-critical applications.',
+              address: {
+                '@type': 'PostalAddress',
+                addressRegion: 'OH',
+                addressCountry: 'US',
+              },
+              areaServed: 'US',
+              serviceType: [
+                'Drone Flight Operations',
+                'Emergency Response',
+                'Search and Rescue',
+                'Aerial Reconnaissance',
+                'Fire Response',
+                'Disaster Assessment',
+              ],
+              sameAs: [],
+            }),
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300`}

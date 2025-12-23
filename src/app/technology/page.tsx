@@ -28,6 +28,9 @@ export const metadata: Metadata = {
   title: 'Technology',
   description:
     'AutonOps leverages the Aeryl M2 Multi-Mission Platform for AI-powered drone operations, real-time sensor analysis, and intelligent mission coordination.',
+  alternates: {
+    canonical: 'https://autonops.com/technology',
+  },
   openGraph: {
     title: 'Technology | AutonOps',
     description: 'AI-powered M2 platform for drone operations with real-time sensor feeds, mission planning, and intelligent coordination.',

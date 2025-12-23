@@ -1,11 +1,15 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight, ChevronDown } from 'lucide-react';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'FAQ',
   description:
     'Frequently asked questions about AutonOps drone flight operations, services, technology, and how we work with clients.',
+  alternates: {
+    canonical: 'https://autonops.com/faq',
+  },
 };
 
 const faqs = [
@@ -91,9 +95,31 @@ const faqs = [
   },
 ];
 
+// Generate FAQ schema for rich results
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.flatMap((category) =>
+    category.questions.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      },
+    }))
+  ),
+};
+
 export default function FAQPage() {
   return (
     <>
+      {/* FAQ Schema for Rich Results */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       {/* Hero */}
       <section className="bg-slate-900 text-white py-20 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

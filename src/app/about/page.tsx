@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   title: 'About',
   description:
     'AutonOps LLP is an Ohio-based professional drone flight operations company. We provide pilots, mission controllers, aircraft, and complete mission execution.',
+  alternates: {
+    canonical: 'https://autonops.com/about',
+  },
+  openGraph: {
+    title: 'About | AutonOps',
+    description: 'Ohio-based professional drone flight operations company providing pilots, mission controllers, aircraft, and complete mission execution.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'AutonOps - Professional Drone Flight Operations' }],
+  },
 };
 
 const values = [

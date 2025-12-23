@@ -19,6 +19,14 @@ export const metadata: Metadata = {
   title: 'How We Operate',
   description:
     'Our structured approach to drone flight operations: mission planning, deployment, execution, and debriefing with emphasis on safety and coordination.',
+  alternates: {
+    canonical: 'https://autonops.com/operations',
+  },
+  openGraph: {
+    title: 'How We Operate | AutonOps',
+    description: 'Structured approach to drone operations: mission planning, deployment, execution, and debriefing with emphasis on safety.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'AutonOps Operations' }],
+  },
 };
 
 const phases = [

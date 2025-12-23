@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: 'Services',
   description:
     'Professional drone flight operations services including pilots, mission controllers, aircraft, mission planning, and emergency response capabilities.',
+  alternates: {
+    canonical: 'https://autonops.com/services',
+  },
   openGraph: {
     title: 'Services | AutonOps',
     description: 'Complete drone operations capabilities for fire response, search & rescue, reconnaissance, and emergency missions.',
