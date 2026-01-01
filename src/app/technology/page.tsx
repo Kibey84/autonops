@@ -22,7 +22,11 @@ import {
   Wifi,
   Camera,
   Battery,
+  Activity,
+  Satellite,
 } from 'lucide-react';
+import TiltCard from '@/components/TiltCard';
+import { RadarPulse } from '@/components/AnimatedDrone';
 
 export const metadata: Metadata = {
   title: 'Technology',
@@ -137,21 +141,46 @@ export default function TechnologyPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative bg-slate-900 text-white py-20 sm:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-red-500 rounded-full blur-[120px] animate-pulse" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '1s' }} />
+      <section className="relative bg-slate-900 text-white py-20 sm:py-28 overflow-hidden">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 animated-gradient opacity-30" />
+
+        {/* Gradient orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="gradient-orb w-[500px] h-[500px] bg-red-500/20 top-[-150px] right-[-100px]" />
+          <div className="gradient-orb w-[400px] h-[400px] bg-blue-500/20 bottom-[-100px] left-[-50px]" style={{ animationDelay: '5s' }} />
+          <div className="gradient-orb w-[300px] h-[300px] bg-purple-500/15 top-[50%] right-[30%]" style={{ animationDelay: '3s' }} />
         </div>
+
+        {/* Floating elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-20 right-[15%] float-slow hidden lg:block">
+            <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-xl px-4 py-2 flex items-center gap-2">
+              <Activity className="w-4 h-4 text-green-400" />
+              <span className="text-sm text-slate-300">AI Processing</span>
+            </div>
+          </div>
+          <div className="absolute bottom-24 right-[25%] float-medium hidden lg:block" style={{ animationDelay: '2s' }}>
+            <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-xl px-4 py-2 flex items-center gap-2">
+              <Satellite className="w-4 h-4 text-blue-400" />
+              <span className="text-sm text-slate-300">Satellite Link</span>
+            </div>
+          </div>
+          <div className="absolute top-1/2 right-[8%] hidden xl:block float-fast">
+            <RadarPulse size={70} color="#ef4444" />
+          </div>
+        </div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl animate-fade-in">
+          <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full text-red-400 text-sm mb-6">
+              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
               <Cpu className="w-4 h-4" />
               Aeryl M2 Platform
             </div>
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
               Technology That Powers
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600">Mission Success</span>
+              <span className="block text-shimmer">Mission Success</span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-300">
               AutonOps operates on the Aeryl M2 Multi-Mission Platform—an AI-powered
@@ -163,42 +192,53 @@ export default function TechnologyPage() {
       </section>
 
       {/* Platform Overview */}
-      <section className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 bg-white dark:bg-slate-900 relative overflow-hidden">
+        {/* Background orb */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="gradient-orb w-[400px] h-[400px] bg-blue-200 dark:bg-blue-900 top-[-100px] right-[-100px]" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
               M2 Platform Capabilities
             </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto text-lg">
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">
               A comprehensive mission management system built for operational excellence.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {platformFeatures.map((feature, index) => {
-              const colorClasses: Record<string, { bg: string; icon: string }> = {
-                red: { bg: 'bg-red-50 group-hover:bg-red-100', icon: 'text-red-600' },
-                blue: { bg: 'bg-blue-50 group-hover:bg-blue-100', icon: 'text-blue-600' },
-                purple: { bg: 'bg-purple-50 group-hover:bg-purple-100', icon: 'text-purple-600' },
-                green: { bg: 'bg-green-50 group-hover:bg-green-100', icon: 'text-green-600' },
-                amber: { bg: 'bg-amber-50 group-hover:bg-amber-100', icon: 'text-amber-600' },
-                cyan: { bg: 'bg-cyan-50 group-hover:bg-cyan-100', icon: 'text-cyan-600' },
+              const colorClasses: Record<string, { bg: string; bgDark: string; icon: string; glow: string }> = {
+                red: { bg: 'bg-red-50', bgDark: 'dark:bg-red-900/30', icon: 'text-red-600', glow: 'bg-red-500' },
+                blue: { bg: 'bg-blue-50', bgDark: 'dark:bg-blue-900/30', icon: 'text-blue-600', glow: 'bg-blue-500' },
+                purple: { bg: 'bg-purple-50', bgDark: 'dark:bg-purple-900/30', icon: 'text-purple-600', glow: 'bg-purple-500' },
+                green: { bg: 'bg-green-50', bgDark: 'dark:bg-green-900/30', icon: 'text-green-600', glow: 'bg-green-500' },
+                amber: { bg: 'bg-amber-50', bgDark: 'dark:bg-amber-900/30', icon: 'text-amber-600', glow: 'bg-amber-500' },
+                cyan: { bg: 'bg-cyan-50', bgDark: 'dark:bg-cyan-900/30', icon: 'text-cyan-600', glow: 'bg-cyan-500' },
               };
               const colors = colorClasses[feature.color];
 
               return (
-                <div
+                <TiltCard
                   key={feature.title}
-                  className="group bg-white border border-slate-200 rounded-xl p-6 hover:border-red-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                  className="group bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-6 hover:border-red-200 dark:hover:border-red-500/50 hover:shadow-xl transition-all duration-300"
+                  tiltAmount={8}
                 >
-                  <div className={`w-12 h-12 ${colors.bg} rounded-lg flex items-center justify-center mb-4 transition-colors`}>
-                    <feature.icon className={`w-6 h-6 ${colors.icon}`} />
+                  <div className="relative">
+                    {/* Glow effect on hover */}
+                    <div className={`absolute -inset-2 ${colors.glow} rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-500`} />
+
+                    <div className={`relative w-12 h-12 ${colors.bg} ${colors.bgDark} rounded-lg flex items-center justify-center mb-4 transition-all group-hover:scale-110`}>
+                      <feature.icon className={`w-6 h-6 ${colors.icon}`} />
+                    </div>
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-3">
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">
                     {feature.title}
                   </h3>
-                  <p className="text-slate-600">{feature.description}</p>
-                </div>
+                  <p className="text-slate-600 dark:text-slate-400">{feature.description}</p>
+                </TiltCard>
               );
             })}
           </div>
@@ -207,14 +247,23 @@ export default function TechnologyPage() {
 
       {/* Mission Workflow */}
       <section className="py-16 sm:py-20 bg-slate-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-500 rounded-full blur-[150px]" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-[150px]" />
+        {/* Animated background */}
+        <div className="absolute inset-0 animated-gradient opacity-20" />
+
+        {/* Gradient orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="gradient-orb w-[500px] h-[500px] bg-red-500/20 top-[-100px] left-[20%]" />
+          <div className="gradient-orb w-[400px] h-[400px] bg-blue-500/20 bottom-[-100px] right-[10%]" style={{ animationDelay: '4s' }} />
         </div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm mb-4">
+              <Zap className="w-4 h-4" />
+              Streamlined Process
+            </div>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Automated Mission Workflow
+              Automated Mission <span className="text-shimmer">Workflow</span>
             </h2>
             <p className="text-slate-400 max-w-2xl mx-auto text-lg">
               From incident detection to final report—streamlined by AI.
@@ -223,50 +272,63 @@ export default function TechnologyPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {missionWorkflow.map((item, index) => (
-              <div
+              <TiltCard
                 key={item.step}
-                className="bg-slate-800/50 backdrop-blur rounded-2xl p-6 border border-slate-700 hover:border-red-500/50 transition-all duration-300"
+                className="group bg-slate-800/50 backdrop-blur rounded-2xl p-6 border border-slate-700 hover:border-red-500/50 transition-all duration-300"
+                tiltAmount={6}
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600">
+                  <div className="text-3xl font-bold text-shimmer">
                     {item.step}
                   </div>
-                  <div className="w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center">
+                  <div className="w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                     <item.icon className="w-5 h-5 text-red-400" />
                   </div>
                 </div>
                 <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
                 <p className="text-slate-400 text-sm">{item.description}</p>
-              </div>
+
+                {/* Connection line indicator */}
+                {index < missionWorkflow.length - 1 && (
+                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-slate-800 border border-slate-700 rounded-full items-center justify-center hidden lg:flex">
+                    <ArrowRight className="w-3 h-3 text-red-400 rotate-90" />
+                  </div>
+                )}
+              </TiltCard>
             ))}
           </div>
         </div>
       </section>
 
       {/* Integration Capabilities */}
-      <section className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 bg-white dark:bg-slate-900 relative overflow-hidden">
+        {/* Background orb */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[300px] h-[300px] bg-green-200 dark:bg-green-900 bottom-0 left-0" style={{ animationDelay: '2s' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">
                 Integrated Operations Management
               </h2>
-              <p className="text-slate-600 mb-8">
+              <p className="text-slate-600 dark:text-slate-400 mb-8">
                 The M2 platform provides end-to-end visibility and control across all
                 aspects of drone operations. From client relationship management to
                 real-time mission execution, every component works together seamlessly.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {integrationCapabilities.map((capability, index) => (
-                  <div key={index} className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-700 text-sm">{capability}</span>
+                  <div key={index} className="flex items-start gap-2 group">
+                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                    <span className="text-slate-700 dark:text-slate-300 text-sm">{capability}</span>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="relative">
-              <div className="rounded-2xl overflow-hidden shadow-2xl border border-slate-200">
+            <TiltCard className="relative" tiltAmount={5}>
+              <div className="rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-700">
                 <Image
                   src="/m2-dashboard.jpg"
                   alt="M2 Platform Dashboard - Live fire tracking and mission management"
@@ -275,30 +337,49 @@ export default function TechnologyPage() {
                   className="w-full h-auto"
                 />
               </div>
-              <div className="absolute -bottom-4 -right-4 bg-white rounded-xl p-3 shadow-lg border border-slate-200">
+              <div className="absolute -bottom-4 -right-4 bg-white dark:bg-slate-800 rounded-xl p-3 shadow-lg border border-slate-200 dark:border-slate-700">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  <span className="text-sm font-medium text-slate-700">Live Dashboard</span>
+                  <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Live Dashboard</span>
                 </div>
               </div>
-            </div>
+              {/* Floating badge */}
+              <div className="absolute -top-4 -left-4 bg-red-600 text-white rounded-xl px-3 py-2 shadow-lg float-slow">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  <span className="text-sm font-medium">AI-Powered</span>
+                </div>
+              </div>
+            </TiltCard>
           </div>
         </div>
       </section>
 
       {/* Aircraft Fleet */}
-      <section className="py-16 sm:py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 bg-slate-50 dark:bg-slate-800 relative overflow-hidden">
+        {/* Background orb */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[400px] h-[400px] bg-purple-200 dark:bg-purple-900 top-[-100px] right-[-100px]" style={{ animationDelay: '3s' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-600 dark:text-purple-400 text-sm mb-4">
+              <Plane className="w-4 h-4" />
+              Mission Hardware
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
               Aircraft Platform
             </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto text-lg">
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">
               Purpose-built aircraft for mission-critical operations.
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-lg">
+          <TiltCard
+            className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-lg"
+            tiltAmount={3}
+          >
             <div className="grid grid-cols-1 lg:grid-cols-2">
               {/* Aircraft Visual */}
               <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center min-h-[300px]">
@@ -313,53 +394,58 @@ export default function TechnologyPage() {
                   <h3 className="text-2xl font-bold text-white mb-2">VTOL Aircraft</h3>
                   <p className="text-slate-300">Primary Mission Platform</p>
                 </div>
+                {/* Status indicator */}
+                <div className="absolute top-4 right-4 bg-slate-800/80 backdrop-blur rounded-lg px-3 py-1.5 flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                  <span className="text-xs text-slate-300">Ready</span>
+                </div>
               </div>
 
               {/* Aircraft Specs */}
               <div className="p-8 lg:p-12">
-                <h3 className="text-xl font-semibold text-slate-900 mb-6">Capabilities</h3>
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-6">Capabilities</h3>
                 <div className="grid grid-cols-2 gap-6">
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-start gap-3 group">
+                    <div className="w-10 h-10 bg-red-50 dark:bg-red-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                       <Clock className="w-5 h-5 text-red-600" />
                     </div>
                     <div>
-                      <p className="font-medium text-slate-900">Extended Flight Time</p>
-                      <p className="text-sm text-slate-500">Long-duration missions</p>
+                      <p className="font-medium text-slate-900 dark:text-white">Extended Flight Time</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">Long-duration missions</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-start gap-3 group">
+                    <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                       <Wifi className="w-5 h-5 text-blue-600" />
                     </div>
                     <div>
-                      <p className="font-medium text-slate-900">Starlink Connected</p>
-                      <p className="text-sm text-slate-500">Remote operation capable</p>
+                      <p className="font-medium text-slate-900 dark:text-white">Starlink Connected</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">Remote operation capable</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-start gap-3 group">
+                    <div className="w-10 h-10 bg-purple-50 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                       <Camera className="w-5 h-5 text-purple-600" />
                     </div>
                     <div>
-                      <p className="font-medium text-slate-900">Multi-Sensor Payload</p>
-                      <p className="text-sm text-slate-500">Thermal & visual cameras</p>
+                      <p className="font-medium text-slate-900 dark:text-white">Multi-Sensor Payload</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">Thermal & visual cameras</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-start gap-3 group">
+                    <div className="w-10 h-10 bg-green-50 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                       <Gauge className="w-5 h-5 text-green-600" />
                     </div>
                     <div>
-                      <p className="font-medium text-slate-900">GPS Waypoint Nav</p>
-                      <p className="text-sm text-slate-500">Precision flight paths</p>
+                      <p className="font-medium text-slate-900 dark:text-white">GPS Waypoint Nav</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">Precision flight paths</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-8 p-4 bg-slate-50 rounded-xl">
-                  <h4 className="font-medium text-slate-900 mb-3">Deployment Model</h4>
-                  <p className="text-sm text-slate-600">
+                <div className="mt-8 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <h4 className="font-medium text-slate-900 dark:text-white mb-3">Deployment Model</h4>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">
                     Aircraft are pre-positioned at client fire stations for rapid response.
                     Remote pilots operate from Ohio HQ via satellite link, enabling 24/7
                     mission capability without on-site personnel.
@@ -367,22 +453,28 @@ export default function TechnologyPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </TiltCard>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-slate-50 to-white border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
-            See the technology in action
+      <section className="py-16 sm:py-20 bg-slate-900 text-white relative overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 animated-gradient opacity-30" />
+        <div className="absolute inset-0">
+          <div className="gradient-orb w-[500px] h-[500px] bg-red-500/30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+            See the technology <span className="text-shimmer">in action</span>
           </h2>
-          <p className="text-slate-600 mb-8 max-w-xl mx-auto">
+          <p className="text-slate-300 mb-8 max-w-xl mx-auto">
             Schedule a demonstration to see how the M2 platform can support your operations.
           </p>
           <Link
             href="/contact"
-            className="group inline-flex items-center justify-center px-8 py-4 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25"
+            className="group inline-flex items-center justify-center px-8 py-4 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-all duration-300 btn-glow"
           >
             Request a Demo
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

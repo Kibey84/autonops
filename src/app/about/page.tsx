@@ -1,7 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Target, Shield, Users, Zap, ArrowRight, Linkedin, Cpu, Radio, Sparkles, Building, FileCheck, GraduationCap, Wrench, CheckCircle } from 'lucide-react';
+import { Target, Shield, Users, Zap, ArrowRight, Linkedin, Cpu, Radio, Sparkles, Building, FileCheck, GraduationCap, Wrench, CheckCircle, Award, MapPin } from 'lucide-react';
+import TiltCard from '@/components/TiltCard';
+import { RadarPulse } from '@/components/AnimatedDrone';
 
 export const metadata: Metadata = {
   title: 'About',
@@ -23,24 +25,28 @@ const values = [
     title: 'Safety',
     description:
       'Safety is foundational to everything we do. We maintain rigorous protocols and never compromise on operational safety.',
+    color: 'red',
   },
   {
     icon: Target,
     title: 'Mission Focus',
     description:
       'Your objectives drive our operations. We exist to support your mission success, not to showcase technology.',
+    color: 'blue',
   },
   {
     icon: Users,
     title: 'Professionalism',
     description:
       'Trained operators, clear communication, and disciplined execution. We represent you in the field.',
+    color: 'purple',
   },
   {
     icon: Zap,
     title: 'Reliability',
     description:
       'When you need us, we deliver. Consistent performance and dependable execution are non-negotiable.',
+    color: 'green',
   },
 ];
 
@@ -80,16 +86,43 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative bg-slate-900 text-white py-20 sm:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-red-500 rounded-full blur-[120px] animate-pulse" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '1s' }} />
+      <section className="relative bg-slate-900 text-white py-20 sm:py-28 overflow-hidden">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 animated-gradient opacity-30" />
+
+        {/* Gradient orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="gradient-orb w-[500px] h-[500px] bg-red-500/20 top-[-150px] left-[-100px]" />
+          <div className="gradient-orb w-[400px] h-[400px] bg-blue-500/20 bottom-[-100px] right-[-50px]" style={{ animationDelay: '5s' }} />
         </div>
+
+        {/* Floating elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-20 right-[15%] float-slow hidden lg:block">
+            <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-xl px-4 py-2 flex items-center gap-2">
+              <Award className="w-4 h-4 text-yellow-400" />
+              <span className="text-sm text-slate-300">FAA Certified</span>
+            </div>
+          </div>
+          <div className="absolute bottom-24 right-[25%] float-medium hidden lg:block" style={{ animationDelay: '2s' }}>
+            <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-xl px-4 py-2 flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-red-400" />
+              <span className="text-sm text-slate-300">Ohio Based</span>
+            </div>
+          </div>
+          <div className="absolute top-1/2 right-[8%] hidden xl:block float-fast">
+            <RadarPulse size={70} color="#ef4444" />
+          </div>
+        </div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl animate-fade-in">
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
-              About AutonOps
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full text-red-400 text-sm mb-6">
+              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+              Professional Operations
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+              About <span className="text-shimmer">AutonOps</span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-300">
               We are a professional drone flight operations company based in Ohio.
@@ -101,14 +134,19 @@ export default function AboutPage() {
       </section>
 
       {/* Who We Are */}
-      <section className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 bg-white dark:bg-slate-900 relative overflow-hidden">
+        {/* Background orb */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[400px] h-[400px] bg-blue-200 dark:bg-blue-900 top-[-100px] right-[-100px]" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-slide-in-left">
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">
+            <div>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">
                 Who We Are
               </h2>
-              <div className="space-y-4 text-slate-600">
+              <div className="space-y-4 text-slate-600 dark:text-slate-400">
                 <p>
                   AutonOps LLP is a professional drone flight operations company. We
                   provide complete drone mission execution: pilots, mission controllers,
@@ -128,7 +166,7 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
-            <div className="relative animate-slide-in-right">
+            <TiltCard className="relative" tiltAmount={5}>
               <div className="aspect-video bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden shadow-2xl">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <Image
@@ -147,26 +185,38 @@ export default function AboutPage() {
               {/* Decorative elements */}
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-red-500/10 rounded-full blur-xl" />
               <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-blue-500/10 rounded-full blur-xl" />
-            </div>
+              {/* Floating badge */}
+              <div className="absolute -top-4 -left-4 bg-red-600 text-white rounded-xl px-3 py-2 shadow-lg float-slow">
+                <div className="flex items-center gap-2">
+                  <Shield className="w-4 h-4" />
+                  <span className="text-sm font-medium">Trusted</span>
+                </div>
+              </div>
+            </TiltCard>
           </div>
         </div>
       </section>
 
       {/* Partnership with Aeryl */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-500 rounded-full blur-[150px]" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-[150px]" />
+      <section className="py-16 sm:py-20 bg-slate-900 text-white relative overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 animated-gradient opacity-20" />
+
+        {/* Gradient orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="gradient-orb w-[500px] h-[500px] bg-red-500/20 top-[-100px] left-[20%]" />
+          <div className="gradient-orb w-[400px] h-[400px] bg-blue-500/20 bottom-[-100px] right-[10%]" style={{ animationDelay: '4s' }} />
         </div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-slide-in-left">
+            <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full text-red-400 text-sm mb-6">
                 <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
                 Strategic Partnership
               </div>
               <h2 className="text-3xl font-bold mb-6">
-                Powered by Aeryl AI
+                Powered by <span className="text-shimmer">Aeryl AI</span>
               </h2>
               <div className="space-y-4 text-slate-300">
                 <p>
@@ -181,65 +231,75 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
-            <div className="animate-slide-in-right">
-              <div className="bg-slate-800/50 backdrop-blur rounded-2xl p-8 border border-slate-700">
-                <h3 className="text-xl font-semibold mb-6 text-center">M2 Platform Capabilities</h3>
-                <div className="grid grid-cols-1 gap-4">
-                  <div className="flex items-start gap-4 p-4 bg-slate-700/30 rounded-xl">
-                    <div className="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Sparkles className="w-5 h-5 text-red-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white mb-1">AI-Generated Mission Planning</h4>
-                      <p className="text-sm text-slate-400">Automated flight plans, waypoint optimization, and real-time adjustments</p>
-                    </div>
+            <TiltCard
+              className="bg-slate-800/50 backdrop-blur rounded-2xl p-8 border border-slate-700"
+              tiltAmount={6}
+            >
+              <h3 className="text-xl font-semibold mb-6 text-center">M2 Platform Capabilities</h3>
+              <div className="grid grid-cols-1 gap-4">
+                <div className="flex items-start gap-4 p-4 bg-slate-700/30 rounded-xl group hover:bg-slate-700/50 transition-colors">
+                  <div className="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <Sparkles className="w-5 h-5 text-red-400" />
                   </div>
-                  <div className="flex items-start gap-4 p-4 bg-slate-700/30 rounded-xl">
-                    <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Radio className="w-5 h-5 text-blue-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white mb-1">Live Sensor & Video Feeds</h4>
-                      <p className="text-sm text-slate-400">Real-time streaming to incident commanders with AI-enhanced analysis</p>
-                    </div>
+                  <div>
+                    <h4 className="font-medium text-white mb-1">AI-Generated Mission Planning</h4>
+                    <p className="text-sm text-slate-400">Automated flight plans, waypoint optimization, and real-time adjustments</p>
                   </div>
-                  <div className="flex items-start gap-4 p-4 bg-slate-700/30 rounded-xl">
-                    <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Cpu className="w-5 h-5 text-green-400" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white mb-1">Intelligent Coordination</h4>
-                      <p className="text-sm text-slate-400">Automated FAA integration, mission scoring, and after-action reports</p>
-                    </div>
+                </div>
+                <div className="flex items-start gap-4 p-4 bg-slate-700/30 rounded-xl group hover:bg-slate-700/50 transition-colors">
+                  <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <Radio className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-white mb-1">Live Sensor & Video Feeds</h4>
+                    <p className="text-sm text-slate-400">Real-time streaming to incident commanders with AI-enhanced analysis</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-4 bg-slate-700/30 rounded-xl group hover:bg-slate-700/50 transition-colors">
+                  <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                    <Cpu className="w-5 h-5 text-green-400" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-white mb-1">Intelligent Coordination</h4>
+                    <p className="text-sm text-slate-400">Automated FAA integration, mission scoring, and after-action reports</p>
                   </div>
                 </div>
               </div>
-            </div>
+            </TiltCard>
           </div>
         </div>
       </section>
 
       {/* Leadership Team */}
-      <section className="py-16 sm:py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 bg-slate-50 dark:bg-slate-800 relative overflow-hidden">
+        {/* Background orb */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[400px] h-[400px] bg-purple-200 dark:bg-purple-900 bottom-[-100px] left-[-100px]" style={{ animationDelay: '3s' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-600 dark:text-purple-400 text-sm mb-4">
+              <Users className="w-4 h-4" />
+              Our Team
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
               Leadership Team
             </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
               Experienced professionals dedicated to operational excellence.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {leadership.map((person, index) => (
-              <div
+              <TiltCard
                 key={person.role}
-                className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="group bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-700"
+                tiltAmount={8}
               >
                 {/* Photo or placeholder */}
-                <div className="aspect-square bg-gradient-to-br from-slate-200 to-slate-300 relative overflow-hidden">
+                <div className="aspect-square bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 relative overflow-hidden">
                   {person.image ? (
                     <Image
                       src={person.image}
@@ -249,7 +309,7 @@ export default function AboutPage() {
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-24 h-24 rounded-full bg-slate-400/50 flex items-center justify-center">
+                      <div className="w-24 h-24 rounded-full bg-slate-400/50 dark:bg-slate-600/50 flex items-center justify-center group-hover:scale-110 transition-transform">
                         <span className="text-3xl font-bold text-white/80">{person.title}</span>
                       </div>
                     </div>
@@ -265,31 +325,36 @@ export default function AboutPage() {
                 </div>
                 {/* Info */}
                 <div className="p-5">
-                  <h3 className="font-semibold text-slate-900 group-hover:text-red-600 transition-colors">
+                  <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-red-600 transition-colors">
                     {person.name}
                   </h3>
                   <p className="text-sm text-red-600 font-medium mb-2">{person.role}</p>
                   {person.bio && (
-                    <p className="text-sm text-slate-600">{person.bio}</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">{person.bio}</p>
                   )}
                 </div>
-              </div>
+              </TiltCard>
             ))}
           </div>
         </div>
       </section>
 
       {/* Featured Team Member - Joshua Kibe */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-500 rounded-full blur-[150px]" />
-          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-blue-500 rounded-full blur-[150px]" />
+      <section className="py-16 sm:py-20 bg-slate-900 text-white relative overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 animated-gradient opacity-20" />
+
+        {/* Gradient orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="gradient-orb w-[500px] h-[500px] bg-red-500/20 top-[-100px] right-[20%]" />
+          <div className="gradient-orb w-[400px] h-[400px] bg-blue-500/20 bottom-[-100px] left-[10%]" style={{ animationDelay: '4s' }} />
         </div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
             {/* Photo */}
             <div className="lg:col-span-1">
-              <div className="relative">
+              <TiltCard className="relative" tiltAmount={5}>
                 <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-slate-700">
                   <Image
                     src="/joshua-kibe.jpg"
@@ -299,7 +364,7 @@ export default function AboutPage() {
                   />
                 </div>
                 {/* Credentials badges */}
-                <div className="absolute -bottom-4 -right-4 bg-white rounded-xl p-3 shadow-xl">
+                <div className="absolute -bottom-4 -right-4 bg-white rounded-xl p-3 shadow-xl float-slow">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
                       <Shield className="w-4 h-4 text-red-600" />
@@ -310,7 +375,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </TiltCard>
               {/* Credential tags */}
               <div className="flex flex-wrap gap-2 mt-8">
                 <span className="px-3 py-1 bg-red-500/20 text-red-300 text-sm rounded-full border border-red-500/30">PMP</span>
@@ -346,20 +411,20 @@ export default function AboutPage() {
 
               {/* Key highlights */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-8 border-t border-slate-700">
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-white">20+</p>
+                <div className="text-center group">
+                  <p className="text-2xl font-bold text-shimmer">20+</p>
                   <p className="text-sm text-slate-400">Years Experience</p>
                 </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-white">$600M+</p>
+                <div className="text-center group">
+                  <p className="text-2xl font-bold text-shimmer">$600M+</p>
                   <p className="text-sm text-slate-400">Portfolio Managed</p>
                 </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-white">5</p>
+                <div className="text-center group">
+                  <p className="text-2xl font-bold text-shimmer">5</p>
                   <p className="text-sm text-slate-400">Aircraft Platforms</p>
                 </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-white">AFRL</p>
+                <div className="text-center group">
+                  <p className="text-2xl font-bold text-shimmer">AFRL</p>
                   <p className="text-sm text-slate-400">Partner Experience</p>
                 </div>
               </div>
@@ -369,31 +434,33 @@ export default function AboutPage() {
       </section>
 
       {/* Featured Team Member - Jaderic Dawson */}
-      <section className="py-16 sm:py-20 bg-slate-50 relative overflow-hidden">
+      <section className="py-16 sm:py-20 bg-slate-50 dark:bg-slate-800 relative overflow-hidden">
+        {/* Background orbs */}
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-300 rounded-full blur-[150px]" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-300 rounded-full blur-[150px]" />
+          <div className="gradient-orb w-[400px] h-[400px] bg-blue-300 dark:bg-blue-900 top-[-100px] left-[20%]" />
+          <div className="gradient-orb w-[300px] h-[300px] bg-purple-300 dark:bg-purple-900 bottom-[-100px] right-[20%]" style={{ animationDelay: '3s' }} />
         </div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
             {/* Bio - on left for variety */}
             <div className="lg:col-span-2 order-2 lg:order-1">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-600 text-sm mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-600 dark:text-blue-400 text-sm mb-4">
                 <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
                 Featured Team Member
               </div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-2">Jaderic Dawson, M.S.</h2>
-              <p className="text-blue-600 font-medium mb-6">Co-Founder | Chief Technology Officer | Pilot</p>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Jaderic Dawson, M.S.</h2>
+              <p className="text-blue-600 dark:text-blue-400 font-medium mb-6">Co-Founder | Chief Technology Officer | Pilot</p>
 
-              <div className="space-y-4 text-slate-600 leading-relaxed">
+              <div className="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed">
                 <p>
                   Jaderic Dawson is a mechanical engineer, AI architect, and FAA Part 107–certified remote pilot with more than a decade of experience designing and deploying advanced artificial intelligence systems in operational, mission-critical environments. At AutonOps, he serves as Chief Technology Officer and one of the company&apos;s original operational pilots, bridging autonomous systems, real-world flight operations, and decision-support technology.
                 </p>
                 <p>
-                  As the founder of <strong className="text-slate-900">KnowlEdge2 AI</strong>, Jaderic has led efforts to operationalize knowledge through AI, transforming complex and unstructured data into decision-ready intelligence. His work focuses on <strong className="text-slate-900">GraphRAG architectures, multi-agent orchestration, and explainable AI</strong>, ensuring AI systems remain transparent, trustworthy, and effective when supporting time-sensitive operations.
+                  As the founder of <strong className="text-slate-900 dark:text-white">KnowlEdge2 AI</strong>, Jaderic has led efforts to operationalize knowledge through AI, transforming complex and unstructured data into decision-ready intelligence. His work focuses on <strong className="text-slate-900 dark:text-white">GraphRAG architectures, multi-agent orchestration, and explainable AI</strong>, ensuring AI systems remain transparent, trustworthy, and effective when supporting time-sensitive operations.
                 </p>
                 <p>
-                  Previously, Jaderic served as the <strong className="text-slate-900">Digital Transformation Lead at AFLCMC</strong>, where he guided enterprise AI adoption strategies and partnered with senior leadership under the Department of the Air Force Chief Data and Artificial Intelligence Officer (CDAO) initiative. Earlier in his career, he supported advanced research at the <strong className="text-slate-900">Air Force Research Laboratory (AFRL)</strong>, managing automation, controls, and infrastructure for a <strong className="text-slate-900">$100M experimental research facility</strong>.
+                  Previously, Jaderic served as the <strong className="text-slate-900 dark:text-white">Digital Transformation Lead at AFLCMC</strong>, where he guided enterprise AI adoption strategies and partnered with senior leadership under the Department of the Air Force Chief Data and Artificial Intelligence Officer (CDAO) initiative. Earlier in his career, he supported advanced research at the <strong className="text-slate-900 dark:text-white">Air Force Research Laboratory (AFRL)</strong>, managing automation, controls, and infrastructure for a <strong className="text-slate-900 dark:text-white">$100M experimental research facility</strong>.
                 </p>
                 <p>
                   At AutonOps, Jaderic is directly involved in flight operations as a Part 107 pilot, while leading the development of AI-enabled mission systems that integrate sensor feeds, autonomy, and real-time analytics into the mission control environment. His dual role ensures that AI capabilities are designed with operator input from the start.
@@ -401,30 +468,30 @@ export default function AboutPage() {
               </div>
 
               {/* Key highlights */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-8 border-t border-slate-200">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-8 border-t border-slate-200 dark:border-slate-700">
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-slate-900">10+</p>
-                  <p className="text-sm text-slate-500">Years in AI</p>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white">10+</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Years in AI</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-slate-900">$100M</p>
-                  <p className="text-sm text-slate-500">Facility Managed</p>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white">$100M</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Facility Managed</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-slate-900">AFLCMC</p>
-                  <p className="text-sm text-slate-500">Digital Lead</p>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white">AFLCMC</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Digital Lead</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-slate-900">Cornell</p>
-                  <p className="text-sm text-slate-500">AI/ML Training</p>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white">Cornell</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">AI/ML Training</p>
                 </div>
               </div>
             </div>
 
             {/* Photo - on right */}
             <div className="lg:col-span-1 order-1 lg:order-2">
-              <div className="relative">
-                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-slate-200">
+              <TiltCard className="relative" tiltAmount={5}>
+                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-700">
                   <Image
                     src="/jaderic-dawson.jpg"
                     alt="Jaderic Dawson, M.S. - Chief Technology Officer"
@@ -433,24 +500,24 @@ export default function AboutPage() {
                   />
                 </div>
                 {/* Credentials badge */}
-                <div className="absolute -bottom-4 -left-4 bg-white rounded-xl p-3 shadow-xl border border-slate-200">
+                <div className="absolute -bottom-4 -left-4 bg-white dark:bg-slate-800 rounded-xl p-3 shadow-xl border border-slate-200 dark:border-slate-700 float-slow">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center">
                       <Cpu className="w-4 h-4 text-blue-600" />
                     </div>
                     <div>
-                      <p className="text-xs text-slate-500">Specialty</p>
-                      <p className="text-sm font-semibold text-slate-900">AI/ML</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">Specialty</p>
+                      <p className="text-sm font-semibold text-slate-900 dark:text-white">AI/ML</p>
                     </div>
                   </div>
                 </div>
-              </div>
+              </TiltCard>
               {/* Credential tags */}
               <div className="flex flex-wrap gap-2 mt-8">
-                <span className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full border border-blue-200">M.S. Engineering</span>
-                <span className="px-3 py-1 bg-purple-100 text-purple-700 text-sm rounded-full border border-purple-200">Cornell AI/ML</span>
-                <span className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full border border-green-200">FAA Part 107</span>
-                <span className="px-3 py-1 bg-orange-100 text-orange-700 text-sm rounded-full border border-orange-200">GraphRAG</span>
+                <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-sm rounded-full border border-blue-200 dark:border-blue-800">M.S. Engineering</span>
+                <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 text-sm rounded-full border border-purple-200 dark:border-purple-800">Cornell AI/ML</span>
+                <span className="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 text-sm rounded-full border border-green-200 dark:border-green-800">FAA Part 107</span>
+                <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 text-sm rounded-full border border-orange-200 dark:border-orange-800">GraphRAG</span>
               </div>
             </div>
           </div>
@@ -458,274 +525,339 @@ export default function AboutPage() {
       </section>
 
       {/* What We Do */}
-      <section className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 bg-white dark:bg-slate-900 relative overflow-hidden">
+        {/* Background orb */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[300px] h-[300px] bg-red-200 dark:bg-red-900 top-0 right-0" style={{ animationDelay: '2s' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full text-red-600 dark:text-red-400 text-sm mb-4">
+              <Target className="w-4 h-4" />
+              Our Services
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
               What We Do
             </h2>
-            <p className="text-slate-600">
+            <p className="text-slate-600 dark:text-slate-400">
               We handle the entire drone operation so you can focus on your core mission.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="group bg-white border border-slate-200 rounded-xl p-6 hover:border-red-200 hover:shadow-lg transition-all duration-300">
-              <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 transition-colors">
-                <Users className="w-6 h-6 text-red-600" />
+            <TiltCard
+              className="group bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-6 hover:border-red-200 dark:hover:border-red-500/50 hover:shadow-lg transition-all duration-300"
+              tiltAmount={8}
+            >
+              <div className="relative">
+                <div className="absolute -inset-2 bg-red-500 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-500" />
+                <div className="relative w-12 h-12 bg-red-50 dark:bg-red-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Users className="w-6 h-6 text-red-600" />
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-3">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">
                 Provide Operators
               </h3>
-              <p className="text-slate-600">
+              <p className="text-slate-600 dark:text-slate-400">
                 Professional pilots and mission controllers trained for demanding
                 operational environments. Remote PIC, visual observers, and support
                 personnel as your mission requires.
               </p>
-            </div>
-            <div className="group bg-white border border-slate-200 rounded-xl p-6 hover:border-red-200 hover:shadow-lg transition-all duration-300">
-              <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 transition-colors">
-                <Shield className="w-6 h-6 text-red-600" />
+            </TiltCard>
+            <TiltCard
+              className="group bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-6 hover:border-red-200 dark:hover:border-red-500/50 hover:shadow-lg transition-all duration-300"
+              tiltAmount={8}
+            >
+              <div className="relative">
+                <div className="absolute -inset-2 bg-blue-500 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-500" />
+                <div className="relative w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Shield className="w-6 h-6 text-blue-600" />
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-3">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">
                 Supply Equipment
               </h3>
-              <p className="text-slate-600">
+              <p className="text-slate-600 dark:text-slate-400">
                 We bring the aircraft, sensors, ground control stations, and support
                 equipment. You don&apos;t need to build or maintain a fleet—we handle it.
               </p>
-            </div>
-            <div className="group bg-white border border-slate-200 rounded-xl p-6 hover:border-red-200 hover:shadow-lg transition-all duration-300">
-              <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 transition-colors">
-                <Target className="w-6 h-6 text-red-600" />
+            </TiltCard>
+            <TiltCard
+              className="group bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-6 hover:border-red-200 dark:hover:border-red-500/50 hover:shadow-lg transition-all duration-300"
+              tiltAmount={8}
+            >
+              <div className="relative">
+                <div className="absolute -inset-2 bg-green-500 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-500" />
+                <div className="relative w-12 h-12 bg-green-50 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Target className="w-6 h-6 text-green-600" />
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-3">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-3">
                 Execute Missions
               </h3>
-              <p className="text-slate-600">
+              <p className="text-slate-600 dark:text-slate-400">
                 From planning through delivery, we manage the entire operation.
                 You define objectives, we execute and deliver results.
               </p>
-            </div>
+            </TiltCard>
           </div>
         </div>
       </section>
 
       {/* Values */}
-      <section className="py-16 sm:py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 bg-slate-50 dark:bg-slate-800 relative overflow-hidden">
+        {/* Background orb */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[400px] h-[400px] bg-purple-200 dark:bg-purple-900 bottom-[-100px] right-[-100px]" style={{ animationDelay: '3s' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-600 dark:text-purple-400 text-sm mb-4">
+              <Shield className="w-4 h-4" />
+              Core Principles
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
               Our Values
             </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
               The principles that guide how we operate and serve our clients.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => (
-              <div
-                key={value.title}
-                className="group bg-white border border-slate-200 rounded-xl p-6 hover:border-red-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 group-hover:scale-110 transition-all duration-300">
-                  <value.icon className="w-6 h-6 text-red-600" />
-                </div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                  {value.title}
-                </h3>
-                <p className="text-sm text-slate-600">{value.description}</p>
-              </div>
-            ))}
+            {values.map((value) => {
+              const colorClasses: Record<string, { bg: string; bgDark: string; icon: string; glow: string }> = {
+                red: { bg: 'bg-red-50', bgDark: 'dark:bg-red-900/30', icon: 'text-red-600', glow: 'bg-red-500' },
+                blue: { bg: 'bg-blue-50', bgDark: 'dark:bg-blue-900/30', icon: 'text-blue-600', glow: 'bg-blue-500' },
+                purple: { bg: 'bg-purple-50', bgDark: 'dark:bg-purple-900/30', icon: 'text-purple-600', glow: 'bg-purple-500' },
+                green: { bg: 'bg-green-50', bgDark: 'dark:bg-green-900/30', icon: 'text-green-600', glow: 'bg-green-500' },
+              };
+              const colors = colorClasses[value.color];
+
+              return (
+                <TiltCard
+                  key={value.title}
+                  className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-6 hover:border-red-200 dark:hover:border-red-500/50 hover:shadow-lg transition-all duration-300"
+                  tiltAmount={8}
+                >
+                  <div className="relative">
+                    <div className={`absolute -inset-2 ${colors.glow} rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-500`} />
+                    <div className={`relative w-12 h-12 ${colors.bg} ${colors.bgDark} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                      <value.icon className={`w-6 h-6 ${colors.icon}`} />
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                    {value.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">{value.description}</p>
+                </TiltCard>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Government & Enterprise Ready */}
-      <section className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 bg-white dark:bg-slate-900 relative overflow-hidden">
+        {/* Background orb */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[300px] h-[300px] bg-blue-200 dark:bg-blue-900 top-0 left-0" style={{ animationDelay: '2s' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-200 rounded-full text-blue-700 text-sm mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-full text-blue-700 dark:text-blue-400 text-sm mb-6">
                 <Building className="w-4 h-4" />
                 Enterprise Ready
               </div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">
                 Government & Enterprise Qualified
               </h2>
-              <p className="text-slate-600 mb-8">
+              <p className="text-slate-600 dark:text-slate-400 mb-8">
                 AutonOps is structured to work with government agencies and enterprise
                 organizations that require formal contracting relationships and compliance verification.
               </p>
               <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 group">
+                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                   <div>
-                    <span className="font-medium text-slate-900">SAM.gov Registration</span>
-                    <p className="text-sm text-slate-600">Registered for federal contracting opportunities</p>
+                    <span className="font-medium text-slate-900 dark:text-white">SAM.gov Registration</span>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">Registered for federal contracting opportunities</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 group">
+                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                   <div>
-                    <span className="font-medium text-slate-900">UEI Number</span>
-                    <p className="text-sm text-slate-600">Unique Entity Identifier for government procurement</p>
+                    <span className="font-medium text-slate-900 dark:text-white">UEI Number</span>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">Unique Entity Identifier for government procurement</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 group">
+                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                   <div>
-                    <span className="font-medium text-slate-900">Ohio LLP</span>
-                    <p className="text-sm text-slate-600">Formally registered limited liability partnership</p>
+                    <span className="font-medium text-slate-900 dark:text-white">Ohio LLP</span>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">Formally registered limited liability partnership</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 group">
+                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                   <div>
-                    <span className="font-medium text-slate-900">Grant Eligible</span>
-                    <p className="text-sm text-slate-600">Positioned for federal grants and programs like Tradewinds</p>
+                    <span className="font-medium text-slate-900 dark:text-white">Grant Eligible</span>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">Positioned for federal grants and programs like Tradewinds</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="relative">
-              <div className="bg-gradient-to-br from-blue-50 to-slate-100 rounded-2xl p-8">
+            <TiltCard className="relative" tiltAmount={5}>
+              <div className="bg-gradient-to-br from-blue-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-8 border border-slate-200 dark:border-slate-700">
                 <div className="flex items-center justify-center mb-6">
                   <div className="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center">
                     <FileCheck className="w-10 h-10 text-white" />
                   </div>
                 </div>
                 <div className="text-center">
-                  <h3 className="text-xl font-semibold text-slate-900 mb-2">Compliance Ready</h3>
-                  <p className="text-slate-600 text-sm">
+                  <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">Compliance Ready</h3>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm">
                     Structured for government procurement, grants, and enterprise contracts
                   </p>
                 </div>
                 <div className="mt-6 grid grid-cols-2 gap-3">
-                  <div className="bg-white rounded-lg p-3 text-center border border-slate-200">
-                    <p className="text-xs text-slate-500">Entity Type</p>
-                    <p className="font-medium text-slate-900">LLP</p>
+                  <div className="bg-white dark:bg-slate-800 rounded-lg p-3 text-center border border-slate-200 dark:border-slate-700">
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Entity Type</p>
+                    <p className="font-medium text-slate-900 dark:text-white">LLP</p>
                   </div>
-                  <div className="bg-white rounded-lg p-3 text-center border border-slate-200">
-                    <p className="text-xs text-slate-500">State</p>
-                    <p className="font-medium text-slate-900">Ohio</p>
+                  <div className="bg-white dark:bg-slate-800 rounded-lg p-3 text-center border border-slate-200 dark:border-slate-700">
+                    <p className="text-xs text-slate-500 dark:text-slate-400">State</p>
+                    <p className="font-medium text-slate-900 dark:text-white">Ohio</p>
                   </div>
-                  <div className="bg-white rounded-lg p-3 text-center border border-slate-200">
-                    <p className="text-xs text-slate-500">Established</p>
-                    <p className="font-medium text-slate-900">2025</p>
+                  <div className="bg-white dark:bg-slate-800 rounded-lg p-3 text-center border border-slate-200 dark:border-slate-700">
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Established</p>
+                    <p className="font-medium text-slate-900 dark:text-white">2025</p>
                   </div>
-                  <div className="bg-white rounded-lg p-3 text-center border border-slate-200">
-                    <p className="text-xs text-slate-500">Status</p>
+                  <div className="bg-white dark:bg-slate-800 rounded-lg p-3 text-center border border-slate-200 dark:border-slate-700">
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Status</p>
                     <p className="font-medium text-green-600">Active</p>
                   </div>
                 </div>
               </div>
-            </div>
+            </TiltCard>
           </div>
         </div>
       </section>
 
       {/* Training Pipeline */}
-      <section className="py-16 sm:py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 bg-slate-50 dark:bg-slate-800 relative overflow-hidden">
+        {/* Background orb */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[400px] h-[400px] bg-green-200 dark:bg-green-900 top-[-100px] right-[-100px]" style={{ animationDelay: '3s' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="lg:order-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-50 border border-green-200 rounded-full text-green-700 text-sm mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-full text-green-700 dark:text-green-400 text-sm mb-6">
                 <GraduationCap className="w-4 h-4" />
                 Workforce Development
               </div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">
                 Training & Talent Pipeline
               </h2>
-              <p className="text-slate-600 mb-8">
+              <p className="text-slate-600 dark:text-slate-400 mb-8">
                 We&apos;re building a sustainable workforce through partnerships with
                 educational institutions that specialize in aviation and UAV technology.
               </p>
               <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="flex items-start gap-4 group">
+                  <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                     <GraduationCap className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900 mb-1">Sinclair Community College Partnership</h3>
-                    <p className="text-slate-600 text-sm">
+                    <h3 className="font-semibold text-slate-900 dark:text-white mb-1">Sinclair Community College Partnership</h3>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">
                       Access to certified UAV pilot programs and trained graduates ready for commercial operations.
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="flex items-start gap-4 group">
+                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                     <Users className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900 mb-1">Pilot Certification Pipeline</h3>
-                    <p className="text-slate-600 text-sm">
+                    <h3 className="font-semibold text-slate-900 dark:text-white mb-1">Pilot Certification Pipeline</h3>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">
                       Continuous supply of FAA Part 107 certified pilots with professional training.
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="flex items-start gap-4 group">
+                  <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                     <Wrench className="w-6 h-6 text-purple-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900 mb-1">UAV Mechanics Training</h3>
-                    <p className="text-slate-600 text-sm">
+                    <h3 className="font-semibold text-slate-900 dark:text-white mb-1">UAV Mechanics Training</h3>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">
                       Trained technicians for aircraft maintenance, repair, and field support.
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="lg:order-1 relative">
-              <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-lg">
-                <h3 className="text-lg font-semibold text-slate-900 mb-6 text-center">Workforce Growth</h3>
+            <TiltCard className="lg:order-1" tiltAmount={5}>
+              <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 p-8 shadow-lg">
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-6 text-center">Workforce Growth</h3>
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+                  <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-xl group hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                         <Users className="w-5 h-5 text-red-600" />
                       </div>
-                      <span className="font-medium text-slate-900">Remote Pilots</span>
+                      <span className="font-medium text-slate-900 dark:text-white">Remote Pilots</span>
                     </div>
-                    <span className="text-sm text-slate-500">Scaling</span>
+                    <span className="text-sm text-slate-500 dark:text-slate-400">Scaling</span>
                   </div>
-                  <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+                  <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-xl group hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                         <Radio className="w-5 h-5 text-blue-600" />
                       </div>
-                      <span className="font-medium text-slate-900">Mission Controllers</span>
+                      <span className="font-medium text-slate-900 dark:text-white">Mission Controllers</span>
                     </div>
-                    <span className="text-sm text-slate-500">Scaling</span>
+                    <span className="text-sm text-slate-500 dark:text-slate-400">Scaling</span>
                   </div>
-                  <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+                  <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-xl group hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                         <Wrench className="w-5 h-5 text-green-600" />
                       </div>
-                      <span className="font-medium text-slate-900">UAV Technicians</span>
+                      <span className="font-medium text-slate-900 dark:text-white">UAV Technicians</span>
                     </div>
-                    <span className="text-sm text-slate-500">Scaling</span>
+                    <span className="text-sm text-slate-500 dark:text-slate-400">Scaling</span>
                   </div>
                 </div>
               </div>
-            </div>
+            </TiltCard>
           </div>
         </div>
       </section>
 
       {/* Location */}
       <section className="py-16 sm:py-20 bg-slate-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-500 rounded-full blur-[150px]" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-[150px]" />
+        {/* Animated background */}
+        <div className="absolute inset-0 animated-gradient opacity-20" />
+
+        {/* Gradient orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="gradient-orb w-[400px] h-[400px] bg-red-500/20 top-[-100px] left-[20%]" />
+          <div className="gradient-orb w-[300px] h-[300px] bg-blue-500/20 bottom-[-100px] right-[20%]" style={{ animationDelay: '4s' }} />
         </div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-6">Based in Ohio</h2>
+              <h2 className="text-3xl font-bold mb-6">Based in <span className="text-shimmer">Ohio</span></h2>
               <p className="text-slate-300 mb-6">
                 AutonOps LLP is headquartered in Ohio. Our central location allows
                 us to deploy teams efficiently across the region and beyond.
@@ -735,32 +867,38 @@ export default function AboutPage() {
                 operations wherever the mission takes us.
               </p>
             </div>
-            <div className="relative">
+            <TiltCard className="relative" tiltAmount={6}>
               <div className="bg-slate-800/50 backdrop-blur rounded-2xl p-8 text-center border border-slate-700">
-                <div className="text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600 mb-4">OH</div>
+                <div className="text-8xl font-bold text-shimmer mb-4">OH</div>
                 <p className="text-slate-400">Ohio, United States</p>
                 <div className="mt-6 flex justify-center gap-2">
                   <span className="px-3 py-1 bg-slate-700/50 rounded-full text-xs text-slate-400">Central Time</span>
                   <span className="px-3 py-1 bg-slate-700/50 rounded-full text-xs text-slate-400">Nationwide Service</span>
                 </div>
               </div>
-            </div>
+            </TiltCard>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-slate-50 to-white border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
-            Want to work with us?
+      <section className="py-16 sm:py-20 bg-slate-900 text-white relative overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 animated-gradient opacity-30" />
+        <div className="absolute inset-0">
+          <div className="gradient-orb w-[500px] h-[500px] bg-red-500/30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+            Want to <span className="text-shimmer">work with us</span>?
           </h2>
-          <p className="text-slate-600 mb-8 max-w-xl mx-auto">
+          <p className="text-slate-300 mb-8 max-w-xl mx-auto">
             We&apos;re always interested in discussing how we can support your mission.
           </p>
           <Link
             href="/contact"
-            className="group inline-flex items-center justify-center px-8 py-4 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25"
+            className="group inline-flex items-center justify-center px-8 py-4 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-all duration-300 btn-glow"
           >
             Contact Us
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

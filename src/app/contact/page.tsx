@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, Clock, MessageSquare } from 'lucide-react';
+import TiltCard from '@/components/TiltCard';
+import { RadarPulse } from '@/components/AnimatedDrone';
 
 const inquiryTypes = [
   'General Inquiry',
@@ -46,10 +48,18 @@ export default function ContactPage() {
   if (isSubmitted) {
     return (
       <>
-        <section className="bg-slate-900 text-white py-20 sm:py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative bg-slate-900 text-white py-20 sm:py-28 overflow-hidden">
+          {/* Animated gradient background */}
+          <div className="absolute inset-0 animated-gradient opacity-30" />
+
+          {/* Gradient orbs */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="gradient-orb w-[400px] h-[400px] bg-green-500/20 top-[-100px] right-[-50px]" />
+          </div>
+
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
-              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
                 Contact Us
               </h1>
               <p className="text-lg sm:text-xl text-slate-300">
@@ -59,15 +69,15 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <section className="py-16 sm:py-20">
+        <section className="py-16 sm:py-20 bg-white dark:bg-slate-900">
           <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <CheckCircle className="w-8 h-8 text-green-600" />
+            <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="w-10 h-10 text-green-600" />
             </div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-4">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
               Message Received
             </h2>
-            <p className="text-slate-600 mb-8">
+            <p className="text-slate-600 dark:text-slate-400 mb-8">
               Thank you for contacting AutonOps. Our team will review your message
               and respond within one business day.
             </p>
@@ -96,11 +106,43 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-slate-900 text-white py-20 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-slate-900 text-white py-20 sm:py-28 overflow-hidden">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 animated-gradient opacity-30" />
+
+        {/* Gradient orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="gradient-orb w-[500px] h-[500px] bg-red-500/20 top-[-150px] left-[-100px]" />
+          <div className="gradient-orb w-[400px] h-[400px] bg-blue-500/20 bottom-[-100px] right-[-50px]" style={{ animationDelay: '5s' }} />
+        </div>
+
+        {/* Floating elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-20 right-[15%] float-slow hidden lg:block">
+            <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-xl px-4 py-2 flex items-center gap-2">
+              <Clock className="w-4 h-4 text-green-400" />
+              <span className="text-sm text-slate-300">24hr Response</span>
+            </div>
+          </div>
+          <div className="absolute bottom-24 right-[25%] float-medium hidden lg:block" style={{ animationDelay: '2s' }}>
+            <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-xl px-4 py-2 flex items-center gap-2">
+              <MessageSquare className="w-4 h-4 text-blue-400" />
+              <span className="text-sm text-slate-300">Get in Touch</span>
+            </div>
+          </div>
+          <div className="absolute top-1/2 right-[8%] hidden xl:block float-fast">
+            <RadarPulse size={60} color="#ef4444" />
+          </div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
-              Contact Us
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full text-red-400 text-sm mb-6">
+              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+              Ready to Connect
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+              <span className="text-shimmer">Contact</span> Us
             </h1>
             <p className="text-lg sm:text-xl text-slate-300">
               Ready to discuss your mission requirements? Reach out to our
@@ -111,55 +153,60 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form & Info */}
-      <section className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 bg-white dark:bg-slate-900 relative overflow-hidden">
+        {/* Background orb */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[400px] h-[400px] bg-blue-200 dark:bg-blue-900 bottom-[-100px] right-[-100px]" style={{ animationDelay: '3s' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Contact Info */}
             <div className="lg:col-span-1">
-              <h2 className="text-xl font-bold text-slate-900 mb-6">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6">
                 Get in Touch
               </h2>
 
               <div className="space-y-6">
-                <div>
-                  <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wide mb-3">
+                <TiltCard className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700" tiltAmount={8}>
+                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">
                     Email
                   </h3>
                   <div className="flex items-center gap-3 text-slate-400">
                     <Mail className="w-5 h-5" />
                     <span>Coming soon</span>
                   </div>
-                </div>
+                </TiltCard>
 
-                <div>
-                  <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wide mb-3">
+                <TiltCard className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700" tiltAmount={8}>
+                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">
                     Phone
                   </h3>
                   <a
                     href="tel:+19372696420"
-                    className="flex items-center gap-3 text-slate-600 hover:text-red-600 transition-colors"
+                    className="flex items-center gap-3 text-slate-600 dark:text-slate-300 hover:text-red-600 transition-colors"
                   >
                     <Phone className="w-5 h-5" />
                     (937) 269-6420
                   </a>
-                </div>
+                </TiltCard>
 
-                <div>
-                  <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wide mb-3">
+                <TiltCard className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700" tiltAmount={8}>
+                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">
                     Location
                   </h3>
-                  <div className="flex items-center gap-3 text-slate-600">
+                  <div className="flex items-center gap-3 text-slate-600 dark:text-slate-300">
                     <MapPin className="w-5 h-5" />
                     Ohio, United States
                   </div>
-                </div>
+                </TiltCard>
               </div>
 
-              <div className="mt-8 pt-8 border-t border-slate-200">
-                <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wide mb-3">
+              <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-700">
+                <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">
                   Response Time
                 </h3>
-                <p className="text-slate-600 text-sm">
+                <p className="text-slate-600 dark:text-slate-400 text-sm">
                   We respond to all inquiries within one business day. For urgent
                   operational matters, please call directly.
                 </p>
@@ -168,8 +215,11 @@ export default function ContactPage() {
 
             {/* Form */}
             <div className="lg:col-span-2">
-              <div className="bg-white border border-slate-200 rounded-lg p-6 sm:p-8">
-                <h2 className="text-xl font-bold text-slate-900 mb-6">
+              <TiltCard
+                className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 sm:p-8"
+                tiltAmount={3}
+              >
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6">
                   Send a Message
                 </h2>
 
@@ -178,7 +228,7 @@ export default function ContactPage() {
                     <div>
                       <label
                         htmlFor="name"
-                        className="block text-sm font-medium text-slate-700 mb-2"
+                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
                       >
                         Name *
                       </label>
@@ -189,14 +239,14 @@ export default function ContactPage() {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                       />
                     </div>
 
                     <div>
                       <label
                         htmlFor="email"
-                        className="block text-sm font-medium text-slate-700 mb-2"
+                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
                       >
                         Email *
                       </label>
@@ -207,7 +257,7 @@ export default function ContactPage() {
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                       />
                     </div>
                   </div>
@@ -216,7 +266,7 @@ export default function ContactPage() {
                     <div>
                       <label
                         htmlFor="organization"
-                        className="block text-sm font-medium text-slate-700 mb-2"
+                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
                       >
                         Organization
                       </label>
@@ -226,14 +276,14 @@ export default function ContactPage() {
                         name="organization"
                         value={formData.organization}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                       />
                     </div>
 
                     <div>
                       <label
                         htmlFor="phone"
-                        className="block text-sm font-medium text-slate-700 mb-2"
+                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
                       >
                         Phone
                       </label>
@@ -243,7 +293,7 @@ export default function ContactPage() {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                       />
                     </div>
                   </div>
@@ -251,7 +301,7 @@ export default function ContactPage() {
                   <div>
                     <label
                       htmlFor="inquiryType"
-                      className="block text-sm font-medium text-slate-700 mb-2"
+                      className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
                     >
                       Inquiry Type
                     </label>
@@ -260,7 +310,7 @@ export default function ContactPage() {
                       name="inquiryType"
                       value={formData.inquiryType}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white"
+                      className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                     >
                       <option value="">Select an option</option>
                       {inquiryTypes.map((type) => (
@@ -274,7 +324,7 @@ export default function ContactPage() {
                   <div>
                     <label
                       htmlFor="message"
-                      className="block text-sm font-medium text-slate-700 mb-2"
+                      className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
                     >
                       Message *
                     </label>
@@ -286,26 +336,26 @@ export default function ContactPage() {
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="Tell us about your mission requirements..."
-                      className="w-full px-4 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none"
+                      className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-400"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white font-medium rounded hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="group inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed btn-glow"
                   >
                     {isSubmitting ? (
                       'Sending...'
                     ) : (
                       <>
                         Send Message
-                        <Send className="ml-2 w-4 h-4" />
+                        <Send className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </>
                     )}
                   </button>
                 </form>
-              </div>
+              </TiltCard>
             </div>
           </div>
         </div>
