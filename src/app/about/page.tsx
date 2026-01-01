@@ -61,11 +61,11 @@ const leadership = [
     credentials: ['PMP', 'Lean Six Sigma Green Belt', 'USAF Veteran', 'Secret Clearance'],
   },
   {
-    name: 'Jaderic Dawson',
+    name: 'Jaderic Dawson, M.S.',
     role: 'Chief Technology Officer',
     title: 'CTO',
-    bio: '',
-    image: null,
+    bio: 'AI architect and mechanical engineer with 10+ years deploying AI in mission-critical environments. FAA Part 107 Pilot. M.S. Mechanical Engineering, Cornell AI/ML.',
+    image: '/jaderic-dawson.jpg',
   },
   {
     name: 'Matthew Sunday',
@@ -362,6 +362,95 @@ export default function AboutPage() {
                   <p className="text-2xl font-bold text-white">AFRL</p>
                   <p className="text-sm text-slate-400">Partner Experience</p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Team Member - Jaderic Dawson */}
+      <section className="py-16 sm:py-20 bg-slate-50 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-300 rounded-full blur-[150px]" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-300 rounded-full blur-[150px]" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+            {/* Bio - on left for variety */}
+            <div className="lg:col-span-2 order-2 lg:order-1">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-600 text-sm mb-4">
+                <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+                Featured Team Member
+              </div>
+              <h2 className="text-3xl font-bold text-slate-900 mb-2">Jaderic Dawson, M.S.</h2>
+              <p className="text-blue-600 font-medium mb-6">Co-Founder | Chief Technology Officer | Pilot</p>
+
+              <div className="space-y-4 text-slate-600 leading-relaxed">
+                <p>
+                  Jaderic Dawson is a mechanical engineer, AI architect, and FAA Part 107–certified remote pilot with more than a decade of experience designing and deploying advanced artificial intelligence systems in operational, mission-critical environments. At AutonOps, he serves as Chief Technology Officer and one of the company&apos;s original operational pilots, bridging autonomous systems, real-world flight operations, and decision-support technology.
+                </p>
+                <p>
+                  As the founder of <strong className="text-slate-900">KnowlEdge2 AI</strong>, Jaderic has led efforts to operationalize knowledge through AI, transforming complex and unstructured data into decision-ready intelligence. His work focuses on <strong className="text-slate-900">GraphRAG architectures, multi-agent orchestration, and explainable AI</strong>, ensuring AI systems remain transparent, trustworthy, and effective when supporting time-sensitive operations.
+                </p>
+                <p>
+                  Previously, Jaderic served as the <strong className="text-slate-900">Digital Transformation Lead at AFLCMC</strong>, where he guided enterprise AI adoption strategies and partnered with senior leadership under the Department of the Air Force Chief Data and Artificial Intelligence Officer (CDAO) initiative. Earlier in his career, he supported advanced research at the <strong className="text-slate-900">Air Force Research Laboratory (AFRL)</strong>, managing automation, controls, and infrastructure for a <strong className="text-slate-900">$100M experimental research facility</strong>.
+                </p>
+                <p>
+                  At AutonOps, Jaderic is directly involved in flight operations as a Part 107 pilot, while leading the development of AI-enabled mission systems that integrate sensor feeds, autonomy, and real-time analytics into the mission control environment. His dual role ensures that AI capabilities are designed with operator input from the start.
+                </p>
+              </div>
+
+              {/* Key highlights */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-8 border-t border-slate-200">
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-slate-900">10+</p>
+                  <p className="text-sm text-slate-500">Years in AI</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-slate-900">$100M</p>
+                  <p className="text-sm text-slate-500">Facility Managed</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-slate-900">AFLCMC</p>
+                  <p className="text-sm text-slate-500">Digital Lead</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-slate-900">Cornell</p>
+                  <p className="text-sm text-slate-500">AI/ML Training</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Photo - on right */}
+            <div className="lg:col-span-1 order-1 lg:order-2">
+              <div className="relative">
+                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-slate-200">
+                  <Image
+                    src="/jaderic-dawson.jpg"
+                    alt="Jaderic Dawson, M.S. - Chief Technology Officer"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                {/* Credentials badge */}
+                <div className="absolute -bottom-4 -left-4 bg-white rounded-xl p-3 shadow-xl border border-slate-200">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <Cpu className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-500">Specialty</p>
+                      <p className="text-sm font-semibold text-slate-900">AI/ML</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* Credential tags */}
+              <div className="flex flex-wrap gap-2 mt-8">
+                <span className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full border border-blue-200">M.S. Engineering</span>
+                <span className="px-3 py-1 bg-purple-100 text-purple-700 text-sm rounded-full border border-purple-200">Cornell AI/ML</span>
+                <span className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full border border-green-200">FAA Part 107</span>
+                <span className="px-3 py-1 bg-orange-100 text-orange-700 text-sm rounded-full border border-orange-200">GraphRAG</span>
               </div>
             </div>
           </div>
