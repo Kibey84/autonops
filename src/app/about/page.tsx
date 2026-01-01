@@ -279,6 +279,95 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Featured Team Member - Joshua Kibe */}
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-500 rounded-full blur-[150px]" />
+          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-blue-500 rounded-full blur-[150px]" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+            {/* Photo */}
+            <div className="lg:col-span-1">
+              <div className="relative">
+                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-slate-700">
+                  <Image
+                    src="/joshua-kibe.jpg"
+                    alt="Joshua Kibe, PMP - Chief Financial Officer"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                {/* Credentials badges */}
+                <div className="absolute -bottom-4 -right-4 bg-white rounded-xl p-3 shadow-xl">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+                      <Shield className="w-4 h-4 text-red-600" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-500">Clearance</p>
+                      <p className="text-sm font-semibold text-slate-900">Secret</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* Credential tags */}
+              <div className="flex flex-wrap gap-2 mt-8">
+                <span className="px-3 py-1 bg-red-500/20 text-red-300 text-sm rounded-full border border-red-500/30">PMP</span>
+                <span className="px-3 py-1 bg-blue-500/20 text-blue-300 text-sm rounded-full border border-blue-500/30">USAF Veteran</span>
+                <span className="px-3 py-1 bg-green-500/20 text-green-300 text-sm rounded-full border border-green-500/30">Lean Six Sigma</span>
+                <span className="px-3 py-1 bg-purple-500/20 text-purple-300 text-sm rounded-full border border-purple-500/30">FAA Part 107</span>
+              </div>
+            </div>
+
+            {/* Bio */}
+            <div className="lg:col-span-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full text-red-400 text-sm mb-4">
+                <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                Featured Team Member
+              </div>
+              <h2 className="text-3xl font-bold mb-2">Joshua Kibe, PMP</h2>
+              <p className="text-red-400 font-medium mb-6">Co-Founder | Chief Financial Officer | Pilot</p>
+
+              <div className="space-y-4 text-slate-300 leading-relaxed">
+                <p>
+                  Joshua Kibe is a Project Management Professional and retired U.S. Air Force veteran with more than 20 years of experience leading mission-critical operations, aircraft support, and complex programs in high-risk, time-sensitive environments. At AutonOps, he serves as Chief Financial Officer and one of the company&apos;s first operational pilots, bringing a rare blend of hands-on mission execution and disciplined financial governance.
+                </p>
+                <p>
+                  During his Air Force career, Josh progressed from tactical aircraft maintenance into senior operational and program leadership roles, supporting global missions and modernization efforts across the <strong className="text-white">F-15, F-16, F-22, F-35, and A-10 platforms</strong>. He oversaw worldwide operations and more than <strong className="text-white">$600M in contract portfolios</strong>, ensuring safety, readiness, and reliability under demanding operational conditions.
+                </p>
+                <p>
+                  Following his military service, Josh led multiple defense innovation initiatives at <strong className="text-white">Wright Brothers Institute</strong> in partnership with the Air Force Research Laboratory (AFRL), including the Bomber Supply Chain Initiative and the F-35 Manpower Model. His work focused on translating advanced technology, data analytics, and AI-enabled tools into deployable capabilities that improved operational readiness, cost efficiency, and decision-making.
+                </p>
+                <p>
+                  At AutonOps, Josh is directly involved in flight operations, mission planning, and pilot execution, while also overseeing financial strategy, budgeting, compliance, and risk management. His dual role ensures that AutonOps scales responsibly without compromising safety, operational readiness, or mission effectiveness.
+                </p>
+              </div>
+
+              {/* Key highlights */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-8 border-t border-slate-700">
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-white">20+</p>
+                  <p className="text-sm text-slate-400">Years Experience</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-white">$600M+</p>
+                  <p className="text-sm text-slate-400">Portfolio Managed</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-white">5</p>
+                  <p className="text-sm text-slate-400">Aircraft Platforms</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-white">AFRL</p>
+                  <p className="text-sm text-slate-400">Partner Experience</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* What We Do */}
       <section className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
