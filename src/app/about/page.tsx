@@ -53,11 +53,12 @@ const leadership = [
     image: null,
   },
   {
-    name: 'Joshua Kibe',
+    name: 'Joshua Kibe, PMP',
     role: 'Chief Financial Officer',
     title: 'CFO',
-    bio: '',
-    image: null,
+    bio: 'U.S. Air Force Veteran with 20+ years leading mission-critical operations. FAA Part 107 Pilot. Project Management Professional (PMP), Lean Six Sigma Green Belt, Active Secret Clearance.',
+    image: '/joshua-kibe.jpg',
+    credentials: ['PMP', 'Lean Six Sigma Green Belt', 'USAF Veteran', 'Secret Clearance'],
   },
   {
     name: 'Jaderic Dawson',
@@ -237,13 +238,22 @@ export default function AboutPage() {
                 className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                {/* Photo placeholder */}
+                {/* Photo or placeholder */}
                 <div className="aspect-square bg-gradient-to-br from-slate-200 to-slate-300 relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-24 h-24 rounded-full bg-slate-400/50 flex items-center justify-center">
-                      <span className="text-3xl font-bold text-white/80">{person.title}</span>
+                  {person.image ? (
+                    <Image
+                      src={person.image}
+                      alt={person.name}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-24 h-24 rounded-full bg-slate-400/50 flex items-center justify-center">
+                        <span className="text-3xl font-bold text-white/80">{person.title}</span>
+                      </div>
                     </div>
-                  </div>
+                  )}
                   {/* Hover overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -259,7 +269,9 @@ export default function AboutPage() {
                     {person.name}
                   </h3>
                   <p className="text-sm text-red-600 font-medium mb-2">{person.role}</p>
-                  <p className="text-sm text-slate-600">{person.bio}</p>
+                  {person.bio && (
+                    <p className="text-sm text-slate-600">{person.bio}</p>
+                  )}
                 </div>
               </div>
             ))}

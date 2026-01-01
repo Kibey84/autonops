@@ -45,11 +45,11 @@ export default function Footer() {
                 contact@autonops.com
               </a>
               <a
-                href="tel:+10000000000"
+                href="tel:+19372696420"
                 className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                (000) 000-0000
+                (937) 269-6420
               </a>
               <div className="flex items-center gap-2 text-slate-400">
                 <MapPin className="w-4 h-4" />
