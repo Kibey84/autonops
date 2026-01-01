@@ -125,13 +125,10 @@ export default function ContactPage() {
                   <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wide mb-3">
                     Email
                   </h3>
-                  <a
-                    href="mailto:contact@autonops.com"
-                    className="flex items-center gap-3 text-slate-600 hover:text-red-600 transition-colors"
-                  >
+                  <div className="flex items-center gap-3 text-slate-400">
                     <Mail className="w-5 h-5" />
-                    contact@autonops.com
-                  </a>
+                    <span>Coming soon</span>
+                  </div>
                 </div>
 
                 <div>
@@ -139,11 +136,11 @@ export default function ContactPage() {
                     Phone
                   </h3>
                   <a
-                    href="tel:+10000000000"
+                    href="tel:+19372696420"
                     className="flex items-center gap-3 text-slate-600 hover:text-red-600 transition-colors"
                   >
                     <Phone className="w-5 h-5" />
-                    (000) 000-0000
+                    (937) 269-6420
                   </a>
                 </div>
 

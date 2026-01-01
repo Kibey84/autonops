@@ -37,13 +37,10 @@ export default function Footer() {
               and mission-critical applications. Based in Ohio, serving organizations nationwide.
             </p>
             <div className="flex flex-col gap-2 text-sm">
-              <a
-                href="mailto:contact@autonops.com"
-                className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
-              >
+              <div className="flex items-center gap-2 text-slate-400">
                 <Mail className="w-4 h-4" />
-                contact@autonops.com
-              </a>
+                <span>Email coming soon</span>
+              </div>
               <a
                 href="tel:+19372696420"
                 className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors"

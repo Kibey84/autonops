@@ -132,51 +132,124 @@ export default function OperationsPage() {
         </div>
       </section>
 
-      {/* Phases */}
-      <section className="py-16 sm:py-20">
+      {/* Mission Journey Map */}
+      <section className="py-16 sm:py-24 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-slate-900 mb-4">
-              Our Operational Process
+              Mission Journey
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Four phases ensure consistent, professional execution across all missions.
+              Follow the path from mission request to successful delivery.
             </p>
           </div>
 
-          <div className="space-y-12">
-            {phases.map((phase, index) => (
-              <div
-                key={phase.number}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
-              >
-                {/* Number */}
-                <div className="lg:col-span-2">
-                  <div className="text-6xl sm:text-7xl font-bold text-slate-200">
-                    {phase.number}
-                  </div>
-                </div>
+          {/* Journey Map - Desktop */}
+          <div className="hidden lg:block relative">
+            {/* Main connecting line */}
+            <div className="absolute top-32 left-0 right-0 h-1 bg-gradient-to-r from-red-200 via-red-400 to-red-600 rounded-full" />
 
-                {/* Content */}
-                <div className="lg:col-span-10 bg-white border border-slate-200 rounded-lg p-6 sm:p-8">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
-                      <phase.icon className="w-6 h-6 text-red-600" />
+            {/* Animated pulse on line */}
+            <div className="absolute top-32 left-0 right-0 h-1 overflow-hidden rounded-full">
+              <div className="h-full w-32 bg-gradient-to-r from-transparent via-white to-transparent animate-pulse opacity-60"
+                   style={{ animation: 'shimmer 3s linear infinite' }} />
+            </div>
+
+            <div className="grid grid-cols-4 gap-8 relative">
+              {phases.map((phase, index) => (
+                <div key={phase.number} className="relative group">
+                  {/* Connector node */}
+                  <div className="absolute top-[7.5rem] left-1/2 -translate-x-1/2 z-10">
+                    <div className="w-8 h-8 rounded-full bg-white border-4 border-red-500 group-hover:scale-125 transition-transform duration-300 shadow-lg" />
+                    <div className="absolute inset-0 w-8 h-8 rounded-full bg-red-500 animate-ping opacity-20" />
+                  </div>
+
+                  {/* Phase number floating above */}
+                  <div className="text-center mb-6">
+                    <span className="inline-block px-4 py-2 bg-red-600 text-white text-sm font-bold rounded-full shadow-lg group-hover:bg-red-700 transition-colors">
+                      PHASE {phase.number}
+                    </span>
+                  </div>
+
+                  {/* Icon and title */}
+                  <div className="text-center mb-20">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-xl border border-slate-200 mb-4 group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300">
+                      <phase.icon className="w-8 h-8 text-red-600" />
                     </div>
-                    <h3 className="text-2xl font-bold text-slate-900">{phase.title}</h3>
+                    <h3 className="text-xl font-bold text-slate-900">{phase.title}</h3>
                   </div>
-                  <p className="text-lg text-slate-600 mb-6">{phase.description}</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {phase.details.map((detail) => (
-                      <div key={detail} className="flex items-start gap-3">
-                        <div className="w-1.5 h-1.5 bg-red-600 rounded-full mt-2 flex-shrink-0" />
-                        <span className="text-slate-700">{detail}</span>
-                      </div>
-                    ))}
+
+                  {/* Content card below the line */}
+                  <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200 hover:shadow-xl hover:border-red-200 transition-all duration-300 group-hover:-translate-y-1">
+                    <p className="text-slate-600 mb-4 text-sm">{phase.description}</p>
+                    <ul className="space-y-2">
+                      {phase.details.slice(0, 3).map((detail) => (
+                        <li key={detail} className="flex items-start gap-2 text-sm">
+                          <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-slate-700">{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    {phase.details.length > 3 && (
+                      <p className="text-xs text-slate-400 mt-3">+{phase.details.length - 3} more steps</p>
+                    )}
                   </div>
+
+                  {/* Arrow to next phase */}
+                  {index < phases.length - 1 && (
+                    <div className="absolute top-[7.5rem] -right-4 z-20 text-red-400">
+                      <ArrowRight className="w-6 h-6" />
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Journey Map - Mobile/Tablet */}
+          <div className="lg:hidden relative">
+            {/* Vertical connecting line */}
+            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-red-200 via-red-400 to-red-600 rounded-full" />
+
+            <div className="space-y-8">
+              {phases.map((phase, index) => (
+                <div key={phase.number} className="relative flex gap-6">
+                  {/* Node on the line */}
+                  <div className="flex-shrink-0 relative z-10">
+                    <div className="w-16 h-16 rounded-2xl bg-white shadow-xl border border-slate-200 flex items-center justify-center">
+                      <phase.icon className="w-7 h-7 text-red-600" />
+                    </div>
+                    {/* Phase number badge */}
+                    <div className="absolute -top-2 -right-2 w-7 h-7 bg-red-600 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg">
+                      {phase.number}
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 bg-white rounded-2xl p-5 shadow-lg border border-slate-200">
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">{phase.title}</h3>
+                    <p className="text-slate-600 mb-4 text-sm">{phase.description}</p>
+                    <ul className="space-y-2">
+                      {phase.details.slice(0, 3).map((detail) => (
+                        <li key={detail} className="flex items-start gap-2 text-sm">
+                          <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-slate-700">{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Arrow down to next */}
+                  {index < phases.length - 1 && (
+                    <div className="absolute left-[1.4rem] bottom-[-1rem] text-red-400">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
