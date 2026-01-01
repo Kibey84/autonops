@@ -265,22 +265,22 @@ export default function Home() {
         </div>
 
         {/* Decorative element */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-50 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-50 dark:from-slate-900 to-transparent" />
       </section>
 
       {/* Proof Points */}
-      <section className="py-16 sm:py-24 bg-slate-50 relative overflow-hidden">
+      <section className="py-16 sm:py-24 bg-slate-50 dark:bg-slate-900 relative overflow-hidden">
         {/* Subtle animated background */}
         <div className="absolute inset-0 opacity-30">
-          <div className="gradient-orb w-[400px] h-[400px] bg-red-200 top-[-100px] right-[-100px]" />
+          <div className="gradient-orb w-[400px] h-[400px] bg-red-200 dark:bg-red-900 top-[-100px] right-[-100px]" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
               <span className="text-shimmer-slow">Operational Excellence</span>
             </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto text-lg">
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">
               Built on discipline, training, and proven processes.
             </p>
           </div>
@@ -289,15 +289,15 @@ export default function Home() {
               {proofPoints.map((point, index) => (
                 <TiltCard
                   key={point.title}
-                  className="group bg-white p-6 rounded-xl border border-slate-200 hover:border-red-200 hover:shadow-xl transition-all duration-300"
+                  className="group bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-red-200 dark:hover:border-red-500/50 hover:shadow-xl transition-all duration-300"
                   tiltAmount={6}
                   glareEnabled={true}
                 >
-                  <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 group-hover:scale-110 transition-all duration-300">
+                  <div className="w-12 h-12 bg-red-50 dark:bg-red-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 dark:group-hover:bg-red-900/50 group-hover:scale-110 transition-all duration-300">
                     <point.icon className="w-6 h-6 text-red-600" />
                   </div>
-                  <h3 className="font-semibold text-slate-900 mb-2">{point.title}</h3>
-                  <p className="text-sm text-slate-600">{point.description}</p>
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">{point.title}</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">{point.description}</p>
                 </TiltCard>
               ))}
             </div>
@@ -306,12 +306,12 @@ export default function Home() {
       </section>
 
       {/* Services Snapshot */}
-      <section className="py-16 sm:py-24 relative">
+      <section className="py-16 sm:py-24 relative bg-white dark:bg-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-12">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-2">Our Services</h2>
-              <p className="text-slate-600 text-lg">
+              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-2">Our Services</h2>
+              <p className="text-slate-600 dark:text-slate-400 text-lg">
                 Complete drone operations capabilities for your mission requirements.
               </p>
             </div>
@@ -332,18 +332,18 @@ export default function Home() {
                   className="group"
                 >
                   <TiltCard
-                    className="relative p-8 bg-white border border-slate-200 rounded-2xl hover:border-red-200 hover:shadow-xl transition-all duration-300 overflow-hidden h-full"
+                    className="relative p-8 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl hover:border-red-200 dark:hover:border-red-500/50 hover:shadow-xl transition-all duration-300 overflow-hidden h-full"
                     tiltAmount={5}
                   >
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-50 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-50 dark:from-red-900/30 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="relative">
-                      <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 transition-colors">
+                      <div className="w-12 h-12 bg-red-50 dark:bg-red-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-100 dark:group-hover:bg-red-900/50 transition-colors">
                         <service.icon className="w-6 h-6 text-red-600" />
                       </div>
-                      <h3 className="font-semibold text-xl text-slate-900 mb-3 group-hover:text-red-600 transition-colors">
+                      <h3 className="font-semibold text-xl text-slate-900 dark:text-white mb-3 group-hover:text-red-600 transition-colors">
                         {service.title}
                       </h3>
-                      <p className="text-slate-600">{service.description}</p>
+                      <p className="text-slate-600 dark:text-slate-400">{service.description}</p>
                       <div className="mt-4 inline-flex items-center text-red-600 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
                         Learn more
                         <ArrowRight className="ml-2 w-4 h-4" />
@@ -413,16 +413,16 @@ export default function Home() {
       </section>
 
       {/* Use Cases */}
-      <section className="py-16 sm:py-24 relative overflow-hidden">
+      <section className="py-16 sm:py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-900">
         <div className="absolute inset-0 opacity-20">
-          <div className="gradient-orb w-[300px] h-[300px] bg-orange-300 top-0 left-0" />
-          <div className="gradient-orb w-[300px] h-[300px] bg-blue-300 bottom-0 right-0" style={{ animationDelay: '5s' }} />
+          <div className="gradient-orb w-[300px] h-[300px] bg-orange-300 dark:bg-orange-900 top-0 left-0" />
+          <div className="gradient-orb w-[300px] h-[300px] bg-blue-300 dark:bg-blue-900 bottom-0 right-0" style={{ animationDelay: '5s' }} />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Use Cases</h2>
-            <p className="text-slate-600 max-w-2xl mx-auto text-lg">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">Use Cases</h2>
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">
               Supporting critical operations across emergency services and beyond.
             </p>
           </div>
@@ -430,22 +430,22 @@ export default function Home() {
             {useCases.map((useCase, index) => (
               <TiltCard
                 key={useCase.title}
-                className="group relative p-6 bg-white border border-slate-200 rounded-2xl hover:shadow-xl transition-all duration-300 overflow-hidden"
+                className="group relative p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl hover:shadow-xl transition-all duration-300 overflow-hidden"
                 tiltAmount={10}
               >
                 <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${useCase.color} opacity-10 rounded-bl-full group-hover:opacity-20 transition-opacity`} />
                 <div className={`w-14 h-14 bg-gradient-to-br ${useCase.color} rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform`}>
                   <useCase.icon className="w-7 h-7 text-white" />
                 </div>
-                <h3 className="font-semibold text-lg text-slate-900 mb-2">{useCase.title}</h3>
-                <p className="text-sm text-slate-600">{useCase.description}</p>
+                <h3 className="font-semibold text-lg text-slate-900 dark:text-white mb-2">{useCase.title}</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">{useCase.description}</p>
               </TiltCard>
             ))}
           </div>
           <div className="text-center mt-12">
             <Link
               href="/industries"
-              className="group inline-flex items-center px-6 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 transition-colors"
+              className="group inline-flex items-center px-6 py-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
             >
               View all industries and use cases
               <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />

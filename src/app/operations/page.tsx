@@ -133,13 +133,13 @@ export default function OperationsPage() {
       </section>
 
       {/* Mission Journey Map */}
-      <section className="py-16 sm:py-24 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
+      <section className="py-16 sm:py-24 bg-gradient-to-b from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
               Mission Journey
             </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
               Follow the path from mission request to successful delivery.
             </p>
           </div>
@@ -147,11 +147,11 @@ export default function OperationsPage() {
           {/* Journey Map - Desktop */}
           <div className="hidden lg:block relative">
             {/* Main connecting line */}
-            <div className="absolute top-32 left-0 right-0 h-1 bg-gradient-to-r from-red-200 via-red-400 to-red-600 rounded-full" />
+            <div className="absolute top-32 left-0 right-0 h-1 bg-gradient-to-r from-red-300 via-red-500 to-red-600 dark:from-red-400 dark:via-red-500 dark:to-red-600 rounded-full" />
 
             {/* Animated pulse on line */}
             <div className="absolute top-32 left-0 right-0 h-1 overflow-hidden rounded-full">
-              <div className="h-full w-32 bg-gradient-to-r from-transparent via-white to-transparent animate-pulse opacity-60"
+              <div className="h-full w-32 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-pulse opacity-60"
                    style={{ animation: 'shimmer 3s linear infinite' }} />
             </div>
 
@@ -160,7 +160,7 @@ export default function OperationsPage() {
                 <div key={phase.number} className="relative group">
                   {/* Connector node */}
                   <div className="absolute top-[7.5rem] left-1/2 -translate-x-1/2 z-10">
-                    <div className="w-8 h-8 rounded-full bg-white border-4 border-red-500 group-hover:scale-125 transition-transform duration-300 shadow-lg" />
+                    <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border-4 border-red-500 group-hover:scale-125 transition-transform duration-300 shadow-lg" />
                     <div className="absolute inset-0 w-8 h-8 rounded-full bg-red-500 animate-ping opacity-20" />
                   </div>
 
@@ -173,20 +173,20 @@ export default function OperationsPage() {
 
                   {/* Icon and title */}
                   <div className="text-center mb-20">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-xl border border-slate-200 mb-4 group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 mb-4 group-hover:shadow-2xl group-hover:-translate-y-1 transition-all duration-300">
                       <phase.icon className="w-8 h-8 text-red-600" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900">{phase.title}</h3>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">{phase.title}</h3>
                   </div>
 
                   {/* Content card below the line */}
-                  <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200 hover:shadow-xl hover:border-red-200 transition-all duration-300 group-hover:-translate-y-1">
-                    <p className="text-slate-600 mb-4 text-sm">{phase.description}</p>
+                  <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-200 dark:border-slate-700 hover:shadow-xl hover:border-red-200 dark:hover:border-red-500/50 transition-all duration-300 group-hover:-translate-y-1">
+                    <p className="text-slate-600 dark:text-slate-400 mb-4 text-sm">{phase.description}</p>
                     <ul className="space-y-2">
                       {phase.details.slice(0, 3).map((detail) => (
                         <li key={detail} className="flex items-start gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700">{detail}</span>
+                          <span className="text-slate-700 dark:text-slate-300">{detail}</span>
                         </li>
                       ))}
                     </ul>
@@ -209,14 +209,14 @@ export default function OperationsPage() {
           {/* Journey Map - Mobile/Tablet */}
           <div className="lg:hidden relative">
             {/* Vertical connecting line */}
-            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-red-200 via-red-400 to-red-600 rounded-full" />
+            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-red-300 via-red-500 to-red-600 rounded-full" />
 
             <div className="space-y-8">
               {phases.map((phase, index) => (
                 <div key={phase.number} className="relative flex gap-6">
                   {/* Node on the line */}
                   <div className="flex-shrink-0 relative z-10">
-                    <div className="w-16 h-16 rounded-2xl bg-white shadow-xl border border-slate-200 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-2xl bg-white dark:bg-slate-800 shadow-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center">
                       <phase.icon className="w-7 h-7 text-red-600" />
                     </div>
                     {/* Phase number badge */}
@@ -226,14 +226,14 @@ export default function OperationsPage() {
                   </div>
 
                   {/* Content */}
-                  <div className="flex-1 bg-white rounded-2xl p-5 shadow-lg border border-slate-200">
-                    <h3 className="text-lg font-bold text-slate-900 mb-2">{phase.title}</h3>
-                    <p className="text-slate-600 mb-4 text-sm">{phase.description}</p>
+                  <div className="flex-1 bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-lg border border-slate-200 dark:border-slate-700">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{phase.title}</h3>
+                    <p className="text-slate-600 dark:text-slate-400 mb-4 text-sm">{phase.description}</p>
                     <ul className="space-y-2">
                       {phase.details.slice(0, 3).map((detail) => (
                         <li key={detail} className="flex items-start gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700">{detail}</span>
+                          <span className="text-slate-700 dark:text-slate-300">{detail}</span>
                         </li>
                       ))}
                     </ul>
@@ -255,65 +255,65 @@ export default function OperationsPage() {
       </section>
 
       {/* Remote Operations Model */}
-      <section className="py-16 sm:py-20 bg-slate-50">
+      <section className="py-16 sm:py-20 bg-slate-100 dark:bg-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
               Remote Operations Model
             </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
               Nationwide coverage from our Ohio operations center.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-lg text-slate-600 mb-8">
+              <p className="text-lg text-slate-600 dark:text-slate-400 mb-8">
                 Our unique operational model positions aircraft at client locations while
                 pilots operate remotely from our Ohio headquarters. This enables rapid
                 response without requiring on-site personnel.
               </p>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
                     <MapPin className="w-6 h-6 text-red-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900 mb-1">Pre-Positioned Aircraft</h3>
-                    <p className="text-slate-600">
+                    <h3 className="font-semibold text-slate-900 dark:text-white mb-1">Pre-Positioned Aircraft</h3>
+                    <p className="text-slate-600 dark:text-slate-400">
                       Aircraft stationed at client fire stations and facilities for immediate deployment when incidents occur.
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Wifi className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900 mb-1">Satellite-Linked Control</h3>
-                    <p className="text-slate-600">
+                    <h3 className="font-semibold text-slate-900 dark:text-white mb-1">Satellite-Linked Control</h3>
+                    <p className="text-slate-600 dark:text-slate-400">
                       Starlink connectivity enables reliable remote piloting from Ohio to aircraft anywhere in the country.
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Clock className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900 mb-1">24/7 Availability</h3>
-                    <p className="text-slate-600">
+                    <h3 className="font-semibold text-slate-900 dark:text-white mb-1">24/7 Availability</h3>
+                    <p className="text-slate-600 dark:text-slate-400">
                       Centralized operations enable round-the-clock mission capability without staffing multiple locations.
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Users className="w-6 h-6 text-purple-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900 mb-1">Scalable Coverage</h3>
-                    <p className="text-slate-600">
+                    <h3 className="font-semibold text-slate-900 dark:text-white mb-1">Scalable Coverage</h3>
+                    <p className="text-slate-600 dark:text-slate-400">
                       One pilot can support multiple regions, scaling efficiently as client base grows.
                     </p>
                   </div>
