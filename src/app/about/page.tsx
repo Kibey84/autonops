@@ -52,11 +52,11 @@ const values = [
 
 const leadership = [
   {
-    name: 'Robert Lee',
+    name: 'Bob Lee',
     role: 'Chief Executive Officer',
     title: 'CEO',
-    bio: '',
-    image: null,
+    bio: 'Experienced operational leader with a background in aviation operations, program leadership, and technology-driven mission execution.',
+    image: '/bob-lee.jpg',
   },
   {
     name: 'Joshua Kibe, PMP',
@@ -335,6 +335,96 @@ export default function AboutPage() {
                 </div>
               </TiltCard>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Team Member - Bob Lee */}
+      <section className="py-16 sm:py-20 bg-white dark:bg-slate-900 relative overflow-hidden">
+        {/* Background orbs */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[500px] h-[500px] bg-amber-200 dark:bg-amber-900 top-[-100px] left-[20%]" />
+          <div className="gradient-orb w-[400px] h-[400px] bg-red-200 dark:bg-red-900 bottom-[-100px] right-[10%]" style={{ animationDelay: '4s' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+            {/* Photo */}
+            <div className="lg:col-span-1">
+              <TiltCard className="relative" tiltAmount={5}>
+                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-700">
+                  <Image
+                    src="/bob-lee.jpg"
+                    alt="Bob Lee - Chief Executive Officer"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                {/* Credentials badge */}
+                <div className="absolute -bottom-4 -right-4 bg-white dark:bg-slate-800 rounded-xl p-3 shadow-xl border border-slate-200 dark:border-slate-700 float-slow">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-amber-100 dark:bg-amber-900/50 rounded-lg flex items-center justify-center">
+                      <Target className="w-4 h-4 text-amber-600" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">Role</p>
+                      <p className="text-sm font-semibold text-slate-900 dark:text-white">CEO</p>
+                    </div>
+                  </div>
+                </div>
+              </TiltCard>
+              {/* Credential tags */}
+              <div className="flex flex-wrap gap-2 mt-8">
+                <span className="px-3 py-1 bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 text-sm rounded-full border border-amber-200 dark:border-amber-800">Aviation Ops</span>
+                <span className="px-3 py-1 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 text-sm rounded-full border border-red-200 dark:border-red-800">Program Leadership</span>
+                <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-sm rounded-full border border-blue-200 dark:border-blue-800">Tech Execution</span>
+              </div>
+            </div>
+
+            {/* Bio */}
+            <div className="lg:col-span-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-600 dark:text-amber-400 text-sm mb-4">
+                <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
+                Featured Team Member
+              </div>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Bob Lee</h2>
+              <p className="text-amber-600 dark:text-amber-400 font-medium mb-6">Founder | Chief Executive Officer</p>
+
+              <div className="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p>
+                  Bob Lee is an experienced operational leader with a background spanning <strong className="text-slate-900 dark:text-white">aviation operations, program leadership, and technology-driven mission execution</strong>. He has led teams across complex, high-accountability environments where safety, precision, and execution speed are critical. His career includes managing multidisciplinary teams, overseeing operational readiness, and guiding organizations through growth, transition, and change.
+                </p>
+                <p>
+                  Bob brings deep experience in <strong className="text-slate-900 dark:text-white">coordinating people, platforms, and processes</strong> to deliver outcomes under real-world constraints. He has a strong track record of turning emerging technologies into operationally viable capabilities, with a focus on reliability, risk management, and continuous improvement. His leadership style emphasizes clarity of roles, disciplined execution, and building systems that scale.
+                </p>
+                <p>
+                  As Chief Executive Officer of AutonOps, Bob is responsible for <strong className="text-slate-900 dark:text-white">overall operational direction, governance, and mission alignment</strong>. He ensures flight operations, mission control, and logistics are structured to support rapid response aerial services while maintaining compliance, safety, and performance standards. Bob works closely with partners and stakeholders to ensure AutonOps delivers dependable capability where time, access, and situational awareness matter most.
+                </p>
+                <p>
+                  Bob is driven by the challenge of <strong className="text-slate-900 dark:text-white">bridging innovation and operations</strong>, ensuring advanced aerial and AI-enabled systems deliver real impact in emergency response and high-consequence scenarios.
+                </p>
+              </div>
+
+              {/* Key highlights */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-8 border-t border-slate-200 dark:border-slate-700">
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white">CEO</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Leadership</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white">Aviation</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Operations</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white">Tech</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Execution</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white">Scale</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Systems</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
