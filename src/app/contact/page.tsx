@@ -172,10 +172,13 @@ export default function ContactPage() {
                   <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">
                     Email
                   </h3>
-                  <div className="flex items-center gap-3 text-slate-400">
+                  <a
+                    href="mailto:bob.lee@autonops.us"
+                    className="flex items-center gap-3 text-slate-600 dark:text-slate-300 hover:text-red-600 transition-colors"
+                  >
                     <Mail className="w-5 h-5" />
-                    <span>Coming soon</span>
-                  </div>
+                    bob.lee@autonops.us
+                  </a>
                 </TiltCard>
 
                 <TiltCard className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700" tiltAmount={8}>
