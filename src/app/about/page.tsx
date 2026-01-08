@@ -388,7 +388,7 @@ export default function AboutPage() {
                 Featured Team Member
               </div>
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Bob Lee</h2>
-              <p className="text-amber-600 dark:text-amber-400 font-medium mb-6">Founder | Chief Executive Officer</p>
+              <p className="text-amber-600 dark:text-amber-400 font-medium mb-6">Co-Founder | Chief Executive Officer</p>
 
               <div className="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed">
                 <p>
