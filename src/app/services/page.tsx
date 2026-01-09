@@ -26,6 +26,7 @@ const services = [
   {
     id: 'flight-operations',
     icon: Plane,
+    image: '/flight-operations.png',
     title: 'Flight Operations',
     description:
       'Complete drone flight operations with professional pilots and mission controllers.',
@@ -40,6 +41,7 @@ const services = [
   {
     id: 'mission-planning',
     icon: ClipboardCheck,
+    image: '/mission-planning.png',
     title: 'Mission Planning',
     description:
       'Comprehensive pre-mission planning and risk assessment for successful outcomes.',
@@ -54,6 +56,7 @@ const services = [
   {
     id: 'emergency-response',
     icon: Zap,
+    image: '/emergency-response.png',
     title: 'Emergency Response',
     description:
       'Rapid deployment capabilities for time-critical emergency situations.',
@@ -68,6 +71,7 @@ const services = [
   {
     id: 'reconnaissance',
     icon: Eye,
+    image: '/reconnaissance.png',
     title: 'Reconnaissance',
     description:
       'Aerial surveillance and intelligence gathering for tactical decision-making.',
@@ -82,6 +86,7 @@ const services = [
   {
     id: 'equipment',
     icon: Wrench,
+    image: '/equipment-logistics.png',
     title: 'Equipment & Logistics',
     description:
       'We bring the aircraft, sensors, and support equipment your mission requires.',
@@ -96,6 +101,7 @@ const services = [
   {
     id: 'data-handling',
     icon: Database,
+    image: '/data-handling.png',
     title: 'Data Handling',
     description:
       'Secure capture, transmission, and delivery of mission data.',
@@ -286,28 +292,28 @@ export default function ServicesPage() {
                   </ul>
                 </div>
                 <TiltCard
-                  className={`bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 rounded-2xl aspect-video flex items-center justify-center relative overflow-hidden ${
+                  className={`rounded-2xl aspect-video relative overflow-hidden shadow-lg ${
                     index % 2 === 1 ? 'lg:order-1' : ''
                   }`}
                   tiltAmount={5}
                 >
-                  {/* Animated background pattern */}
-                  <div className="absolute inset-0 opacity-10">
-                    <div className="absolute inset-0" style={{
-                      backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)',
-                      backgroundSize: '24px 24px'
-                    }} />
-                  </div>
-
-                  {/* Icon with glow */}
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-red-500 blur-3xl opacity-20" />
-                    <service.icon className="relative w-24 h-24 text-slate-400 dark:text-slate-500" />
-                  </div>
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className="object-cover"
+                  />
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
 
                   {/* Corner accent */}
                   <div className="absolute top-4 right-4">
                     <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                  </div>
+
+                  {/* Service icon badge */}
+                  <div className="absolute bottom-4 left-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur rounded-lg p-2">
+                    <service.icon className="w-6 h-6 text-red-600" />
                   </div>
                 </TiltCard>
               </div>
