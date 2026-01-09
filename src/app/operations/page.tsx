@@ -462,14 +462,13 @@ export default function OperationsPage() {
                 </li>
               </ul>
             </div>
-            <div className="relative rounded-2xl overflow-hidden shadow-lg aspect-square">
+            <div className="relative rounded-2xl overflow-hidden shadow-lg bg-slate-100 dark:bg-slate-800 aspect-square flex items-center justify-center p-4">
               <Image
                 src="/how-we-operate.png"
                 alt="How We Operate - Mission Control"
                 fill
-                className="object-cover"
+                className="object-contain p-4"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent" />
             </div>
           </div>
         </div>
