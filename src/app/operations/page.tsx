@@ -462,8 +462,14 @@ export default function OperationsPage() {
                 </li>
               </ul>
             </div>
-            <div className="bg-slate-100 rounded-lg aspect-square flex items-center justify-center">
-              <ClipboardList className="w-32 h-32 text-slate-300" />
+            <div className="relative rounded-2xl overflow-hidden shadow-lg aspect-square">
+              <Image
+                src="/how-we-operate.png"
+                alt="How We Operate - Mission Control"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent" />
             </div>
           </div>
         </div>
