@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   ClipboardList,
   Truck,
@@ -13,6 +14,7 @@ import {
   MapPin,
   Users,
   Clock,
+  Target,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -117,11 +119,49 @@ export default function OperationsPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-slate-900 text-white py-20 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-slate-900 text-white py-20 sm:py-28 overflow-hidden">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/how-we-operate.png"
+            alt="AutonOps Operations"
+            fill
+            className="object-cover opacity-20"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/95 to-slate-900/80" />
+        </div>
+
+        {/* Animated gradient orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="gradient-orb w-[500px] h-[500px] bg-red-500/20 top-[-150px] right-[-100px]" />
+          <div className="gradient-orb w-[400px] h-[400px] bg-blue-500/20 bottom-[-100px] left-[-50px]" style={{ animationDelay: '5s' }} />
+        </div>
+
+        {/* Floating elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-20 right-[15%] float-slow hidden lg:block">
+            <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-xl px-4 py-2 flex items-center gap-2">
+              <Target className="w-4 h-4 text-red-400" />
+              <span className="text-sm text-slate-300">Mission Ready</span>
+            </div>
+          </div>
+          <div className="absolute bottom-24 right-[25%] float-medium hidden lg:block" style={{ animationDelay: '2s' }}>
+            <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-xl px-4 py-2 flex items-center gap-2">
+              <Shield className="w-4 h-4 text-green-400" />
+              <span className="text-sm text-slate-300">Safety First</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
-              How We Operate
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full text-red-400 text-sm mb-6">
+              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+              Structured Process
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+              How We <span className="text-shimmer">Operate</span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-300">
               A structured, disciplined approach to every mission. From initial planning
