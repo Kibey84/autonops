@@ -74,11 +74,11 @@ const leadership = [
     image: '/jaderic-dawson.jpg',
   },
   {
-    name: 'Matthew Sunday',
+    name: 'Matthew B. Sunday',
     role: 'Chief Operating Officer',
     title: 'COO',
-    bio: '',
-    image: null,
+    bio: 'USMC Sergeant (Ret.), Fire Captain (Ret.) with 30+ years in military, emergency response, and engineering leadership.',
+    image: '/matt-sunday.png',
   },
 ];
 
@@ -608,6 +608,96 @@ export default function AboutPage() {
                 <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 text-sm rounded-full border border-purple-200 dark:border-purple-800">Cornell AI/ML</span>
                 <span className="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 text-sm rounded-full border border-green-200 dark:border-green-800">FAA Part 107</span>
                 <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 text-sm rounded-full border border-orange-200 dark:border-orange-800">GraphRAG</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Team Member - Matthew Sunday */}
+      <section className="py-16 sm:py-20 bg-slate-900 text-white relative overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 animated-gradient opacity-20" />
+
+        {/* Gradient orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="gradient-orb w-[500px] h-[500px] bg-green-500/20 top-[-100px] left-[20%]" />
+          <div className="gradient-orb w-[400px] h-[400px] bg-orange-500/20 bottom-[-100px] right-[10%]" style={{ animationDelay: '4s' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+            {/* Photo */}
+            <div className="lg:col-span-1">
+              <TiltCard className="relative" tiltAmount={5}>
+                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-slate-700">
+                  <Image
+                    src="/matt-sunday.png"
+                    alt="Matthew B. Sunday - Chief Operating Officer"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                {/* Credentials badge */}
+                <div className="absolute -bottom-4 -right-4 bg-white rounded-xl p-3 shadow-xl float-slow">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                      <Shield className="w-4 h-4 text-green-600" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-500">Service</p>
+                      <p className="text-sm font-semibold text-slate-900">30+ Years</p>
+                    </div>
+                  </div>
+                </div>
+              </TiltCard>
+              {/* Credential tags */}
+              <div className="flex flex-wrap gap-2 mt-8">
+                <span className="px-3 py-1 bg-green-500/20 text-green-300 text-sm rounded-full border border-green-500/30">USMC Veteran</span>
+                <span className="px-3 py-1 bg-orange-500/20 text-orange-300 text-sm rounded-full border border-orange-500/30">Fire Captain (Ret.)</span>
+                <span className="px-3 py-1 bg-blue-500/20 text-blue-300 text-sm rounded-full border border-blue-500/30">Emergency Response</span>
+              </div>
+            </div>
+
+            {/* Bio */}
+            <div className="lg:col-span-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full text-green-400 text-sm mb-4">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                Featured Team Member
+              </div>
+              <h2 className="text-3xl font-bold mb-2">Matthew B. Sunday</h2>
+              <p className="text-green-400 font-medium mb-6">Co-Founder | Chief Operating Officer</p>
+
+              <div className="space-y-4 text-slate-300 leading-relaxed">
+                <p>
+                  Matthew B. Sunday brings more than <strong className="text-white">30 years of leadership and operational experience</strong> across military service, emergency response, and advanced engineering to his role as Chief Operating Officer at AutonOps. His career spans the <strong className="text-white">United States Marine Corps, law enforcement, firefighting, and emergency medical services</strong>, where he has consistently led teams operating in high-risk, high-consequence environments with a focus on precision, safety, and mission success.
+                </p>
+                <p>
+                  A <strong className="text-white">retired Fire Captain and former Sergeant of Marines</strong>, Matthew has commanded multidisciplinary teams during complex emergency operations and technical initiatives alike. His firsthand experience as a first responder provides AutonOps with a grounded, end-user perspective, ensuring that operational decisions, workflows, and technologies are built to perform reliably when conditions are most demanding.
+                </p>
+                <p>
+                  In addition to his public service, Matthew is the <strong className="text-white">Founder and CEO of The Science and Engineering Corporation</strong>, where he leads initiatives bridging advanced technology with real-world operational needs.
+                </p>
+              </div>
+
+              {/* Key highlights */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-8 border-t border-slate-700">
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-shimmer">30+</p>
+                  <p className="text-sm text-slate-400">Years Experience</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-shimmer">USMC</p>
+                  <p className="text-sm text-slate-400">Sergeant (Ret.)</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-shimmer">Fire</p>
+                  <p className="text-sm text-slate-400">Captain (Ret.)</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-shimmer">CEO</p>
+                  <p className="text-sm text-slate-400">S&E Corp</p>
+                </div>
               </div>
             </div>
           </div>
