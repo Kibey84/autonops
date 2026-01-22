@@ -77,7 +77,7 @@ const leadership = [
     name: 'Matthew B. Sunday',
     role: 'Chief Operating Officer',
     title: 'COO',
-    bio: 'USMC Sergeant (Ret.), Fire Captain (Ret.) with 30+ years in military, emergency response, and engineering leadership.',
+    bio: 'USMC Sergeant (Ret.), Fire Captain (Ret.) with 30+ years of leadership and operational experience.',
     image: '/matt-sunday.png',
   },
 ];
