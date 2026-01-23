@@ -384,7 +384,7 @@ export default function TechnologyPage() {
               {/* Aircraft Visual */}
               <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center min-h-[300px]">
                 <Image
-                  src="/aircraft.jpg"
+                  src="/hoverjet.png"
                   alt="AutonOps VTOL Aircraft"
                   fill
                   className="object-cover opacity-90"

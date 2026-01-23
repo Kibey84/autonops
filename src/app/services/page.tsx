@@ -153,7 +153,7 @@ export default function ServicesPage() {
       <section className="relative bg-slate-900 text-white py-20 sm:py-28 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/aircraft-fire.jpg"
+            src="/hoverjet-dropping.png"
             alt="Aircraft performing fire suppression"
             fill
             className="object-cover opacity-30"

@@ -234,7 +234,7 @@ export default function Home() {
               <TiltCard className="relative" tiltAmount={8}>
                 <div className="rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50">
                   <Image
-                    src="/aircraft.jpg"
+                    src="/hoverjet.png"
                     alt="AutonOps VTOL Aircraft"
                     width={600}
                     height={400}

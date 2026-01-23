@@ -502,8 +502,8 @@ export default function IndustriesPage() {
             </div>
             <TiltCard className="relative rounded-2xl overflow-hidden" tiltAmount={5}>
               <Image
-                src="/aircraft-fire.jpg"
-                alt="Aircraft performing fire response"
+                src="/hoverjet-dropping.png"
+                alt="AutonOps drone operations"
                 width={600}
                 height={400}
                 className="w-full h-auto"
