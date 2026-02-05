@@ -88,6 +88,14 @@ const faqs = [
     color: 'green',
     questions: [
       {
+        q: 'Who has authority during a mission?',
+        a: 'The Incident Commander retains full authority over all tactical decisions. AutonOps provides aerial intelligence and situational awareness, but we do not direct ground operations or make tactical decisions. All flight adjustments are made at the request of the IC, and our operators follow IC directives throughout the mission.',
+      },
+      {
+        q: 'Are your drones fully autonomous?',
+        a: 'No. All AutonOps missions are human-supervised. While our aircraft use AI-assisted analysis to identify hotspots and targets of interest, every flight is controlled by a certified pilot. We never take autonomous tactical action that affects ground operations. The AI supports decision-making; humans remain in control.',
+      },
+      {
         q: 'How do you handle FAA compliance?',
         a: 'The M2 platform integrates with FAA systems for automated flight plan filing and airspace clearance. We handle all regulatory requirements so you can focus on your mission objectives.',
       },

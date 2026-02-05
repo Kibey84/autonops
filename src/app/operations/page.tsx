@@ -411,6 +411,66 @@ export default function OperationsPage() {
         </div>
       </section>
 
+      {/* Commander-Directed Response */}
+      <section className="py-16 sm:py-20 bg-slate-50 dark:bg-slate-800 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[400px] h-[400px] bg-red-200 dark:bg-red-900 top-[-100px] right-[-100px]" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-slate-800 dark:bg-slate-900 rounded-2xl p-8 md:p-12 border border-slate-700 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-red-500/20 to-transparent rounded-bl-full" />
+            <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full text-red-400 text-sm mb-6">
+                  <Shield className="w-4 h-4" />
+                  Command Authority
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                  Commander-Directed Response
+                </h2>
+                <p className="text-slate-300 text-lg mb-6">
+                  Every AutonOps mission operates under the direction of the Incident Commander. We provide aerial intelligence and situational awareness - the IC makes all tactical decisions.
+                </p>
+                <ul className="space-y-4">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-300">All flight adjustments requested through IC</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-300">Real-time video and sensor feeds to command post</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-300">No autonomous tactical action without IC approval</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-300">Integrates with existing incident command structure</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="relative">
+                <Image
+                  src="/iPhoneiPadWildland-2.webp"
+                  alt="Incident Command receiving live drone feeds"
+                  width={600}
+                  height={400}
+                  className="rounded-xl shadow-2xl"
+                />
+                <div className="absolute -bottom-4 -left-4 bg-white dark:bg-slate-800 rounded-xl p-3 shadow-lg border border-slate-200 dark:border-slate-700">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Live to IC</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Planning Section */}
       <section id="planning" className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

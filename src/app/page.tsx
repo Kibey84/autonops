@@ -19,6 +19,14 @@ import {
   MapPin,
   Wifi,
   Zap,
+  Phone,
+  FileText,
+  Video,
+  ClipboardList,
+  CheckCircle,
+  Cpu,
+  PlayCircle,
+  BarChart3,
 } from 'lucide-react';
 import ScrollAnimation from '@/components/ScrollAnimation';
 import MouseGlow from '@/components/MouseGlow';
@@ -136,6 +144,57 @@ const useCases = [
     title: 'Disaster Assessment',
     description: 'Rapid damage evaluation and infrastructure inspection post-event.',
     color: 'from-amber-500 to-orange-600',
+  },
+];
+
+const missionFlowSteps = [
+  {
+    step: '01',
+    title: 'Emergency Call Received',
+    description: '911 or dispatch initiates the incident response.',
+    icon: Phone,
+  },
+  {
+    step: '02',
+    title: 'Request Routed to AutonOps',
+    description: 'Aerial support request forwarded to our operations center.',
+    icon: Radio,
+  },
+  {
+    step: '03',
+    title: 'Mission Planning Initiated',
+    description: 'Flight routes and sensor configurations prepared.',
+    icon: ClipboardList,
+  },
+  {
+    step: '04',
+    title: 'Aircraft Launched',
+    description: 'Deployment from designated staging area.',
+    icon: Plane,
+  },
+  {
+    step: '05',
+    title: 'Live Feed to Command',
+    description: 'Video and sensor data delivered to Incident Command.',
+    icon: Video,
+  },
+  {
+    step: '06',
+    title: 'AI-Assisted Analysis',
+    description: 'Hotspots, drift zones, and targets of interest highlighted.',
+    icon: Cpu,
+  },
+  {
+    step: '07',
+    title: 'Commander Directs Operations',
+    description: 'Incident Commander requests adjustments or additional data.',
+    icon: Target,
+  },
+  {
+    step: '08',
+    title: 'After-Action Report',
+    description: 'Mission concludes with AAR delivered to stakeholders.',
+    icon: BarChart3,
   },
 ];
 
@@ -408,6 +467,112 @@ export default function Home() {
                 </TiltCard>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* From 911 Call to After Action Report */}
+      <section className="py-16 sm:py-24 bg-slate-50 dark:bg-slate-900 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[400px] h-[400px] bg-orange-300 dark:bg-orange-900 top-[-100px] left-[-100px]" />
+          <div className="gradient-orb w-[300px] h-[300px] bg-red-300 dark:bg-red-900 bottom-[-50px] right-[-50px]" style={{ animationDelay: '5s' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+              From <span className="text-shimmer-slow">911 Call</span> to After Action Report
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 max-w-3xl mx-auto text-lg">
+              A complete mission lifecycle, from initial emergency dispatch to final documentation.
+            </p>
+          </div>
+
+          {/* 8-Step Timeline */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4 mb-12">
+            {missionFlowSteps.map((step, index) => (
+              <div key={step.step} className="relative group">
+                {/* Connector line */}
+                {index < missionFlowSteps.length - 1 && (
+                  <div className="hidden lg:block absolute top-6 left-full w-full h-0.5 bg-gradient-to-r from-red-300 dark:from-red-700 to-transparent z-0" />
+                )}
+                <TiltCard
+                  className="relative bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700 hover:border-red-300 dark:hover:border-red-500/50 hover:shadow-lg transition-all duration-300 z-10"
+                  tiltAmount={8}
+                >
+                  <div className="text-2xl font-bold text-red-600 mb-2">{step.step}</div>
+                  <div className="w-10 h-10 bg-red-50 dark:bg-red-900/30 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                    <step.icon className="w-5 h-5 text-red-600" />
+                  </div>
+                  <h3 className="font-semibold text-sm text-slate-900 dark:text-white mb-1">{step.title}</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">{step.description}</p>
+                </TiltCard>
+              </div>
+            ))}
+          </div>
+
+          {/* Callout Box */}
+          <div className="bg-slate-800 dark:bg-slate-800 rounded-2xl p-8 border border-slate-700 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-500/20 to-transparent rounded-bl-full" />
+            <div className="relative flex flex-col md:flex-row items-start md:items-center gap-6">
+              <div className="w-16 h-16 bg-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Shield className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2">Incident Command Always Retains Control</h3>
+                <p className="text-slate-300">
+                  AutonOps provides situational awareness and aerial intelligence. All tactical decisions remain with the Incident Commander. Our operators follow IC directives and never take autonomous action that affects ground operations.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Technology Partner: Aeryl AI */}
+      <section className="py-16 sm:py-24 bg-white dark:bg-slate-900 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[400px] h-[400px] bg-blue-200 dark:bg-blue-900 bottom-0 left-1/4" style={{ animationDelay: '3s' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-600 dark:text-blue-400 text-sm mb-6">
+                <Cpu className="w-4 h-4" />
+                Technology Partnership
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-6">
+                Technology Partner: <span className="text-shimmer-slow">Aeryl AI</span>
+              </h2>
+              <p className="text-lg text-slate-600 dark:text-slate-400 mb-6">
+                AutonOps partners with Aeryl AI, a leader in edge-computing solutions for real-time wildfire detection. Aeryl's AI-powered sensors enable onboard analysis of thermal imagery, surface temps, and smoke drift, delivering actionable intelligence in seconds rather than minutes.
+              </p>
+              <p className="text-lg text-slate-600 dark:text-slate-400 mb-8">
+                Together, we bridge the gap between cutting-edge detection technology and mission-grade flight operations.
+              </p>
+              <a
+                href="https://aeryl.ai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-all duration-300"
+              >
+                Learn about Aeryl AI
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
+            <TiltCard
+              className="rounded-2xl overflow-hidden shadow-xl border border-slate-200 dark:border-slate-700"
+              tiltAmount={5}
+            >
+              <Image
+                src="/figure_1_infrared-camera.jpg"
+                alt="Aeryl AI infrared thermal imaging"
+                width={600}
+                height={400}
+                className="object-cover w-full"
+              />
+            </TiltCard>
           </div>
         </div>
       </section>

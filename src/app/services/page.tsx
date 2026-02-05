@@ -59,13 +59,14 @@ const services = [
     image: '/emergency-response.png',
     title: 'Emergency Response',
     description:
-      'Rapid deployment capabilities for time-critical emergency situations.',
+      'Rapid deployment capabilities for time-critical emergency situations with real-time intelligence delivered directly to Incident Command.',
     details: [
       'Quick-response team mobilization',
-      'Integration with incident command systems',
-      'Real-time situational awareness support',
-      'Thermal and visual imaging capabilities',
-      'Coordination with first responders',
+      'Live video and sensor feeds to Incident Command',
+      'Aeryl AI-powered thermal analysis for hotspot detection',
+      'Real-time smoke drift and fire behavior monitoring',
+      'Coordination with first responders and ground teams',
+      'Commander-directed flight adjustments on demand',
     ],
   },
   {

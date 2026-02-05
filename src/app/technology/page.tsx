@@ -24,6 +24,9 @@ import {
   Battery,
   Activity,
   Satellite,
+  Phone,
+  ClipboardList,
+  BarChart3,
 } from 'lucide-react';
 import TiltCard from '@/components/TiltCard';
 import { RadarPulse } from '@/components/AnimatedDrone';
@@ -90,39 +93,51 @@ const platformFeatures = [
 const missionWorkflow = [
   {
     step: '01',
-    title: 'Order Received',
-    description: 'Client request triggers automatic mission generation in M2 system',
-    icon: Database,
+    title: 'Emergency Call Received',
+    description: '911 or dispatch initiates the incident response',
+    icon: Phone,
   },
   {
     step: '02',
-    title: 'AI Planning',
-    description: 'System generates optimized flight plan with waypoints and sortie assignments',
-    icon: Sparkles,
-  },
-  {
-    step: '03',
-    title: 'Pilot Notification',
-    description: 'Available pilots receive mission alert and accept assignment via mobile app',
+    title: 'Request Routed to AutonOps',
+    description: 'Aerial support request forwarded to our operations center',
     icon: Radio,
   },
   {
+    step: '03',
+    title: 'Mission Planning Initiated',
+    description: 'Flight routes and sensor configurations prepared by AI',
+    icon: ClipboardList,
+  },
+  {
     step: '04',
-    title: 'Pre-Flight',
-    description: 'Automated FAA flight plan filing and airspace clearance coordination',
-    icon: Shield,
+    title: 'Aircraft Launched',
+    description: 'Deployment from designated staging area',
+    icon: Plane,
   },
   {
     step: '05',
-    title: 'Mission Execution',
-    description: 'Live feeds stream to commander while pilot navigates waypoints',
-    icon: Target,
+    title: 'Live Feed to Command',
+    description: 'Video and sensor data delivered to Incident Command',
+    icon: Video,
   },
   {
     step: '06',
-    title: 'Report Delivery',
-    description: 'AI generates after-action report with mission score and findings',
-    icon: FileText,
+    title: 'AI-Assisted Analysis',
+    description: 'Hotspots, drift zones, and targets of interest highlighted',
+    icon: Cpu,
+  },
+  {
+    step: '07',
+    title: 'Commander Directs Operations',
+    description: 'Incident Commander requests adjustments or additional data',
+    icon: Target,
+  },
+  {
+    step: '08',
+    title: 'After-Action Report',
+    description: 'Mission concludes with AAR delivered to stakeholders',
+    icon: BarChart3,
   },
 ];
 
@@ -270,38 +285,120 @@ export default function TechnologyPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
             {missionWorkflow.map((item, index) => (
-              <TiltCard
-                key={item.step}
-                className="group bg-slate-800/50 backdrop-blur rounded-2xl p-6 border border-slate-700 hover:border-red-500/50 transition-all duration-300"
-                tiltAmount={6}
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="text-3xl font-bold text-shimmer">
-                    {item.step}
-                  </div>
-                  <div className="w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div key={item.step} className="relative group">
+                {/* Connector line */}
+                {index < missionWorkflow.length - 1 && (
+                  <div className="hidden lg:block absolute top-6 left-full w-full h-0.5 bg-gradient-to-r from-red-500/50 to-transparent z-0" />
+                )}
+                <TiltCard
+                  className="relative bg-slate-800/50 backdrop-blur rounded-xl p-4 border border-slate-700 hover:border-red-500/50 transition-all duration-300 z-10"
+                  tiltAmount={8}
+                >
+                  <div className="text-2xl font-bold text-red-500 mb-2">{item.step}</div>
+                  <div className="w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                     <item.icon className="w-5 h-5 text-red-400" />
                   </div>
-                </div>
-                <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-                <p className="text-slate-400 text-sm">{item.description}</p>
-
-                {/* Connection line indicator */}
-                {index < missionWorkflow.length - 1 && (
-                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-slate-800 border border-slate-700 rounded-full items-center justify-center hidden lg:flex">
-                    <ArrowRight className="w-3 h-3 text-red-400 rotate-90" />
-                  </div>
-                )}
-              </TiltCard>
+                  <h3 className="font-semibold text-sm mb-1">{item.title}</h3>
+                  <p className="text-slate-400 text-xs">{item.description}</p>
+                </TiltCard>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Integration Capabilities */}
+      {/* Command Authority and Safety */}
+      <section className="py-16 sm:py-20 bg-slate-50 dark:bg-slate-800 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[400px] h-[400px] bg-amber-200 dark:bg-amber-900 top-[-100px] left-[-100px]" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-slate-800 dark:bg-slate-900 rounded-2xl p-8 md:p-12 border border-slate-700 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-red-500/20 to-transparent rounded-bl-full" />
+            <div className="relative flex flex-col lg:flex-row items-start lg:items-center gap-8">
+              <div className="w-20 h-20 bg-red-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                <Shield className="w-10 h-10 text-white" />
+              </div>
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                  Command Authority and Safety
+                </h2>
+                <p className="text-slate-300 text-lg mb-4">
+                  AutonOps provides situational awareness and aerial intelligence. All tactical decisions remain with the Incident Commander. Our operators follow IC directives and never take autonomous action that affects ground operations.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center gap-2 text-slate-400">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Human-supervised operations</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-400">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>IC retains full authority</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-400">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>No autonomous tactical action</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Technology Partner: Aeryl AI */}
       <section className="py-16 sm:py-20 bg-white dark:bg-slate-900 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="gradient-orb w-[400px] h-[400px] bg-blue-200 dark:bg-blue-900 bottom-0 right-1/4" style={{ animationDelay: '3s' }} />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-600 dark:text-blue-400 text-sm mb-6">
+                <Cpu className="w-4 h-4" />
+                Technology Partnership
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-6">
+                Technology Partner: <span className="text-shimmer-slow">Aeryl AI</span>
+              </h2>
+              <p className="text-lg text-slate-600 dark:text-slate-400 mb-6">
+                AutonOps partners with Aeryl AI, a leader in edge-computing solutions for real-time wildfire detection. Aeryl's AI-powered sensors enable onboard analysis of thermal imagery, surface temps, and smoke drift, delivering actionable intelligence in seconds rather than minutes.
+              </p>
+              <p className="text-lg text-slate-600 dark:text-slate-400 mb-8">
+                Together, we bridge the gap between cutting-edge detection technology and mission-grade flight operations.
+              </p>
+              <a
+                href="https://aeryl.ai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-all duration-300"
+              >
+                Learn about Aeryl AI
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
+            <TiltCard
+              className="rounded-2xl overflow-hidden shadow-xl border border-slate-200 dark:border-slate-700"
+              tiltAmount={5}
+            >
+              <Image
+                src="/figure_1_infrared-camera.jpg"
+                alt="Aeryl AI infrared thermal imaging"
+                width={600}
+                height={400}
+                className="object-cover w-full"
+              />
+            </TiltCard>
+          </div>
+        </div>
+      </section>
+
+      {/* Integration Capabilities */}
+      <section className="py-16 sm:py-20 bg-slate-50 dark:bg-slate-800 relative overflow-hidden">
         {/* Background orb */}
         <div className="absolute inset-0 opacity-20">
           <div className="gradient-orb w-[300px] h-[300px] bg-green-200 dark:bg-green-900 bottom-0 left-0" style={{ animationDelay: '2s' }} />
