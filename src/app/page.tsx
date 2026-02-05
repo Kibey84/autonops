@@ -552,7 +552,7 @@ export default function Home() {
                 Together, we bridge the gap between cutting-edge detection technology and mission-grade flight operations.
               </p>
               <a
-                href="https://aeryl.ai"
+                href="https://aeryl.base44.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-all duration-300"
