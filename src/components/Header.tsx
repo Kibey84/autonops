@@ -9,6 +9,7 @@ import { useTheme } from './ThemeProvider';
 const navigation = [
   { name: 'Services', href: '/services' },
   { name: 'Technology', href: '/technology' },
+  { name: 'How It Works', href: '/how-it-works' },
   { name: 'How We Operate', href: '/operations' },
   { name: 'Industries', href: '/industries' },
   { name: 'About', href: '/about' },
@@ -57,10 +58,10 @@ export default function Header() {
               {mounted ? (theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />) : <Moon className="w-5 h-5" />}
             </button>
             <Link
-              href="/contact"
+              href="/dashboard"
               className="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition-colors"
             >
-              Contact Us
+              Dashboard
             </Link>
           </div>
 
@@ -99,11 +100,11 @@ export default function Header() {
                 </Link>
               ))}
               <Link
-                href="/contact"
+                href="/dashboard"
                 className="inline-flex items-center justify-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Contact Us
+                Dashboard
               </Link>
             </div>
           </div>
