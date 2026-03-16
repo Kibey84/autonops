@@ -21,287 +21,184 @@ interface Order {
   type: string;
   date: string;
   status: string;
+  price: string;
 }
 
-interface Account {
-  name: string;
-  address: string;
-  phone: string;
-  type: string;
-  activeOrders: number;
-  contacts: Contact[];
-  activities: Activity[];
-  orders: Order[];
-}
+const accountInfo = {
+  name: 'Springfield Fire Department',
+  address: '345 N Limestone St, Springfield, OH 45503',
+  phone: '(937) 555-0101',
+  type: 'Fire',
+  status: 'Active',
+  contractStart: 'Oct 1, 2024',
+  pricePerSortie: '$1,000',
+};
 
-const initialAccounts: Account[] = [
-  {
-    name: 'Springfield Fire Dept',
-    address: 'Springfield, OH',
-    phone: '(937) 555-0101',
-    type: 'Fire',
-    activeOrders: 1,
-    contacts: [
-      { name: 'Capt. Harris', title: 'Station Captain', phone: '(937) 555-0102', email: 'harris@springfieldfd.gov' },
-      { name: 'Lt. Rodriguez', title: 'Operations Officer', phone: '(937) 555-0103', email: 'rodriguez@springfieldfd.gov' },
-    ],
-    activities: [
-      { date: 'Mar 16, 2025', type: 'Mission', subject: 'Active fire response', notes: 'MSN-2025-0001 dispatched' },
-      { date: 'Mar 10, 2025', type: 'Call', subject: 'Pre-deployment check', notes: 'Confirmed staging at Station 4' },
-    ],
-    orders: [
-      { orderId: 'ORD-001', type: 'Fire', date: 'Mar 16', status: 'In Progress' },
-    ],
-  },
-  {
-    name: 'Rio Verde Fire Dept',
-    address: 'Rio Verde, AZ',
-    phone: '(480) 555-0198',
-    type: 'Fire',
-    activeOrders: 0,
-    contacts: [
-      { name: 'Chief Malone', title: 'Fire Chief', phone: '(480) 555-0199', email: 'malone@rioverdefd.gov' },
-    ],
-    activities: [
-      { date: 'Feb 12, 2025', type: 'Mission', subject: 'Recon mission completed', notes: 'MSN-2024-0004 closed — score 94/100' },
-    ],
-    orders: [
-      { orderId: 'ORD-002', type: 'Recon', date: 'Feb 12', status: 'Closed' },
-    ],
-  },
-  {
-    name: 'Clark Co. Sheriff',
-    address: 'Springfield, OH',
-    phone: '(937) 555-0142',
-    type: 'Law',
-    activeOrders: 0,
-    contacts: [
-      { name: 'Sgt. Williams', title: 'Tactical Lead', phone: '(937) 555-0143', email: 'williams@clarkcountyso.gov' },
-    ],
-    activities: [
-      { date: 'Dec 03, 2024', type: 'Mission', subject: 'SAR operation', notes: 'MSN-2024-0002 — person located' },
-    ],
-    orders: [],
-  },
+const contacts: Contact[] = [
+  { name: 'Capt. Harris', title: 'Station Captain', phone: '(937) 555-0102', email: 'harris@springfieldfd.gov' },
+  { name: 'Lt. Rodriguez', title: 'Operations Officer', phone: '(937) 555-0103', email: 'rodriguez@springfieldfd.gov' },
+  { name: 'FF. Davis', title: 'Drone Liaison', phone: '(937) 555-0104', email: 'davis@springfieldfd.gov' },
 ];
 
-export default function AccountsView() {
-  const [accounts, setAccounts] = useState<Account[]>(initialAccounts);
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const [showModal, setShowModal] = useState(false);
-  const [newAccount, setNewAccount] = useState({ name: '', address: '', phone: '' });
+const activities: Activity[] = [
+  { date: 'Mar 16, 2025', type: 'Mission', subject: 'Active fire response dispatched', notes: 'MSN-2025-0001 — in progress' },
+  { date: 'Mar 10, 2025', type: 'Call', subject: 'Pre-deployment coordination', notes: 'Confirmed staging at Station 4, Starlink tested' },
+  { date: 'Dec 03, 2024', type: 'Mission', subject: 'SAR operation completed', notes: 'MSN-2024-0002 — person located, score 91/100' },
+  { date: 'Nov 14, 2024', type: 'Mission', subject: 'Fire response completed', notes: 'MSN-2024-0001 — score 87/100' },
+  { date: 'Oct 01, 2024', type: 'Contract', subject: 'Service agreement signed', notes: 'Fire + SAR coverage, $1,000/sortie' },
+];
 
-  const handleSave = () => {
-    if (!newAccount.name.trim()) return;
-    setAccounts((prev) => [
-      ...prev,
-      {
-        ...newAccount,
-        type: 'New',
-        activeOrders: 0,
-        contacts: [],
-        activities: [],
-        orders: [],
-      },
-    ]);
-    setNewAccount({ name: '', address: '', phone: '' });
-    setShowModal(false);
-  };
+const orders: Order[] = [
+  { orderId: 'ORD-001', type: 'Fire', date: 'Mar 16, 2025', status: 'In Progress', price: '$1,000' },
+  { orderId: 'ORD-002', type: 'SAR', date: 'Dec 03, 2024', status: 'Closed', price: '$1,000' },
+  { orderId: 'ORD-003', type: 'Fire', date: 'Nov 14, 2024', status: 'Closed', price: '$1,000' },
+];
+
+const statusBadge = (status: string) => {
+  const base = 'text-[10px] font-mono px-2 py-0.5 rounded border';
+  if (status === 'In Progress')
+    return `${base} bg-amber-500/20 text-amber-400 border-amber-500/30`;
+  if (status === 'Active')
+    return `${base} bg-green-500/20 text-green-400 border-green-500/30`;
+  return `${base} bg-slate-500/20 text-slate-400 border-slate-500/30`;
+};
+
+export default function AccountsView() {
+  const [activeTab, setActiveTab] = useState<'contacts' | 'activity' | 'orders'>('contacts');
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-white">Accounts</h2>
-        <button
-          onClick={() => setShowModal(true)}
-          className="px-3 py-1.5 bg-red-600 text-white text-xs font-mono rounded hover:bg-red-700 transition-colors"
-        >
-          + New Account
-        </button>
-      </div>
+      <h2 className="text-lg font-semibold text-white mb-4">Your Account</h2>
 
-      <div className="bg-slate-800/80 border border-slate-700 rounded-xl overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-[11px] font-mono">
-            <thead>
-              <tr className="text-slate-500 border-b border-slate-700 bg-slate-800">
-                <th className="text-left py-3 px-4">Account Name</th>
-                <th className="text-left py-3 px-4">Address</th>
-                <th className="text-left py-3 px-4">Phone</th>
-                <th className="text-left py-3 px-4">Type</th>
-                <th className="text-left py-3 px-4">Active Orders</th>
-              </tr>
-            </thead>
-            <tbody>
-              {accounts.map((acct) => (
-                <>
-                  <tr
-                    key={acct.name}
-                    className="border-b border-slate-700/50 hover:bg-slate-700/30 cursor-pointer transition-colors"
-                    onClick={() => setExpanded(expanded === acct.name ? null : acct.name)}
-                  >
-                    <td className="py-3 px-4 text-slate-200">{acct.name}</td>
-                    <td className="py-3 px-4 text-slate-400">{acct.address}</td>
-                    <td className="py-3 px-4 text-slate-400">{acct.phone}</td>
-                    <td className="py-3 px-4 text-slate-300">{acct.type}</td>
-                    <td className="py-3 px-4 text-slate-300">{acct.activeOrders}</td>
-                  </tr>
-                  {expanded === acct.name && (
-                    <tr key={`${acct.name}-detail`} className="bg-slate-800/50">
-                      <td colSpan={5} className="px-6 py-5">
-                        <div className="space-y-5">
-                          {/* Contacts */}
-                          <div>
-                            <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                              Contacts
-                            </h4>
-                            {acct.contacts.length > 0 ? (
-                              <table className="w-full text-[10px]">
-                                <thead>
-                                  <tr className="text-slate-500">
-                                    <th className="text-left py-1 pr-4">Name</th>
-                                    <th className="text-left py-1 pr-4">Title</th>
-                                    <th className="text-left py-1 pr-4">Phone</th>
-                                    <th className="text-left py-1">Email</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {acct.contacts.map((c) => (
-                                    <tr key={c.name} className="text-slate-400">
-                                      <td className="py-1 pr-4">{c.name}</td>
-                                      <td className="py-1 pr-4">{c.title}</td>
-                                      <td className="py-1 pr-4">{c.phone}</td>
-                                      <td className="py-1">{c.email}</td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            ) : (
-                              <p className="text-[10px] text-slate-500">No contacts yet.</p>
-                            )}
-                          </div>
-                          {/* Activities */}
-                          <div>
-                            <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                              Activities
-                            </h4>
-                            {acct.activities.length > 0 ? (
-                              <table className="w-full text-[10px]">
-                                <thead>
-                                  <tr className="text-slate-500">
-                                    <th className="text-left py-1 pr-4">Date</th>
-                                    <th className="text-left py-1 pr-4">Type</th>
-                                    <th className="text-left py-1 pr-4">Subject</th>
-                                    <th className="text-left py-1">Notes</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {acct.activities.map((a, i) => (
-                                    <tr key={i} className="text-slate-400">
-                                      <td className="py-1 pr-4">{a.date}</td>
-                                      <td className="py-1 pr-4">{a.type}</td>
-                                      <td className="py-1 pr-4">{a.subject}</td>
-                                      <td className="py-1">{a.notes}</td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            ) : (
-                              <p className="text-[10px] text-slate-500">No activities yet.</p>
-                            )}
-                          </div>
-                          {/* Orders */}
-                          <div>
-                            <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                              Orders
-                            </h4>
-                            {acct.orders.length > 0 ? (
-                              <table className="w-full text-[10px]">
-                                <thead>
-                                  <tr className="text-slate-500">
-                                    <th className="text-left py-1 pr-4">Order ID</th>
-                                    <th className="text-left py-1 pr-4">Type</th>
-                                    <th className="text-left py-1 pr-4">Date</th>
-                                    <th className="text-left py-1">Status</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {acct.orders.map((o) => (
-                                    <tr key={o.orderId} className="text-slate-400">
-                                      <td className="py-1 pr-4">{o.orderId}</td>
-                                      <td className="py-1 pr-4">{o.type}</td>
-                                      <td className="py-1 pr-4">{o.date}</td>
-                                      <td className="py-1">{o.status}</td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            ) : (
-                              <p className="text-[10px] text-slate-500">No orders yet.</p>
-                            )}
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* New Account Modal */}
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 w-full max-w-md">
-            <h3 className="text-white font-semibold mb-4">New Account</h3>
-            <div className="space-y-3">
-              <div>
-                <label className="block text-xs text-slate-400 mb-1">Account Name</label>
-                <input
-                  type="text"
-                  value={newAccount.name}
-                  onChange={(e) => setNewAccount({ ...newAccount, name: e.target.value })}
-                  className="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-red-500"
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-slate-400 mb-1">Address</label>
-                <input
-                  type="text"
-                  value={newAccount.address}
-                  onChange={(e) => setNewAccount({ ...newAccount, address: e.target.value })}
-                  className="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-red-500"
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-slate-400 mb-1">Phone</label>
-                <input
-                  type="text"
-                  value={newAccount.phone}
-                  onChange={(e) => setNewAccount({ ...newAccount, phone: e.target.value })}
-                  className="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-red-500"
-                />
-              </div>
-            </div>
-            <div className="flex gap-3 mt-5">
-              <button
-                onClick={handleSave}
-                className="flex-1 px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition-colors"
-              >
-                Save
-              </button>
-              <button
-                onClick={() => setShowModal(false)}
-                className="flex-1 px-4 py-2 bg-slate-700 text-slate-300 text-sm rounded hover:bg-slate-600 transition-colors"
-              >
-                Cancel
-              </button>
+      {/* Account Info Card */}
+      <div className="bg-slate-800/80 border border-slate-700 rounded-xl p-6 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div>
+            <h3 className="text-xl font-bold text-white mb-1">{accountInfo.name}</h3>
+            <p className="text-sm text-slate-400">{accountInfo.address}</p>
+            <p className="text-sm text-slate-400">{accountInfo.phone}</p>
+          </div>
+          <div className="flex flex-col items-start sm:items-end gap-2">
+            <span className={statusBadge(accountInfo.status)}>{accountInfo.status}</span>
+            <div className="text-[11px] text-slate-500 font-mono">
+              Since {accountInfo.contractStart}
             </div>
           </div>
         </div>
-      )}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6 pt-6 border-t border-slate-700">
+          <div>
+            <div className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Service Type</div>
+            <div className="text-sm text-slate-200 font-mono">{accountInfo.type}</div>
+          </div>
+          <div>
+            <div className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Price per Sortie</div>
+            <div className="text-sm text-slate-200 font-mono">{accountInfo.pricePerSortie}</div>
+          </div>
+          <div>
+            <div className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Total Missions</div>
+            <div className="text-sm text-slate-200 font-mono">3</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex gap-1 mb-4 border-b border-slate-700 pb-px">
+        {(['contacts', 'activity', 'orders'] as const).map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-4 py-2 text-xs font-mono uppercase tracking-wider transition-colors rounded-t ${
+              activeTab === tab
+                ? 'bg-slate-800 text-white border-b-2 border-red-500'
+                : 'text-slate-500 hover:text-slate-300'
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      {/* Tab Content */}
+      <div className="bg-slate-800/80 border border-slate-700 rounded-xl overflow-hidden">
+        {activeTab === 'contacts' && (
+          <div className="overflow-x-auto">
+            <table className="w-full text-[11px] font-mono">
+              <thead>
+                <tr className="text-slate-500 border-b border-slate-700 bg-slate-800">
+                  <th className="text-left py-3 px-4">Name</th>
+                  <th className="text-left py-3 px-4">Title</th>
+                  <th className="text-left py-3 px-4">Phone</th>
+                  <th className="text-left py-3 px-4">Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {contacts.map((c) => (
+                  <tr key={c.name} className="border-b border-slate-700/50">
+                    <td className="py-3 px-4 text-slate-200">{c.name}</td>
+                    <td className="py-3 px-4 text-slate-400">{c.title}</td>
+                    <td className="py-3 px-4 text-slate-400">{c.phone}</td>
+                    <td className="py-3 px-4 text-slate-400">{c.email}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activeTab === 'activity' && (
+          <div className="overflow-x-auto">
+            <table className="w-full text-[11px] font-mono">
+              <thead>
+                <tr className="text-slate-500 border-b border-slate-700 bg-slate-800">
+                  <th className="text-left py-3 px-4">Date</th>
+                  <th className="text-left py-3 px-4">Type</th>
+                  <th className="text-left py-3 px-4">Subject</th>
+                  <th className="text-left py-3 px-4">Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {activities.map((a, i) => (
+                  <tr key={i} className="border-b border-slate-700/50">
+                    <td className="py-3 px-4 text-slate-400 whitespace-nowrap">{a.date}</td>
+                    <td className="py-3 px-4 text-slate-300">{a.type}</td>
+                    <td className="py-3 px-4 text-slate-200">{a.subject}</td>
+                    <td className="py-3 px-4 text-slate-400">{a.notes}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activeTab === 'orders' && (
+          <div className="overflow-x-auto">
+            <table className="w-full text-[11px] font-mono">
+              <thead>
+                <tr className="text-slate-500 border-b border-slate-700 bg-slate-800">
+                  <th className="text-left py-3 px-4">Order ID</th>
+                  <th className="text-left py-3 px-4">Type</th>
+                  <th className="text-left py-3 px-4">Date</th>
+                  <th className="text-left py-3 px-4">Status</th>
+                  <th className="text-left py-3 px-4">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.map((o) => (
+                  <tr key={o.orderId} className="border-b border-slate-700/50">
+                    <td className="py-3 px-4 text-slate-200">{o.orderId}</td>
+                    <td className="py-3 px-4 text-slate-300">{o.type}</td>
+                    <td className="py-3 px-4 text-slate-400">{o.date}</td>
+                    <td className="py-3 px-4">
+                      <span className={statusBadge(o.status)}>{o.status}</span>
+                    </td>
+                    <td className="py-3 px-4 text-slate-200">{o.price}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

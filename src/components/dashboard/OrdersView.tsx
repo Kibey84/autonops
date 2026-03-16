@@ -22,22 +22,31 @@ const initialOrders: Order[] = [
     date: 'Mar 16',
     location: 'Springfield',
     status: 'In Progress',
-    price: '$1,200',
+    price: '$1,000',
   },
   {
     id: 'ORD-002',
-    account: 'Rio Verde FD',
-    requestor: 'Chief Malone',
-    type: 'Recon',
-    date: 'Feb 12',
-    location: 'Rio Verde',
+    account: 'Springfield FD',
+    requestor: 'Lt. Rodriguez',
+    type: 'SAR',
+    date: 'Dec 03',
+    location: 'Springfield',
     status: 'Closed',
-    price: '$800',
+    price: '$1,000',
+  },
+  {
+    id: 'ORD-003',
+    account: 'Springfield FD',
+    requestor: 'Capt. Harris',
+    type: 'Fire',
+    date: 'Nov 14',
+    location: 'Springfield',
+    status: 'Closed',
+    price: '$1,000',
   },
 ];
 
-const accounts = ['Springfield FD', 'Rio Verde FD', 'Clark Co. Sheriff'];
-const requestors = ['Capt. Harris', 'Chief Malone', 'Lt. Rodriguez', 'Sgt. Williams'];
+const requestors = ['Capt. Harris', 'Lt. Rodriguez'];
 const commanders = ['CTR-001 · Jared K.', 'CTR-002 · Jaderic D.', 'CTR-003 · Matt S.'];
 const types = ['Fire', 'Rescue', 'Law', 'Recon'];
 
@@ -53,7 +62,6 @@ export default function OrdersView() {
   const [showModal, setShowModal] = useState(false);
   const [toast, setToast] = useState('');
   const [form, setForm] = useState({
-    account: accounts[0],
     requestor: requestors[0],
     commander: commanders[0],
     date: '',
@@ -76,19 +84,18 @@ export default function OrdersView() {
       ...prev,
       {
         id: newId,
-        account: form.account,
+        account: 'Springfield FD',
         requestor: form.requestor,
         type: form.type,
         date: form.date || 'Mar 16',
-        location: form.location || 'TBD',
+        location: form.location || 'Springfield',
         status: 'In Progress',
-        price: '—',
+        price: '$1,000',
       },
     ]);
     setToast(`Mission ${msnId} auto-generated.`);
     setShowModal(false);
     setForm({
-      account: accounts[0],
       requestor: requestors[0],
       commander: commanders[0],
       date: '',
@@ -101,7 +108,7 @@ export default function OrdersView() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-white">Orders</h2>
+        <h2 className="text-lg font-semibold text-white">Orders — Springfield Fire Dept</h2>
         <button
           onClick={() => setShowModal(true)}
           className="px-3 py-1.5 bg-red-600 text-white text-xs font-mono rounded hover:bg-red-700 transition-colors"
@@ -159,20 +166,9 @@ export default function OrdersView() {
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
           <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 w-full max-w-md">
-            <h3 className="text-white font-semibold mb-4">New Order</h3>
+            <h3 className="text-white font-semibold mb-1">New Order</h3>
+            <p className="text-xs text-slate-500 mb-4 font-mono">Springfield Fire Dept · $1,000/sortie</p>
             <div className="space-y-3">
-              <div>
-                <label className="block text-xs text-slate-400 mb-1">Account</label>
-                <select
-                  value={form.account}
-                  onChange={(e) => setForm({ ...form, account: e.target.value })}
-                  className="w-full bg-slate-700 border border-slate-600 rounded px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-red-500"
-                >
-                  {accounts.map((a) => (
-                    <option key={a} value={a}>{a}</option>
-                  ))}
-                </select>
-              </div>
               <div>
                 <label className="block text-xs text-slate-400 mb-1">Requestor</label>
                 <select

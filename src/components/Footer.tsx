@@ -10,7 +10,7 @@ const footerLinks = {
     { name: 'Contact', href: '/contact' },
   ],
   operations: [
-    { name: 'How We Operate', href: '/operations' },
+    { name: 'How It Works', href: '/how-it-works' },
     { name: 'Technology', href: '/technology' },
     { name: 'FAQ', href: '/faq' },
   ],

@@ -436,7 +436,7 @@ export default function Home() {
               </p>
             </div>
             <Link
-              href="/operations"
+              href="/how-it-works"
               className="group inline-flex items-center text-red-400 font-medium hover:text-red-300 transition-colors"
             >
               Learn more
