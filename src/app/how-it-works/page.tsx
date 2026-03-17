@@ -238,9 +238,9 @@ export default function HowItWorks() {
                       <div><span className="text-green-400">incident_id:</span> &quot;INC-2025-03847&quot;</div>
                       <div><span className="text-green-400">type:</span> &quot;STRUCTURE_FIRE&quot;</div>
                       <div><span className="text-green-400">priority:</span> &quot;HIGH&quot;</div>
-                      <div><span className="text-green-400">lat:</span> 39.8850</div>
-                      <div><span className="text-green-400">lng:</span> -83.7650</div>
-                      <div><span className="text-green-400">address:</span> &quot;1247 Oak Ridge Rd&quot;</div>
+                      <div><span className="text-green-400">lat:</span> 33.5000</div>
+                      <div><span className="text-green-400">lng:</span> -111.8100</div>
+                      <div><span className="text-green-400">address:</span> &quot;18402 E Rio Verde Dr&quot;</div>
                       <div><span className="text-green-400">units_dispatched:</span> [&quot;E4&quot;, &quot;L2&quot;]</div>
                       <div><span className="text-green-400">timestamp:</span> &quot;2025-03-16T14:28:31Z&quot;</div>
                     </div>

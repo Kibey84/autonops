@@ -1,7 +1,7 @@
 'use client';
 
 const assets = [
-  { id: 'AC-001', type: 'Aircraft', name: 'Blackfly-01', status: 'Active', location: 'Springfield ANGB' },
+  { id: 'AC-001', type: 'Aircraft', name: 'Blackfly-01', status: 'Active', location: 'Rio Verde Staging' },
   { id: 'AC-002', type: 'Aircraft', name: 'Blackfly-02', status: 'Standby', location: 'Sinclair CC' },
   { id: 'PLT-001', type: 'Pilot', name: 'Jared K.', status: 'On Mission', location: 'In Flight' },
   { id: 'PLT-002', type: 'Pilot', name: 'Josh T.', status: 'Available', location: 'Springboro, OH' },

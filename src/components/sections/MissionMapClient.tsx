@@ -26,9 +26,9 @@ const blueIcon = createIcon('#3b82f6');
 const yellowIcon = createIcon('#eab308');
 const redIcon = createIcon('#dc2626');
 
-const stagingPos: [number, number] = [39.9242, -83.8088];
-const stationPos: [number, number] = [39.9050, -83.7900];
-const firePos: [number, number] = [39.8850, -83.7650];
+const stagingPos: [number, number] = [33.5350, -111.8550];
+const stationPos: [number, number] = [33.5200, -111.8350];
+const firePos: [number, number] = [33.5000, -111.8100];
 
 function FitBounds() {
   const map = useMap();
@@ -58,14 +58,14 @@ export default function MissionMapClient() {
           <Popup>
             <strong>Blackfly-01</strong><br />
             Staged &amp; Ready<br />
-            Springfield ANGB
+            Rio Verde Staging Area
           </Popup>
         </Marker>
 
         <Marker position={stationPos} icon={yellowIcon}>
           <Popup>
-            <strong>Springfield Fire Dept</strong><br />
-            Station 4
+            <strong>Rio Verde Fire Dept</strong><br />
+            Station 1
           </Popup>
         </Marker>
 

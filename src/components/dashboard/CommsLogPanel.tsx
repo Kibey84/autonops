@@ -24,13 +24,13 @@ const initialLog: CommsEntry[] = [
   },
   {
     time: '14:32:10',
-    from: 'SPRINGFIELD FD',
-    message: 'Control, we have eyes on smoke from Station 4. ETE?',
+    from: 'RIO VERDE FD',
+    message: 'Control, we have eyes on smoke from Station 1. ETE?',
   },
   {
     time: '14:32:13',
     from: 'CTRL',
-    to: 'SFD',
+    to: 'RVFD',
     message: 'ETE 4 minutes. Dual feed live on your app shortly.',
   },
   {

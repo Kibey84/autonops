@@ -16,31 +16,31 @@ interface Order {
 const initialOrders: Order[] = [
   {
     id: 'ORD-001',
-    account: 'Springfield FD',
+    account: 'Rio Verde FD',
     requestor: 'Capt. Harris',
     type: 'Fire',
     date: 'Mar 16',
-    location: 'Springfield',
+    location: 'Rio Verde',
     status: 'In Progress',
     price: '$1,000',
   },
   {
     id: 'ORD-002',
-    account: 'Springfield FD',
+    account: 'Rio Verde FD',
     requestor: 'Lt. Rodriguez',
     type: 'SAR',
     date: 'Dec 03',
-    location: 'Springfield',
+    location: 'Rio Verde',
     status: 'Closed',
     price: '$1,000',
   },
   {
     id: 'ORD-003',
-    account: 'Springfield FD',
+    account: 'Rio Verde FD',
     requestor: 'Capt. Harris',
     type: 'Fire',
     date: 'Nov 14',
-    location: 'Springfield',
+    location: 'Rio Verde',
     status: 'Closed',
     price: '$1,000',
   },
@@ -84,11 +84,11 @@ export default function OrdersView() {
       ...prev,
       {
         id: newId,
-        account: 'Springfield FD',
+        account: 'Rio Verde FD',
         requestor: form.requestor,
         type: form.type,
         date: form.date || 'Mar 16',
-        location: form.location || 'Springfield',
+        location: form.location || 'Rio Verde',
         status: 'In Progress',
         price: '$1,000',
       },
@@ -108,7 +108,7 @@ export default function OrdersView() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-white">Orders — Springfield Fire Dept</h2>
+        <h2 className="text-lg font-semibold text-white">Orders — Rio Verde Fire Dept</h2>
         <button
           onClick={() => setShowModal(true)}
           className="px-3 py-1.5 bg-red-600 text-white text-xs font-mono rounded hover:bg-red-700 transition-colors"
@@ -167,7 +167,7 @@ export default function OrdersView() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
           <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 w-full max-w-md">
             <h3 className="text-white font-semibold mb-1">New Order</h3>
-            <p className="text-xs text-slate-500 mb-4 font-mono">Springfield Fire Dept · $1,000/sortie</p>
+            <p className="text-xs text-slate-500 mb-4 font-mono">Rio Verde Fire Dept · $1,000/sortie</p>
             <div className="space-y-3">
               <div>
                 <label className="block text-xs text-slate-400 mb-1">Requestor</label>

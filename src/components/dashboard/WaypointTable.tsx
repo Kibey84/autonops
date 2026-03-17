@@ -6,7 +6,7 @@ const waypoints = [
   {
     wp: 1,
     stage: 'PreFlight',
-    geo: '39.9242,-83.8088',
+    geo: '33.5350,-111.8550',
     alt: '0 ft',
     objective: 'System check & FAA clearance',
     status: 'complete',
@@ -15,7 +15,7 @@ const waypoints = [
   {
     wp: 2,
     stage: 'Launch',
-    geo: '39.9242,-83.8088',
+    geo: '33.5350,-111.8550',
     alt: '500 ft',
     objective: 'Liftoff and initial climb',
     status: 'complete',
@@ -24,7 +24,7 @@ const waypoints = [
   {
     wp: 3,
     stage: 'Transit',
-    geo: '39.9100,-83.7900',
+    geo: '33.5200,-111.8350',
     alt: '1200 ft',
     objective: 'Route to fire zone',
     status: 'active',
@@ -33,7 +33,7 @@ const waypoints = [
   {
     wp: 4,
     stage: 'Survey',
-    geo: '39.9001,-83.7700',
+    geo: '33.5100,-111.8200',
     alt: '800 ft',
     objective: 'Dual-feed survey pass',
     status: 'planned',
@@ -42,7 +42,7 @@ const waypoints = [
   {
     wp: 5,
     stage: 'Perform',
-    geo: '39.8950,-83.7650',
+    geo: '33.5000,-111.8100',
     alt: '600 ft',
     objective: 'AI scan + ground coordination',
     status: 'planned',

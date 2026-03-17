@@ -25,9 +25,9 @@ interface Order {
 }
 
 const accountInfo = {
-  name: 'Springfield Fire Department',
-  address: '345 N Limestone St, Springfield, OH 45503',
-  phone: '(937) 555-0101',
+  name: 'Rio Verde Fire Department',
+  address: '18402 E Rio Verde Dr, Rio Verde, AZ 85263',
+  phone: '(480) 555-0198',
   type: 'Fire',
   status: 'Active',
   contractStart: 'Oct 1, 2024',
@@ -35,14 +35,14 @@ const accountInfo = {
 };
 
 const contacts: Contact[] = [
-  { name: 'Capt. Harris', title: 'Station Captain', phone: '(937) 555-0102', email: 'harris@springfieldfd.gov' },
-  { name: 'Lt. Rodriguez', title: 'Operations Officer', phone: '(937) 555-0103', email: 'rodriguez@springfieldfd.gov' },
-  { name: 'FF. Davis', title: 'Drone Liaison', phone: '(937) 555-0104', email: 'davis@springfieldfd.gov' },
+  { name: 'Capt. Harris', title: 'Station Captain', phone: '(480) 555-0192', email: 'harris@rioverdefd.gov' },
+  { name: 'Lt. Rodriguez', title: 'Operations Officer', phone: '(480) 555-0193', email: 'rodriguez@rioverdefd.gov' },
+  { name: 'FF. Davis', title: 'Drone Liaison', phone: '(480) 555-0194', email: 'davis@rioverdefd.gov' },
 ];
 
 const activities: Activity[] = [
   { date: 'Mar 16, 2025', type: 'Mission', subject: 'Active fire response dispatched', notes: 'MSN-2025-0001 — in progress' },
-  { date: 'Mar 10, 2025', type: 'Call', subject: 'Pre-deployment coordination', notes: 'Confirmed staging at Station 4, Starlink tested' },
+  { date: 'Mar 10, 2025', type: 'Call', subject: 'Pre-deployment coordination', notes: 'Confirmed staging at Station 1, Starlink tested' },
   { date: 'Dec 03, 2024', type: 'Mission', subject: 'SAR operation completed', notes: 'MSN-2024-0002 — person located, score 91/100' },
   { date: 'Nov 14, 2024', type: 'Mission', subject: 'Fire response completed', notes: 'MSN-2024-0001 — score 87/100' },
   { date: 'Oct 01, 2024', type: 'Contract', subject: 'Service agreement signed', notes: 'Fire + SAR coverage, $1,000/sortie' },

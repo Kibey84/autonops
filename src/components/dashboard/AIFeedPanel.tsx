@@ -7,7 +7,7 @@ const initialEntries = [
   { time: 'T+00:01', text: 'Fire line detected — bearing 220°, spreading NE ~8 mph' },
   { time: 'T+00:14', text: 'Terrain analysis complete — heavy tree cover, 2 ridgelines' },
   { time: 'T+00:29', text: 'Structure detected — 3 residential properties within 0.8 mi' },
-  { time: 'T+00:45', text: 'Heat signature — possible person/large animal at Grid 4407N ⚠' },
+  { time: 'T+00:45', text: 'Heat signature — possible person/large animal at Grid 3332N ⚠' },
   { time: 'T+01:02', text: 'Wind shift detected — updating fire spread model...' },
   { time: 'T+01:15', text: 'Revised spread: NNE at ~11 mph — fire line expanding' },
 ];
@@ -15,7 +15,7 @@ const initialEntries = [
 const rotatingEntries = [
   'Smoke density increasing — EO visibility reduced to ~40%',
   'Recommended new waypoint uploaded — awaiting controller confirmation',
-  'Animal heat cluster detected — Grid 4408N (3 signatures)',
+  'Animal heat cluster detected — Grid 3333N (3 signatures)',
   'Structure risk elevated — 1 property now within 0.3 mi of fire front',
   'Wind stabilizing — spread rate may be decreasing',
   'Thermal anomaly resolved — likely vehicle exhaust, not person',

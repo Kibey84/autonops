@@ -24,11 +24,11 @@ const missions: Mission[] = [
     id: 'MSN-2025-0001',
     date: 'Mar 16, 2025',
     type: 'Fire',
-    account: 'Springfield FD',
-    location: 'Springfield, OH',
+    account: 'Rio Verde FD',
+    location: 'Rio Verde, AZ',
     status: 'In Progress',
     score: '—',
-    aar: 'Mission currently in progress. Active fire response near Springfield, OH. UAV deployed from Springfield ANGB staging area. Dual camera feeds active. AI analysis running.',
+    aar: 'Mission currently in progress. Active fire response near Rio Verde, AZ. UAV deployed from Rio Verde staging area. Dual camera feeds active. AI analysis running.',
     sortieEfficiency: 0,
     aiAccuracy: 0,
     responseTime: 0,
@@ -40,11 +40,11 @@ const missions: Mission[] = [
     id: 'MSN-2024-0002',
     date: 'Dec 03, 2024',
     type: 'SAR',
-    account: 'Springfield FD',
-    location: 'Springfield, OH',
+    account: 'Rio Verde FD',
+    location: 'Rio Verde, AZ',
     status: 'Closed',
     score: '91/100',
-    aar: 'Search and rescue operation in rural Clark County, coordinated with Springfield FD. Thermal imaging located missing individual within 22 minutes of aircraft deployment. Coordinates relayed to ground teams who completed extraction. Mission scored highly for response time and AI accuracy.',
+    aar: 'Search and rescue operation in rural Maricopa County, coordinated with Rio Verde FD. Thermal imaging located missing individual within 22 minutes of aircraft deployment. Coordinates relayed to ground teams who completed extraction. Mission scored highly for response time and AI accuracy.',
     sortieEfficiency: 90,
     aiAccuracy: 93,
     responseTime: 91,
@@ -56,11 +56,11 @@ const missions: Mission[] = [
     id: 'MSN-2024-0001',
     date: 'Nov 14, 2024',
     type: 'Fire',
-    account: 'Springfield FD',
-    location: 'Springfield, OH',
+    account: 'Rio Verde FD',
+    location: 'Rio Verde, AZ',
     status: 'Closed',
     score: '87/100',
-    aar: 'Fire response mission supporting Springfield FD near rural Clark County. Aircraft deployed within 6 minutes of dispatch. Thermal imaging identified active fire line and 3 hotspots. One heat signature flagged — determined to be livestock. After-action report delivered same day.',
+    aar: 'Fire response mission supporting Rio Verde FD near rural Maricopa County. Aircraft deployed within 6 minutes of dispatch. Thermal imaging identified active fire line and 3 hotspots. One heat signature flagged — determined to be livestock. After-action report delivered same day.',
     sortieEfficiency: 88,
     aiAccuracy: 85,
     responseTime: 89,
@@ -82,7 +82,7 @@ export default function MissionHistoryView() {
 
   return (
     <div>
-      <h2 className="text-lg font-semibold text-white mb-4">Mission History — Springfield Fire Dept</h2>
+      <h2 className="text-lg font-semibold text-white mb-4">Mission History — Rio Verde Fire Dept</h2>
       <div className="bg-slate-800/80 border border-slate-700 rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-[11px] font-mono">
