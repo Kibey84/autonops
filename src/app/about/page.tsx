@@ -222,7 +222,7 @@ export default function AboutPage() {
                 <p>
                   AutonOps operates in strategic partnership with <strong className="text-white">Aeryl AI LLC</strong>,
                   a leader in autonomous aviation technology. This partnership combines Aeryl&apos;s cutting-edge
-                  M2 Multi-Mission Platform with our operational expertise to deliver unmatched drone services.
+                  M3 Multi-Mission Platform with our operational expertise to deliver unmatched drone services.
                 </p>
                 <p>
                   Through this collaboration, we leverage AI-powered mission planning, real-time sensor
@@ -235,7 +235,7 @@ export default function AboutPage() {
               className="bg-slate-800/50 backdrop-blur rounded-2xl p-8 border border-slate-700"
               tiltAmount={6}
             >
-              <h3 className="text-xl font-semibold mb-6 text-center">M2 Platform Capabilities</h3>
+              <h3 className="text-xl font-semibold mb-6 text-center">M3 Platform Capabilities</h3>
               <div className="grid grid-cols-1 gap-4">
                 <div className="flex items-start gap-4 p-4 bg-slate-700/30 rounded-xl group hover:bg-slate-700/50 transition-colors">
                   <div className="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
