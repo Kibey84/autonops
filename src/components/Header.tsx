@@ -12,6 +12,7 @@ const navigation = [
   { name: 'How It Works', href: '/how-it-works' },
   { name: 'Industries', href: '/industries' },
   { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 export default function Header() {
@@ -57,7 +58,7 @@ export default function Header() {
               {mounted ? (theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />) : <Moon className="w-5 h-5" />}
             </button>
             <Link
-              href="/dashboard"
+              href="/login"
               className="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition-colors"
             >
               Dashboard
@@ -99,7 +100,7 @@ export default function Header() {
                 </Link>
               ))}
               <Link
-                href="/dashboard"
+                href="/login"
                 className="inline-flex items-center justify-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >

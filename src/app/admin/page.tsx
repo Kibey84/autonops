@@ -5,46 +5,52 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import {
   LayoutDashboard,
-  PlusCircle,
+  DollarSign,
   Crosshair,
-  FileText,
-  Receipt,
-  MessageSquare,
+  Users,
+  ShieldCheck,
+  BarChart3,
   LogOut,
 } from 'lucide-react';
-import { getSession, clearSession } from '@/lib/data/auth';
+import { getSession, clearSession, isAdmin } from '@/lib/data/auth';
 import type { AuthSession } from '@/lib/data/types';
 import LiveClock from '@/components/dashboard/LiveClock';
-import CustomerOverview from '@/components/dashboard/CustomerOverview';
-import RequestMissionForm from '@/components/dashboard/RequestMissionForm';
-import CustomerMissionsView from '@/components/dashboard/CustomerMissionsView';
-import CustomerDeliverablesView from '@/components/dashboard/CustomerDeliverablesView';
-import CustomerBillingView from '@/components/dashboard/CustomerBillingView';
-import CustomerMessagesView from '@/components/dashboard/CustomerMessagesView';
+import AdminOverview from '@/components/admin/AdminOverview';
+import FinanceView from '@/components/admin/FinanceView';
+import OperationsView from '@/components/admin/OperationsView';
+import CRMView from '@/components/admin/CRMView';
+import ComplianceView from '@/components/admin/ComplianceView';
+import AnalyticsView from '@/components/admin/AnalyticsView';
 
-type View = 'overview' | 'request' | 'missions' | 'deliverables' | 'billing' | 'messages';
+type AdminView = 'overview' | 'finance' | 'operations' | 'crm' | 'compliance' | 'analytics';
 
-const sidebarItems: { key: View; label: string; icon: typeof LayoutDashboard }[] = [
+const sidebarItems: { key: AdminView; label: string; icon: typeof LayoutDashboard }[] = [
   { key: 'overview', label: 'Overview', icon: LayoutDashboard },
-  { key: 'request', label: 'Request Mission', icon: PlusCircle },
-  { key: 'missions', label: 'My Missions', icon: Crosshair },
-  { key: 'deliverables', label: 'Deliverables', icon: FileText },
-  { key: 'billing', label: 'Billing', icon: Receipt },
-  { key: 'messages', label: 'Messages', icon: MessageSquare },
+  { key: 'finance', label: 'Finance', icon: DollarSign },
+  { key: 'operations', label: 'Operations', icon: Crosshair },
+  { key: 'crm', label: 'CRM', icon: Users },
+  { key: 'compliance', label: 'Compliance', icon: ShieldCheck },
+  { key: 'analytics', label: 'Analytics', icon: BarChart3 },
 ];
 
-export default function DashboardPage() {
+export default function AdminPage() {
   const router = useRouter();
   const [session, setSession] = useState<AuthSession | null>(null);
-  const [activeView, setActiveView] = useState<View>('overview');
+  const [activeView, setActiveView] = useState<AdminView>('overview');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const s = getSession();
-    if (!s || s.role !== 'customer') {
+    if (!s) {
       router.push('/login');
       return;
     }
+    if (!isAdmin(s.role)) {
+      router.push('/dashboard');
+      return;
+    }
     setSession(s);
+    setLoading(false);
   }, [router]);
 
   const handleLogout = () => {
@@ -52,22 +58,21 @@ export default function DashboardPage() {
     router.push('/login');
   };
 
-  // Loading state while checking auth
-  if (!session) {
+  if (loading || !session) {
     return (
-      <div className="dark min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
         <div className="w-6 h-6 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
-  const views: Record<View, React.ReactNode> = {
-    overview: <CustomerOverview session={session} onNavigate={(v) => setActiveView(v as View)} />,
-    request: <RequestMissionForm session={session} />,
-    missions: <CustomerMissionsView session={session} />,
-    deliverables: <CustomerDeliverablesView session={session} />,
-    billing: <CustomerBillingView session={session} />,
-    messages: <CustomerMessagesView session={session} />,
+  const views: Record<AdminView, React.ReactNode> = {
+    overview: <AdminOverview onNavigate={(v) => setActiveView(v as AdminView)} />,
+    finance: <FinanceView />,
+    operations: <OperationsView />,
+    crm: <CRMView />,
+    compliance: <ComplianceView />,
+    analytics: <AnalyticsView />,
   };
 
   return (
@@ -78,12 +83,15 @@ export default function DashboardPage() {
           <Image src="/logo.png" alt="AutonOps" width={120} height={34} className="h-8 w-auto" />
         </div>
         <div className="hidden sm:block">
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-slate-400">
-            Client Portal
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-red-400">
+            Admin
           </span>
         </div>
         <div className="flex items-center gap-4">
           <LiveClock />
+          <span className="hidden md:inline font-mono text-xs text-slate-400">
+            {session.userName}
+          </span>
           <button
             onClick={handleLogout}
             className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-slate-400 hover:text-white border border-slate-700 rounded hover:bg-slate-800 transition-colors"
@@ -95,15 +103,7 @@ export default function DashboardPage() {
       </header>
 
       {/* Sidebar — Desktop */}
-      <aside className="fixed top-14 left-0 bottom-0 w-[220px] bg-slate-900 border-r border-slate-800 py-4 hidden lg:block">
-        <div className="px-4 mb-4">
-          <p className="font-mono text-[10px] uppercase tracking-wider text-slate-500 mb-1">
-            Account
-          </p>
-          <p className="text-sm text-white font-medium truncate">{session.accountName}</p>
-          <p className="text-xs text-slate-500 truncate">{session.userName}</p>
-        </div>
-        <div className="border-t border-slate-800 mx-3 mb-3" />
+      <aside className="fixed top-14 left-0 bottom-0 w-[240px] bg-slate-900 border-r border-slate-800 py-4 hidden lg:block">
         <nav className="space-y-1 px-3">
           {sidebarItems.map((item) => (
             <button
@@ -141,7 +141,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Main Content */}
-      <main className="pt-14 lg:pl-[220px]">
+      <main className="pt-14 lg:pl-[240px]">
         <div className="p-4 lg:p-6 mt-10 lg:mt-0">
           {views[activeView]}
         </div>

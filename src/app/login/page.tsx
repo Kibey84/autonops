@@ -3,10 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { Lock } from 'lucide-react';
-
-const DEMO_USER = 'ohio-demo';
-const DEMO_PASS = 'autonops2025';
+import { Lock, Shield } from 'lucide-react';
+import { authenticate, saveSession, isAdmin } from '@/lib/data/auth';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,9 +18,14 @@ export default function LoginPage() {
     setLoading(true);
 
     setTimeout(() => {
-      if (username === DEMO_USER && password === DEMO_PASS) {
-        sessionStorage.setItem('autonops_auth', 'true');
-        router.push('/dashboard');
+      const session = authenticate(username, password);
+      if (session) {
+        saveSession(session);
+        if (isAdmin(session.role)) {
+          router.push('/admin');
+        } else {
+          router.push('/dashboard');
+        }
       } else {
         setError(true);
         setLoading(false);
@@ -61,7 +64,7 @@ export default function LoginPage() {
             <div className="w-12 h-12 bg-red-600/20 rounded-lg flex items-center justify-center mx-auto mb-4">
               <Lock className="w-6 h-6 text-red-500" />
             </div>
-            <h1 className="text-2xl font-bold text-white">Mission Dashboard</h1>
+            <h1 className="text-2xl font-bold text-white">AutonOps Platform</h1>
             <p className="text-slate-400 text-sm mt-1">Authorized access only</p>
           </div>
 
@@ -108,6 +111,24 @@ export default function LoginPage() {
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
+          </div>
+
+          {/* Role info */}
+          <div className="mt-6 pt-6 border-t border-slate-700">
+            <div className="flex items-center gap-2 mb-3">
+              <Shield className="w-4 h-4 text-slate-500" />
+              <span className="text-xs text-slate-500 uppercase tracking-wider">Demo Accounts</span>
+            </div>
+            <div className="space-y-2 text-xs font-mono">
+              <div className="flex justify-between text-slate-500">
+                <span>Customer:</span>
+                <span className="text-slate-400">ohio-demo / autonops2025</span>
+              </div>
+              <div className="flex justify-between text-slate-500">
+                <span>Admin:</span>
+                <span className="text-slate-400">admin / autonops2025</span>
+              </div>
+            </div>
           </div>
 
           <p className="text-center text-slate-500 text-xs mt-6">

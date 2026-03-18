@@ -5,7 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ChatWidget from '@/components/ChatWidget';
 
-const BARE_ROUTES = ['/dashboard', '/login'];
+const BARE_ROUTES = ['/dashboard', '/login', '/admin'];
 
 export default function LayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
