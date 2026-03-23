@@ -323,36 +323,142 @@ function ThermalFeedPanel() {
   );
 }
 
-// ─── WEATHER / CONDITIONS ───────────────────────────────────
+// ─── WEATHER RADAR ──────────────────────────────────────────
 
-function WeatherPanel() {
+function WeatherRadar() {
+  const [sweepAngle, setSweepAngle] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSweepAngle((p) => (p + 3) % 360);
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <DashboardPanel title="Weather & Conditions" statusColor="green">
-      <div className="space-y-2 text-[11px]">
-        <div className="bg-slate-900 rounded-lg p-3 space-y-2">
+    <DashboardPanel title="Weather Radar" statusColor="green" headerRight={
+      <span className="font-mono text-[9px] text-slate-500">25 nm range</span>
+    }>
+      <div className="space-y-2">
+        {/* Radar display */}
+        <div className="relative aspect-square max-h-[260px] mx-auto bg-slate-950 rounded-lg border border-slate-700 overflow-hidden">
+          {/* Range rings */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            {[80, 60, 40, 20].map((size) => (
+              <div
+                key={size}
+                className="absolute rounded-full border border-slate-700/40"
+                style={{ width: `${size}%`, height: `${size}%` }}
+              />
+            ))}
+          </div>
+
+          {/* Cross lines */}
+          <div className="absolute top-0 bottom-0 left-1/2 w-px bg-slate-700/30" />
+          <div className="absolute left-0 right-0 top-1/2 h-px bg-slate-700/30" />
+
+          {/* Cardinal directions */}
+          <div className="absolute top-1 left-1/2 -translate-x-1/2 text-[7px] font-mono text-slate-500">N</div>
+          <div className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[7px] font-mono text-slate-500">S</div>
+          <div className="absolute left-1.5 top-1/2 -translate-y-1/2 text-[7px] font-mono text-slate-500">W</div>
+          <div className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[7px] font-mono text-slate-500">E</div>
+
+          {/* Range labels */}
+          <div className="absolute top-[11%] left-1/2 translate-x-1 text-[6px] font-mono text-slate-600">25</div>
+          <div className="absolute top-[21%] left-1/2 translate-x-1 text-[6px] font-mono text-slate-600">20</div>
+          <div className="absolute top-[31%] left-1/2 translate-x-1 text-[6px] font-mono text-slate-600">15</div>
+
+          {/* Precipitation cells - light scattered returns */}
+          <div className="absolute top-[18%] left-[22%] w-[12%] h-[8%] rounded-full opacity-50"
+            style={{ background: 'radial-gradient(ellipse, #22c55e 0%, transparent 70%)' }} />
+          <div className="absolute top-[25%] left-[18%] w-[8%] h-[6%] rounded-full opacity-40"
+            style={{ background: 'radial-gradient(ellipse, #22c55e 0%, transparent 70%)' }} />
+
+          {/* Moderate cell NE */}
+          <div className="absolute top-[15%] right-[25%] w-[15%] h-[12%] rounded-full opacity-60"
+            style={{ background: 'radial-gradient(ellipse, #eab308 20%, #22c55e 60%, transparent 80%)' }} />
+
+          {/* Light returns south */}
+          <div className="absolute bottom-[22%] left-[35%] w-[18%] h-[10%] rounded-full opacity-35"
+            style={{ background: 'radial-gradient(ellipse, #22c55e 0%, transparent 70%)' }} />
+
+          {/* Aircraft position (center dot) */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full z-10" />
+
+          {/* Sweep line */}
+          <div
+            className="absolute top-1/2 left-1/2 origin-bottom-left z-20"
+            style={{
+              width: '50%',
+              height: '1px',
+              background: 'linear-gradient(to right, rgba(34,197,94,0.8), transparent)',
+              transform: `rotate(${sweepAngle}deg)`,
+              transformOrigin: '0 0',
+            }}
+          />
+
+          {/* Sweep glow trail */}
+          <div
+            className="absolute top-1/2 left-1/2 origin-bottom-left z-10"
+            style={{
+              width: '50%',
+              height: '1px',
+              background: 'linear-gradient(to right, rgba(34,197,94,0.15), transparent)',
+              transform: `rotate(${sweepAngle - 15}deg)`,
+              transformOrigin: '0 0',
+            }}
+          />
+          <div
+            className="absolute top-1/2 left-1/2 origin-bottom-left z-10"
+            style={{
+              width: '50%',
+              height: '1px',
+              background: 'linear-gradient(to right, rgba(34,197,94,0.05), transparent)',
+              transform: `rotate(${sweepAngle - 30}deg)`,
+              transformOrigin: '0 0',
+            }}
+          />
+
+          {/* Wind barb indicator */}
+          <div className="absolute bottom-2 left-2 flex items-center gap-1">
+            <Wind className="w-3 h-3 text-cyan-400/70" />
+            <span className="font-mono text-[7px] text-cyan-400/70">270° 12G18</span>
+          </div>
+        </div>
+
+        {/* Legend + conditions */}
+        <div className="flex items-center justify-between text-[8px] font-mono text-slate-500">
+          <div className="flex items-center gap-3">
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500 inline-block" /> Light</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-yellow-500 inline-block" /> Mod</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500 inline-block" /> Heavy</span>
+          </div>
+          <span>UPD: 2 min ago</span>
+        </div>
+
+        {/* Conditions summary */}
+        <div className="bg-slate-900 rounded-lg p-2.5 space-y-1.5 text-[10px]">
           {[
             { icon: Wind, label: 'Wind', value: '270° at 12 kts, gusts 18' },
             { icon: Thermometer, label: 'Temp', value: '84°F / 29°C' },
-            { icon: Eye, label: 'Visibility', value: '6 SM (smoke haze)' },
+            { icon: Eye, label: 'Vis', value: '6 SM (smoke haze)' },
             { icon: Target, label: 'Ceiling', value: 'CLR' },
           ].map((row) => (
             <div key={row.label} className="flex items-center justify-between">
-              <span className="text-slate-400 flex items-center gap-1.5">
-                <row.icon className="w-3 h-3" />{row.label}
-              </span>
+              <span className="text-slate-400 flex items-center gap-1"><row.icon className="w-3 h-3" />{row.label}</span>
               <span className="font-mono text-slate-200">{row.value}</span>
             </div>
           ))}
         </div>
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-2">
-          <div className="flex items-center gap-1.5 text-amber-400 text-[10px] font-mono font-bold mb-1">
-            <AlertTriangle className="w-3 h-3" /> WIND ADVISORY
+
+        {/* Advisory */}
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg px-2.5 py-1.5">
+          <div className="flex items-center gap-1 text-amber-400 text-[9px] font-mono font-bold">
+            <AlertTriangle className="w-3 h-3" /> WIND ADVISORY — Gusts 18 kts
           </div>
-          <p className="text-[10px] text-amber-300/80">
-            Gusts to 18 kts. Monitor aircraft stability during survey passes. Consider altitude adjustment if turbulence increases.
-          </p>
         </div>
-        <div className="text-[9px] text-slate-500 font-mono">
+
+        <div className="text-[8px] text-slate-600 font-mono truncate">
           METAR: KSGH 161453Z 27012G18KT 6SM HZ CLR 29/18 A3001
         </div>
       </div>
@@ -587,9 +693,19 @@ export default function FlightControlView() {
       {/* Mission status bar */}
       <MissionStatusBar />
 
-      {/* Row 1: Map + Dual Camera Feeds */}
-      <div className="grid grid-cols-12 gap-3" style={{ minHeight: '380px' }}>
-        <div className="col-span-12 xl:col-span-4">
+      {/* Row 1: Dual Live Feeds — side by side, top priority */}
+      <div className="grid grid-cols-12 gap-3">
+        <div className="col-span-12 lg:col-span-6">
+          <EOFeedPanel />
+        </div>
+        <div className="col-span-12 lg:col-span-6">
+          <ThermalFeedPanel />
+        </div>
+      </div>
+
+      {/* Row 2: Mission Map + Weather Radar */}
+      <div className="grid grid-cols-12 gap-3">
+        <div className="col-span-12 lg:col-span-7">
           <DashboardPanel
             title="Mission Map"
             statusColor="green"
@@ -600,31 +716,25 @@ export default function FlightControlView() {
             </div>
           </DashboardPanel>
         </div>
-        <div className="col-span-12 sm:col-span-6 xl:col-span-4">
-          <EOFeedPanel />
-        </div>
-        <div className="col-span-12 sm:col-span-6 xl:col-span-4">
-          <ThermalFeedPanel />
+        <div className="col-span-12 lg:col-span-5">
+          <WeatherRadar />
         </div>
       </div>
 
-      {/* Row 2: Telemetry + Commands + Weather */}
+      {/* Row 3: Telemetry + Commands + Waypoints */}
       <div className="grid grid-cols-12 gap-3">
         <div className="col-span-12 sm:col-span-6 lg:col-span-4">
           <PilotTelemetry />
         </div>
-        <div className="col-span-12 sm:col-span-6 lg:col-span-4">
-          <div className="space-y-3">
-            <AircraftCommands />
-            <WeatherPanel />
-          </div>
+        <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+          <AircraftCommands />
         </div>
-        <div className="col-span-12 lg:col-span-4">
+        <div className="col-span-12 lg:col-span-5">
           <WaypointManager />
         </div>
       </div>
 
-      {/* Row 3: AI Alerts + Comms */}
+      {/* Row 4: AI Alerts + Comms */}
       <div className="grid grid-cols-12 gap-3">
         <div className="col-span-12 lg:col-span-5">
           <PilotAIFeed />
