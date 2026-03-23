@@ -24,11 +24,10 @@ import ComplianceView from '@/components/admin/ComplianceView';
 import AnalyticsView from '@/components/admin/AnalyticsView';
 import LiveMissionView from '@/components/admin/LiveMissionView';
 
-type AdminView = 'overview' | 'live' | 'finance' | 'operations' | 'crm' | 'compliance' | 'analytics';
+type AdminView = 'overview' | 'finance' | 'operations' | 'crm' | 'compliance' | 'analytics';
 
 const sidebarItems: { key: AdminView; label: string; icon: typeof LayoutDashboard }[] = [
   { key: 'overview', label: 'Overview', icon: LayoutDashboard },
-  { key: 'live', label: 'Live Mission', icon: Joystick },
   { key: 'finance', label: 'Finance', icon: DollarSign },
   { key: 'operations', label: 'Operations', icon: Crosshair },
   { key: 'crm', label: 'CRM', icon: Users },
@@ -40,6 +39,7 @@ export default function AdminPage() {
   const router = useRouter();
   const [session, setSession] = useState<AuthSession | null>(null);
   const [activeView, setActiveView] = useState<AdminView>('overview');
+  const [showLiveMission, setShowLiveMission] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -69,9 +69,13 @@ export default function AdminPage() {
     );
   }
 
+  // Live Mission takes over the entire screen
+  if (showLiveMission) {
+    return <LiveMissionView />;
+  }
+
   const views: Record<AdminView, React.ReactNode> = {
     overview: <AdminOverview onNavigate={(v) => setActiveView(v as AdminView)} />,
-    live: <LiveMissionView />,
     finance: <FinanceView />,
     operations: <OperationsView />,
     crm: <CRMView />,
@@ -107,8 +111,8 @@ export default function AdminPage() {
       </header>
 
       {/* Sidebar — Desktop */}
-      <aside className="fixed top-14 left-0 bottom-0 w-[240px] bg-slate-900 border-r border-slate-800 py-4 hidden lg:block">
-        <nav className="space-y-1 px-3">
+      <aside className="fixed top-14 left-0 bottom-0 w-[240px] bg-slate-900 border-r border-slate-800 py-4 hidden lg:flex flex-col">
+        <nav className="space-y-1 px-3 flex-1">
           {sidebarItems.map((item) => (
             <button
               key={item.key}
@@ -124,6 +128,17 @@ export default function AdminPage() {
             </button>
           ))}
         </nav>
+
+        {/* Live Mission — separate button at bottom */}
+        <div className="px-3 pb-2">
+          <button
+            onClick={() => setShowLiveMission(true)}
+            className="w-full flex items-center justify-center gap-2 px-3 py-3 rounded-lg text-sm font-bold bg-red-600 hover:bg-red-700 text-white transition-colors animate-pulse hover:animate-none"
+          >
+            <Joystick className="w-5 h-5" />
+            LIVE MISSION
+          </button>
+        </div>
       </aside>
 
       {/* Mobile Tab Bar */}
@@ -142,6 +157,13 @@ export default function AdminPage() {
             {item.label}
           </button>
         ))}
+        <button
+          onClick={() => setShowLiveMission(true)}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs whitespace-nowrap bg-red-600 text-white font-bold"
+        >
+          <Joystick className="w-3.5 h-3.5" />
+          LIVE MISSION
+        </button>
       </div>
 
       {/* Main Content */}

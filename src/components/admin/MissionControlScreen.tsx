@@ -219,41 +219,18 @@ function EOFeed() {
           </span>
         </div>
       </div>
-      <div className="flex-1 relative overflow-hidden" style={{ background: 'radial-gradient(ellipse at 35% 35%, #4a5568 0%, #1a202c 70%, #0d1117 100%)' }}>
-        {/* ── ANIMATED TERRAIN (panning to simulate flight) ── */}
-        <div className="absolute inset-0" style={{ animation: 'panTerrain 25s linear infinite' }}>
-          {/* Ground layers */}
-          <div className="absolute bottom-[8%] left-[-20%] right-[-20%] h-6" style={{ background: 'linear-gradient(180deg, transparent, #2d3748 40%, #1a202c)' }} />
-          <div className="absolute bottom-[14%] left-[-20%] right-[-20%] h-5" style={{ background: 'linear-gradient(180deg, transparent, #2d3748 50%, transparent)' }} />
-          <div className="absolute bottom-[20%] left-[-15%] right-[-15%] h-4" style={{ background: 'linear-gradient(180deg, transparent, #374151 40%, transparent)' }} />
-          {/* Tree lines */}
-          <div className="absolute bottom-[25%] left-[-10%] right-[-5%] h-3" style={{ background: 'linear-gradient(180deg, transparent, #1e3a2f 60%, transparent)' }} />
-          <div className="absolute bottom-[30%] left-[5%] right-[-10%] h-2" style={{ background: 'linear-gradient(180deg, transparent, #1e3a2f 50%, transparent)' }} />
-          {/* Fields */}
-          <div className="absolute bottom-[12%] left-[25%] w-[20%] h-[5%] bg-slate-600/12 rounded-sm" />
-          <div className="absolute bottom-[18%] left-[60%] w-[12%] h-[4%] bg-slate-600/08 rounded-sm" />
-          <div className="absolute bottom-[22%] left-[10%] w-[8%] h-[3%] bg-slate-700/10 rounded-sm" />
-          {/* Roads */}
-          <div className="absolute bottom-[15%] left-[-5%] w-[70%] h-px bg-slate-400/12 rotate-[-3deg]" />
-          <div className="absolute bottom-[19%] left-[35%] w-[40%] h-px bg-slate-400/08 rotate-[12deg]" />
-          {/* Structures passing underneath */}
-          <div className="absolute bottom-[21%] left-[38%] w-2.5 h-2 bg-slate-500/18 shadow-sm shadow-black/20" />
-          <div className="absolute bottom-[20%] left-[40%] w-2 h-1.5 bg-slate-500/14" />
-          <div className="absolute bottom-[24%] left-[58%] w-3 h-2 bg-slate-500/18" />
-          <div className="absolute bottom-[16%] left-[72%] w-2 h-1.5 bg-slate-500/12" />
+      <div className="flex-1 relative overflow-hidden bg-black">
+        {/* Real aerial image as feed background, slowly panning */}
+        <div className="absolute inset-[-20%]" style={{ animation: 'panTerrain 40s linear infinite' }}>
+          <img
+            src="/20250902_1839_GarnetFire.png"
+            alt=""
+            className="w-full h-full object-cover"
+            style={{ filter: 'brightness(0.7) contrast(1.1)' }}
+          />
         </div>
-        {/* Smoke plume (drifts separately) */}
-        <div className="absolute top-0 right-0 w-full h-full pointer-events-none" style={{ animation: 'driftSmoke 18s ease-in-out infinite' }}>
-          <div className="absolute top-[3%] right-[8%] w-40 h-52 rotate-[-15deg] opacity-22"
-            style={{ background: 'radial-gradient(ellipse at 50% 80%, #94a3b8 0%, transparent 60%)' }} />
-          <div className="absolute top-[12%] right-[15%] w-24 h-32 rotate-[-22deg] opacity-14"
-            style={{ background: 'radial-gradient(ellipse at 50% 70%, #cbd5e1 0%, transparent 55%)' }} />
-          <div className="absolute top-[8%] right-[5%] w-16 h-20 rotate-[-10deg] opacity-10"
-            style={{ background: 'radial-gradient(ellipse at 50% 60%, #e2e8f0 0%, transparent 60%)' }} />
-        </div>
-        {/* Ember glow (pulses) */}
-        <div className="absolute bottom-[26%] right-[20%] w-10 h-8 rounded-full"
-          style={{ background: 'radial-gradient(circle, #dc2626 0%, #991b1b 30%, transparent 65%)', animation: 'pulseEmber 3s ease-in-out infinite' }} />
+        {/* Slight vignette */}
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%)' }} />
 
         {/* === HUD OVERLAY === */}
         <div className="absolute inset-0 pointer-events-none">
@@ -380,24 +357,18 @@ function IRFeed() {
           </span>
         </div>
       </div>
-      <div className="flex-1 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, #0f0f0f 50%, #141414 100%)' }}>
-        {/* ── ANIMATED THERMAL TERRAIN (slow drift) ── */}
-        <div className="absolute inset-0" style={{ animation: 'panThermal 30s linear infinite' }}>
-          {/* Ambient thermal noise pattern */}
-          <div className="absolute inset-0 opacity-[0.06]"
-            style={{ background: 'radial-gradient(ellipse at 30% 60%, #1a1a1a, transparent 50%), radial-gradient(ellipse at 70% 30%, #1a1a1a, transparent 40%)' }} />
-          {/* Cool terrain base */}
-          <div className="absolute bottom-[8%] left-[-10%] right-[-10%] h-[22%] opacity-[0.07]"
-            style={{ background: 'linear-gradient(180deg, transparent, #4a2810)' }} />
-          {/* Roads (warm from sun absorption) */}
-          <div className="absolute bottom-[15%] left-[-5%] w-[65%] h-0.5 bg-amber-900/08 rotate-[-3deg]" />
-          <div className="absolute bottom-[19%] left-[30%] w-[35%] h-0.5 bg-amber-900/06 rotate-[10deg]" />
-          {/* Warm structures */}
-          <div className="absolute bottom-[21%] left-[38%] w-3 h-2 rounded-sm opacity-20"
-            style={{ background: 'radial-gradient(ellipse, #92400e, transparent)' }} />
-          <div className="absolute bottom-[17%] left-[65%] w-2.5 h-1.5 rounded-sm opacity-15"
-            style={{ background: 'radial-gradient(ellipse, #78350f, transparent)' }} />
+      <div className="flex-1 relative overflow-hidden bg-black">
+        {/* Real thermal image as feed background, slowly drifting */}
+        <div className="absolute inset-[-15%]" style={{ animation: 'panThermal 35s ease-in-out infinite' }}>
+          <img
+            src="/figure_1_infrared-camera.jpg"
+            alt=""
+            className="w-full h-full object-cover"
+            style={{ filter: 'brightness(0.6) contrast(1.3) hue-rotate(-10deg)' }}
+          />
         </div>
+        {/* Thermal tint overlay */}
+        <div className="absolute inset-0 bg-black/30 mix-blend-multiply" />
 
         {/* === FIRE / HOTSPOT RENDERING === */}
         {/* Primary fire — large irregular hotspot */}
@@ -565,7 +536,7 @@ function WeatherPanel() {
     async function fetchWeather() {
       try {
         const res = await fetch(
-          'https://api.open-meteo.com/v1/forecast?latitude=39.9242&longitude=-83.8088&current=temperature_2m,wind_speed_10m,wind_direction_10m,weather_code&temperature_unit=fahrenheit&wind_speed_unit=knots'
+          'https://api.open-meteo.com/v1/forecast?latitude=39.9242&longitude=-83.8088&current=temperature_2m,wind_speed_10m,wind_direction_10m,weather_code&temperature_unit=fahrenheit&wind_speed_unit=kn'
         );
         if (!res.ok) throw new Error();
         const data = await res.json();
@@ -764,11 +735,12 @@ function EmergencyChecklist({ onClose }: { onClose: () => void }) {
 
   let itemIndex = 0;
 
+  // Using absolute positioning within the fullscreen container instead of fixed
   return (
-    <div className="fixed inset-0 z-[200] flex">
+    <div className="absolute inset-0 z-[200] flex">
       {/* Backdrop */}
       <div className="flex-1 bg-black/60" onClick={onClose} />
-      {/* Panel */}
+      {/* Panel — right side, full height */}
       <div className="w-[380px] bg-slate-900 border-l border-slate-700 overflow-y-auto p-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
