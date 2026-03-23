@@ -13,6 +13,11 @@ const MissionControlMapClient = dynamic(
   { ssr: false, loading: () => <div className="h-full w-full bg-slate-800 animate-pulse rounded-lg" /> }
 );
 
+const WeatherMapClient = dynamic(
+  () => import('./WeatherMapClient'),
+  { ssr: false, loading: () => <div className="h-full w-full bg-slate-800 animate-pulse rounded-lg" /> }
+);
+
 // ─── HELPERS ────────────────────────────────────────────────
 
 function useInterval(callback: () => void, delay: number | null) {
@@ -182,88 +187,285 @@ function AssetQueue() {
   );
 }
 
-// ─── VIDEO FEEDS ────────────────────────────────────────────
+// ─── EO FEED WITH FULL HUD ──────────────────────────────────
 
 function EOFeed() {
+  const [alt, setAlt] = useState(1200);
+  const [spd, setSpd] = useState(68);
+  const [hdg, setHdg] = useState(315);
+  const [vsi, setVsi] = useState(0);
+  const [gLoad, setGLoad] = useState(1.0);
+  const [frame, setFrame] = useState(0);
+
+  useInterval(() => {
+    setAlt((p) => p + Math.round((Math.random() - 0.48) * 6));
+    setSpd((p) => Math.max(48, Math.min(78, p + Math.round((Math.random() - 0.5) * 2))));
+    setHdg((p) => (p + (Math.random() - 0.5) * 1.5 + 360) % 360);
+    setVsi(Math.round((Math.random() - 0.5) * 200));
+    setGLoad(+(1.0 + (Math.random() - 0.5) * 0.15).toFixed(2));
+    setFrame((p) => p + 1);
+  }, 200);
+
+  const pitchLines = [-10, -5, 0, 5, 10];
+
   return (
-    <div className="h-full bg-slate-900 border border-slate-700/50 rounded-lg overflow-hidden flex flex-col">
-      <div className="px-3 py-1.5 bg-slate-800 border-b border-slate-700/50 flex items-center justify-between">
-        <span className="font-mono text-[9px] text-slate-400">EO FEED · 4K · NADIR</span>
-        <span className="flex items-center gap-1 font-mono text-[9px] text-red-400">
-          <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />REC
-        </span>
+    <div className="h-full bg-black border border-slate-700/50 rounded-lg overflow-hidden flex flex-col">
+      <div className="px-3 py-1 bg-slate-900/90 border-b border-slate-700/50 flex items-center justify-between">
+        <span className="font-mono text-[8px] text-slate-500">CAM-1 · EO/RGB · 4K · NADIR</span>
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-[8px] text-slate-600 tabular-nums">F{String(frame).padStart(6, '0')}</span>
+          <span className="flex items-center gap-1 font-mono text-[8px] text-red-500">
+            <span className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse" />REC
+          </span>
+        </div>
       </div>
-      <div className="flex-1 relative overflow-hidden" style={{ background: 'radial-gradient(ellipse at 40% 40%, #475569 0%, #1e293b 100%)' }}>
-        {/* Terrain */}
-        <div className="absolute bottom-[15%] left-0 right-0 h-4 bg-slate-700/50" />
-        <div className="absolute bottom-[22%] left-0 right-0 h-3 bg-slate-700/35" />
-        <div className="absolute bottom-[28%] left-[5%] right-[10%] h-2 bg-slate-700/25" />
+      <div className="flex-1 relative overflow-hidden" style={{ background: 'radial-gradient(ellipse at 35% 35%, #4a5568 0%, #1a202c 70%, #0d1117 100%)' }}>
+        {/* Terrain layers */}
+        <div className="absolute bottom-[12%] left-0 right-0 h-5" style={{ background: 'linear-gradient(180deg, transparent, #2d3748 40%, #1a202c)' }} />
+        <div className="absolute bottom-[18%] left-0 right-0 h-4" style={{ background: 'linear-gradient(180deg, transparent, #2d3748 50%, transparent)' }} />
+        <div className="absolute bottom-[24%] left-[3%] right-[8%] h-3" style={{ background: 'linear-gradient(180deg, transparent, #374151 40%, transparent)' }} />
+        {/* Fields / clearings */}
+        <div className="absolute bottom-[14%] left-[30%] w-[15%] h-[4%] bg-slate-600/15 rounded-sm" />
+        <div className="absolute bottom-[20%] left-[55%] w-[10%] h-[3%] bg-slate-600/10 rounded-sm" />
         {/* Road */}
-        <div className="absolute bottom-[18%] left-[3%] w-[50%] h-0.5 bg-slate-400/20 rotate-[-5deg]" />
-        {/* Smoke */}
-        <div className="absolute top-[10%] right-[15%] w-32 h-40 rotate-[-20deg] opacity-30"
-          style={{ background: 'linear-gradient(135deg, transparent 25%, #94a3b8 50%, transparent 75%)' }} />
-        {/* Scanlines */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
-          style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, #fff 2px, #fff 3px)', backgroundSize: '100% 3px' }} />
-        {/* HUD overlay */}
-        <div className="absolute top-2 left-2 font-mono text-[7px] text-green-400/60 leading-tight">
-          <div>AC: DEMO-1</div><div>EO/RGB · NADIR</div><div>39.9242°N 83.8088°W</div>
-        </div>
-        <div className="absolute top-2 right-2 font-mono text-[7px] text-green-400/60 text-right leading-tight">
-          <div>ALT 1200 AGL</div><div>HDG 315° MAG</div><div>GS 68 KTS</div>
-        </div>
-        {/* Crosshair */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-6 h-px bg-red-500/30" /><div className="h-6 w-px bg-red-500/30 absolute" />
+        <div className="absolute bottom-[16%] left-[2%] w-[55%] h-px bg-slate-500/15 rotate-[-4deg]" />
+        <div className="absolute bottom-[19%] left-[40%] w-[30%] h-px bg-slate-500/10 rotate-[15deg]" />
+        {/* Structures */}
+        <div className="absolute bottom-[22%] left-[42%] w-2 h-1.5 bg-slate-500/20" />
+        <div className="absolute bottom-[21%] left-[44%] w-1.5 h-1 bg-slate-500/15" />
+        <div className="absolute bottom-[25%] left-[60%] w-2.5 h-1.5 bg-slate-500/20" />
+        {/* Smoke plume */}
+        <div className="absolute top-[5%] right-[12%] w-36 h-48 rotate-[-18deg] opacity-25"
+          style={{ background: 'radial-gradient(ellipse at 50% 80%, #94a3b8 0%, transparent 65%)' }} />
+        <div className="absolute top-[15%] right-[18%] w-20 h-28 rotate-[-25deg] opacity-15"
+          style={{ background: 'radial-gradient(ellipse at 50% 70%, #cbd5e1 0%, transparent 60%)' }} />
+        {/* Ember glow on ground */}
+        <div className="absolute bottom-[28%] right-[22%] w-8 h-6 rounded-full opacity-20"
+          style={{ background: 'radial-gradient(circle, #dc2626 0%, transparent 70%)' }} />
+
+        {/* === HUD OVERLAY === */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Scanlines */}
+          <div className="absolute inset-0 opacity-[0.025]"
+            style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 1px, #22c55e 1px, #22c55e 2px)', backgroundSize: '100% 2px' }} />
+
+          {/* ── Compass ribbon (top center) ── */}
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[50%]">
+            <div className="relative h-4 bg-black/30 border border-green-500/20 rounded overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="font-mono text-[9px] text-green-400 font-bold tabular-nums">{Math.round(hdg)}°</span>
+              </div>
+              {/* Tick marks */}
+              <div className="absolute top-0 left-[20%] w-px h-1.5 bg-green-500/30" />
+              <div className="absolute top-0 left-[40%] w-px h-1.5 bg-green-500/30" />
+              <div className="absolute top-0 left-[60%] w-px h-1.5 bg-green-500/30" />
+              <div className="absolute top-0 left-[80%] w-px h-1.5 bg-green-500/30" />
+              {/* Center caret */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[4px] border-r-[4px] border-t-[5px] border-l-transparent border-r-transparent border-t-green-400" />
+            </div>
+          </div>
+
+          {/* ── Speed tape (left) ── */}
+          <div className="absolute left-3 top-1/2 -translate-y-1/2">
+            <div className="w-10 bg-black/30 border border-green-500/20 rounded py-1 text-center">
+              <div className="text-[7px] text-green-500/50 font-mono">{spd + 10}</div>
+              <div className="text-[7px] text-green-500/50 font-mono">{spd + 5}</div>
+              <div className="h-px bg-green-500/30 my-0.5" />
+              <div className="text-[10px] text-green-400 font-mono font-bold tabular-nums">{spd}</div>
+              <div className="h-px bg-green-500/30 my-0.5" />
+              <div className="text-[7px] text-green-500/50 font-mono">{spd - 5}</div>
+              <div className="text-[7px] text-green-500/50 font-mono">{spd - 10}</div>
+            </div>
+            <div className="text-[6px] text-green-500/40 font-mono text-center mt-0.5">KTS</div>
+          </div>
+
+          {/* ── Altitude tape (right) ── */}
+          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+            <div className="w-12 bg-black/30 border border-green-500/20 rounded py-1 text-center">
+              <div className="text-[7px] text-green-500/50 font-mono">{alt + 100}</div>
+              <div className="text-[7px] text-green-500/50 font-mono">{alt + 50}</div>
+              <div className="h-px bg-green-500/30 my-0.5" />
+              <div className="text-[10px] text-green-400 font-mono font-bold tabular-nums">{alt}</div>
+              <div className="h-px bg-green-500/30 my-0.5" />
+              <div className="text-[7px] text-green-500/50 font-mono">{alt - 50}</div>
+              <div className="text-[7px] text-green-500/50 font-mono">{alt - 100}</div>
+            </div>
+            <div className="text-[6px] text-green-500/40 font-mono text-center mt-0.5">FT AGL</div>
+          </div>
+
+          {/* ── Pitch ladder (center) ── */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="relative w-[30%]">
+              {pitchLines.map((deg) => (
+                <div key={deg} className="flex items-center justify-center mb-2.5" style={{ opacity: deg === 0 ? 0.5 : 0.25 }}>
+                  <div className={`h-px ${deg === 0 ? 'w-full bg-green-500' : 'w-[60%] bg-green-500'}`} style={{ borderTop: deg !== 0 ? '1px dashed rgba(34,197,94,0.4)' : undefined }} />
+                  {deg !== 0 && <span className="absolute right-0 text-[6px] font-mono text-green-500/40">{deg}</span>}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Flight path vector (center cross) ── */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="w-5 h-5 border border-green-400/50 rounded-full" />
+            <div className="absolute top-1/2 -left-3 w-3 h-px bg-green-400/50" />
+            <div className="absolute top-1/2 -right-3 w-3 h-px bg-green-400/50" />
+            <div className="absolute -top-3 left-1/2 w-px h-3 bg-green-400/50 -translate-x-1/2" />
+          </div>
+
+          {/* ── VSI indicator (right of alt tape) ── */}
+          <div className="absolute right-[18px] top-1/2 translate-y-4">
+            <div className="text-[6px] font-mono text-green-500/50">VS {vsi > 0 ? '+' : ''}{vsi}</div>
+          </div>
+
+          {/* ── Bottom HUD data ── */}
+          <div className="absolute bottom-2 left-3 font-mono text-[7px] text-green-400/60 leading-tight">
+            <div>39.9340°N 83.8230°W</div>
+            <div>WP3 TRANSIT · 1.2nm to WP4</div>
+            <div>G: {gLoad.toFixed(1)} · BAT: 74%</div>
+          </div>
+          <div className="absolute bottom-2 right-3 font-mono text-[7px] text-green-400/60 text-right leading-tight">
+            <div>TGT BRG: 315° · 2.1nm</div>
+            <div>WIND: 270/12G18</div>
+            <div>STARLINK: 34ms</div>
+          </div>
+
+          {/* ── Top corners ── */}
+          <div className="absolute top-9 left-3 font-mono text-[7px] text-green-400/50">
+            DEMO-1 · EO/RGB
+          </div>
+          <div className="absolute top-9 right-3 font-mono text-[7px] text-green-400/50 text-right">
+            NADIR · 4K
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
+// ─── IR FEED WITH REALISTIC THERMAL ─────────────────────────
+
 function IRFeed() {
+  const [frame, setFrame] = useState(0);
+
+  useInterval(() => {
+    setFrame((p) => p + 1);
+  }, 200);
+
+  // Slight hotspot shimmer
+  const shimmer1 = 0.65 + Math.sin(frame * 0.15) * 0.08;
+  const shimmer2 = 0.55 + Math.sin(frame * 0.12 + 1) * 0.06;
+  const shimmer3 = 0.42 + Math.sin(frame * 0.18 + 2) * 0.05;
+
   return (
-    <div className="h-full bg-slate-900 border border-slate-700/50 rounded-lg overflow-hidden flex flex-col">
-      <div className="px-3 py-1.5 bg-slate-800 border-b border-slate-700/50 flex items-center justify-between">
-        <span className="font-mono text-[9px] text-slate-400">IR FEED · FLIR · WHITE-HOT</span>
-        <span className="flex items-center gap-1 font-mono text-[9px] text-red-400">
-          <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />REC
-        </span>
+    <div className="h-full bg-black border border-slate-700/50 rounded-lg overflow-hidden flex flex-col">
+      <div className="px-3 py-1 bg-slate-900/90 border-b border-slate-700/50 flex items-center justify-between">
+        <span className="font-mono text-[8px] text-slate-500">CAM-2 · THERMAL/IR · FLIR · WHITE-HOT</span>
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-[8px] text-slate-600 tabular-nums">F{String(frame).padStart(6, '0')}</span>
+          <span className="flex items-center gap-1 font-mono text-[8px] text-red-500">
+            <span className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse" />REC
+          </span>
+        </div>
       </div>
-      <div className="flex-1 relative overflow-hidden bg-slate-950">
-        {/* Thermal tint */}
-        <div className="absolute inset-0 opacity-[0.06]" style={{ background: 'linear-gradient(180deg, #064e3b 0%, transparent 100%)' }} />
-        {/* Hotspots */}
-        <div className="absolute top-[20%] left-[25%] w-20 h-20 rounded-full opacity-70"
-          style={{ background: 'radial-gradient(circle, #ea580c 0%, #991b1b 40%, transparent 70%)' }} />
-        <div className="absolute top-[40%] right-[20%] w-14 h-14 rounded-full opacity-55"
-          style={{ background: 'radial-gradient(circle, #f59e0b 0%, #ea580c 40%, transparent 70%)' }} />
-        <div className="absolute bottom-[25%] left-[45%] w-10 h-10 rounded-full opacity-45"
-          style={{ background: 'radial-gradient(circle, #fbbf24 0%, #f59e0b 40%, transparent 70%)' }} />
-        {/* Fire line */}
-        <div className="absolute top-[35%] left-[15%] w-[45%] h-0.5 rotate-[-10deg] opacity-50"
-          style={{ background: 'linear-gradient(90deg, #dc2626, #ea580c, #f59e0b, transparent)' }} />
-        {/* Heat sig */}
-        <div className="absolute bottom-[20%] left-[35%] bg-red-600/80 text-white text-[7px] font-mono px-1 py-0.5 rounded animate-pulse">
-          ⚠ HEAT SIG
+      <div className="flex-1 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, #0f0f0f 50%, #141414 100%)' }}>
+        {/* Ambient thermal noise */}
+        <div className="absolute inset-0 opacity-[0.08]"
+          style={{ background: 'radial-gradient(ellipse at 30% 60%, #1a1a1a, transparent 50%), radial-gradient(ellipse at 70% 30%, #1a1a1a, transparent 40%)' }} />
+
+        {/* Cool terrain (very faint warm tones) */}
+        <div className="absolute bottom-[10%] left-0 right-0 h-[20%] opacity-[0.08]"
+          style={{ background: 'linear-gradient(180deg, transparent, #4a2810)' }} />
+        {/* Road (slightly warmer than terrain) */}
+        <div className="absolute bottom-[16%] left-[2%] w-[55%] h-0.5 bg-amber-900/10 rotate-[-4deg]" />
+
+        {/* === FIRE / HOTSPOT RENDERING === */}
+        {/* Primary fire — large irregular hotspot */}
+        <div className="absolute top-[16%] left-[18%] w-28 h-24 rounded-[40%] rotate-[-15deg]" style={{ opacity: shimmer1, background: 'radial-gradient(ellipse at 45% 55%, #fff 0%, #fbbf24 15%, #ea580c 35%, #991b1b 55%, #3b0a0a 75%, transparent 90%)' }} />
+        {/* Secondary hotspot */}
+        <div className="absolute top-[35%] right-[15%] w-18 h-16 rounded-[45%] rotate-[10deg]" style={{ opacity: shimmer2, background: 'radial-gradient(ellipse at 50% 50%, #fef3c7 0%, #f59e0b 20%, #dc2626 45%, #7f1d1d 65%, transparent 85%)' }} />
+        {/* Smoldering area */}
+        <div className="absolute bottom-[22%] left-[40%] w-14 h-12 rounded-[50%]" style={{ opacity: shimmer3, background: 'radial-gradient(ellipse, #fbbf24 0%, #b45309 30%, #451a03 55%, transparent 80%)' }} />
+
+        {/* Fire line (connected thermal signature) */}
+        <div className="absolute top-[30%] left-[14%] w-[50%] h-1 rotate-[-8deg]"
+          style={{ background: 'linear-gradient(90deg, #fbbf24 0%, #ea580c 20%, #dc2626 40%, #b91c1c 60%, #7f1d1d 80%, transparent 100%)', filter: 'blur(1px)' }} />
+
+        {/* Heat signature — person/animal */}
+        <div className="absolute bottom-[30%] left-[62%] w-2 h-3 rounded-full"
+          style={{ background: 'radial-gradient(circle, #fff 0%, #fbbf24 40%, transparent 80%)', opacity: 0.7 }} />
+
+        {/* === TRACKING BOXES === */}
+        {/* Fire A tracking box */}
+        <div className="absolute top-[12%] left-[14%] w-36 h-30 border border-red-500/50 rounded-sm">
+          <div className="absolute -top-3.5 left-0 font-mono text-[7px] text-red-400 bg-black/60 px-1 rounded">
+            TRK-01 · FIRE-A · 847°F
+          </div>
+          {/* Corner brackets */}
+          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-red-500/70" />
+          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-red-500/70" />
+          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-red-500/70" />
+          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-red-500/70" />
         </div>
-        {/* Temp badges */}
-        <div className="absolute top-[16%] left-[19%] text-[7px] font-mono text-orange-300/80">847°F</div>
-        <div className="absolute top-[36%] right-[17%] text-[7px] font-mono text-amber-300/80">612°F</div>
-        {/* Scanlines */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
-          style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, #22c55e 2px, #22c55e 3px)', backgroundSize: '100% 3px' }} />
-        {/* HUD */}
-        <div className="absolute top-2 left-2 font-mono text-[7px] text-cyan-400/60 leading-tight">
-          <div>AC: DEMO-1</div><div>THERMAL/IR · FLIR</div><div>39.9242°N 83.8088°W</div>
+        {/* Fire B tracking box */}
+        <div className="absolute top-[31%] right-[11%] w-24 h-22 border border-amber-500/50 rounded-sm">
+          <div className="absolute -top-3.5 left-0 font-mono text-[7px] text-amber-400 bg-black/60 px-1 rounded">
+            TRK-02 · FIRE-B · 612°F
+          </div>
+          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-amber-500/70" />
+          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-amber-500/70" />
+          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-amber-500/70" />
+          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-amber-500/70" />
         </div>
-        <div className="absolute top-2 right-2 font-mono text-[7px] text-cyan-400/60 text-right leading-tight">
-          <div>RANGE: 200–900°F</div><div>PALETTE: WHITE-HOT</div><div>3 HOTSPOTS</div>
+        {/* Heat sig tracking box */}
+        <div className="absolute bottom-[26%] left-[59%] w-10 h-10 border border-red-400/60 rounded-sm animate-pulse">
+          <div className="absolute -top-3.5 left-0 font-mono text-[6px] text-red-400 bg-black/60 px-1 rounded whitespace-nowrap">
+            ⚠ HEAT-SIG · 98.6°F
+          </div>
         </div>
-        {/* Crosshair */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-6 h-px bg-cyan-400/30" /><div className="h-6 w-px bg-cyan-400/30 absolute" />
+
+        {/* === ISOTHERM LINE === */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path d="M15,38 Q25,28 35,32 Q45,36 55,30 Q60,28 65,35" fill="none" stroke="#dc2626" strokeWidth="0.3" strokeDasharray="2,2" opacity="0.4" />
+          <text x="67" y="34" fill="#dc2626" fontSize="2.5" fontFamily="monospace" opacity="0.5">500°F</text>
+        </svg>
+
+        {/* === TEMP COLOR BAR (right edge) === */}
+        <div className="absolute right-1.5 top-[10%] bottom-[10%] w-2.5 rounded-full overflow-hidden border border-slate-700/30">
+          <div className="h-full w-full" style={{ background: 'linear-gradient(to bottom, #fff 0%, #fbbf24 20%, #ea580c 40%, #dc2626 55%, #7f1d1d 70%, #1a1a1a 100%)' }} />
+        </div>
+        <div className="absolute right-5 top-[9%] font-mono text-[6px] text-slate-500">900°F</div>
+        <div className="absolute right-5 top-[30%] font-mono text-[6px] text-slate-600">600°F</div>
+        <div className="absolute right-5 top-[55%] font-mono text-[6px] text-slate-600">300°F</div>
+        <div className="absolute right-5 bottom-[9%] font-mono text-[6px] text-slate-500">AMB</div>
+
+        {/* === SCANLINES === */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
+          style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 1px, #22c55e 1px, #22c55e 2px)', backgroundSize: '100% 2px' }} />
+
+        {/* === HUD TEXT === */}
+        <div className="absolute top-2 left-2 font-mono text-[7px] text-cyan-400/50 leading-tight">
+          <div>DEMO-1 · THERMAL/IR</div>
+          <div>FLIR · WHITE-HOT</div>
+          <div>39.9340°N 83.8230°W</div>
+        </div>
+        <div className="absolute bottom-2 left-2 font-mono text-[7px] text-cyan-400/50 leading-tight">
+          <div>HOTSPOTS: 3 tracked</div>
+          <div>HEAT SIGS: 1 unresolved</div>
+          <div>MAX: 847°F · AVG: 340°F</div>
+        </div>
+        <div className="absolute bottom-2 right-8 font-mono text-[7px] text-cyan-400/50 text-right leading-tight">
+          <div>ISOTHERM: 500°F</div>
+          <div>SENS: 0.05°C NETD</div>
+          <div>RANGE: AMB–900°F</div>
+        </div>
+
+        {/* Center crosshair */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+          <div className="w-5 h-5 border border-cyan-400/30 rounded-full" />
+          <div className="absolute top-1/2 -left-2 w-2 h-px bg-cyan-400/30" />
+          <div className="absolute top-1/2 -right-2 w-2 h-px bg-cyan-400/30" />
+          <div className="absolute -top-2 left-1/2 w-px h-2 bg-cyan-400/30 -translate-x-1/2" />
         </div>
       </div>
     </div>
@@ -523,6 +725,10 @@ export default function MissionControlScreen({ pilotCallsign }: { pilotCallsign:
         {/* RIGHT COLUMN */}
         <div className="flex flex-col gap-2 overflow-y-auto pl-1">
           <PilotAlerts />
+          {/* Live weather radar map */}
+          <div className="bg-slate-900 border border-slate-700/50 rounded-lg overflow-hidden" style={{ height: '180px' }}>
+            <WeatherMapClient />
+          </div>
           <WeatherPanel />
           <AIMissionPlan />
           <CommsLog />
