@@ -22,13 +22,13 @@ import OperationsView from '@/components/admin/OperationsView';
 import CRMView from '@/components/admin/CRMView';
 import ComplianceView from '@/components/admin/ComplianceView';
 import AnalyticsView from '@/components/admin/AnalyticsView';
-import FlightControlView from '@/components/admin/FlightControlView';
+import LiveMissionView from '@/components/admin/LiveMissionView';
 
-type AdminView = 'overview' | 'flight' | 'finance' | 'operations' | 'crm' | 'compliance' | 'analytics';
+type AdminView = 'overview' | 'live' | 'finance' | 'operations' | 'crm' | 'compliance' | 'analytics';
 
 const sidebarItems: { key: AdminView; label: string; icon: typeof LayoutDashboard }[] = [
   { key: 'overview', label: 'Overview', icon: LayoutDashboard },
-  { key: 'flight', label: 'Flight Control', icon: Joystick },
+  { key: 'live', label: 'Live Mission', icon: Joystick },
   { key: 'finance', label: 'Finance', icon: DollarSign },
   { key: 'operations', label: 'Operations', icon: Crosshair },
   { key: 'crm', label: 'CRM', icon: Users },
@@ -71,7 +71,7 @@ export default function AdminPage() {
 
   const views: Record<AdminView, React.ReactNode> = {
     overview: <AdminOverview onNavigate={(v) => setActiveView(v as AdminView)} />,
-    flight: <FlightControlView />,
+    live: <LiveMissionView />,
     finance: <FinanceView />,
     operations: <OperationsView />,
     crm: <CRMView />,
