@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import {
   Plane, AlertTriangle, Wind, Thermometer, Cloud, Radio,
-  Cpu, ChevronUp, Minimize2,
+  Cpu, ChevronUp, Minimize2, ShieldAlert, X, CheckCircle2,
 } from 'lucide-react';
 
 const MissionControlMapClient = dynamic(
@@ -220,28 +220,40 @@ function EOFeed() {
         </div>
       </div>
       <div className="flex-1 relative overflow-hidden" style={{ background: 'radial-gradient(ellipse at 35% 35%, #4a5568 0%, #1a202c 70%, #0d1117 100%)' }}>
-        {/* Terrain layers */}
-        <div className="absolute bottom-[12%] left-0 right-0 h-5" style={{ background: 'linear-gradient(180deg, transparent, #2d3748 40%, #1a202c)' }} />
-        <div className="absolute bottom-[18%] left-0 right-0 h-4" style={{ background: 'linear-gradient(180deg, transparent, #2d3748 50%, transparent)' }} />
-        <div className="absolute bottom-[24%] left-[3%] right-[8%] h-3" style={{ background: 'linear-gradient(180deg, transparent, #374151 40%, transparent)' }} />
-        {/* Fields / clearings */}
-        <div className="absolute bottom-[14%] left-[30%] w-[15%] h-[4%] bg-slate-600/15 rounded-sm" />
-        <div className="absolute bottom-[20%] left-[55%] w-[10%] h-[3%] bg-slate-600/10 rounded-sm" />
-        {/* Road */}
-        <div className="absolute bottom-[16%] left-[2%] w-[55%] h-px bg-slate-500/15 rotate-[-4deg]" />
-        <div className="absolute bottom-[19%] left-[40%] w-[30%] h-px bg-slate-500/10 rotate-[15deg]" />
-        {/* Structures */}
-        <div className="absolute bottom-[22%] left-[42%] w-2 h-1.5 bg-slate-500/20" />
-        <div className="absolute bottom-[21%] left-[44%] w-1.5 h-1 bg-slate-500/15" />
-        <div className="absolute bottom-[25%] left-[60%] w-2.5 h-1.5 bg-slate-500/20" />
-        {/* Smoke plume */}
-        <div className="absolute top-[5%] right-[12%] w-36 h-48 rotate-[-18deg] opacity-25"
-          style={{ background: 'radial-gradient(ellipse at 50% 80%, #94a3b8 0%, transparent 65%)' }} />
-        <div className="absolute top-[15%] right-[18%] w-20 h-28 rotate-[-25deg] opacity-15"
-          style={{ background: 'radial-gradient(ellipse at 50% 70%, #cbd5e1 0%, transparent 60%)' }} />
-        {/* Ember glow on ground */}
-        <div className="absolute bottom-[28%] right-[22%] w-8 h-6 rounded-full opacity-20"
-          style={{ background: 'radial-gradient(circle, #dc2626 0%, transparent 70%)' }} />
+        {/* ── ANIMATED TERRAIN (panning to simulate flight) ── */}
+        <div className="absolute inset-0" style={{ animation: 'panTerrain 25s linear infinite' }}>
+          {/* Ground layers */}
+          <div className="absolute bottom-[8%] left-[-20%] right-[-20%] h-6" style={{ background: 'linear-gradient(180deg, transparent, #2d3748 40%, #1a202c)' }} />
+          <div className="absolute bottom-[14%] left-[-20%] right-[-20%] h-5" style={{ background: 'linear-gradient(180deg, transparent, #2d3748 50%, transparent)' }} />
+          <div className="absolute bottom-[20%] left-[-15%] right-[-15%] h-4" style={{ background: 'linear-gradient(180deg, transparent, #374151 40%, transparent)' }} />
+          {/* Tree lines */}
+          <div className="absolute bottom-[25%] left-[-10%] right-[-5%] h-3" style={{ background: 'linear-gradient(180deg, transparent, #1e3a2f 60%, transparent)' }} />
+          <div className="absolute bottom-[30%] left-[5%] right-[-10%] h-2" style={{ background: 'linear-gradient(180deg, transparent, #1e3a2f 50%, transparent)' }} />
+          {/* Fields */}
+          <div className="absolute bottom-[12%] left-[25%] w-[20%] h-[5%] bg-slate-600/12 rounded-sm" />
+          <div className="absolute bottom-[18%] left-[60%] w-[12%] h-[4%] bg-slate-600/08 rounded-sm" />
+          <div className="absolute bottom-[22%] left-[10%] w-[8%] h-[3%] bg-slate-700/10 rounded-sm" />
+          {/* Roads */}
+          <div className="absolute bottom-[15%] left-[-5%] w-[70%] h-px bg-slate-400/12 rotate-[-3deg]" />
+          <div className="absolute bottom-[19%] left-[35%] w-[40%] h-px bg-slate-400/08 rotate-[12deg]" />
+          {/* Structures passing underneath */}
+          <div className="absolute bottom-[21%] left-[38%] w-2.5 h-2 bg-slate-500/18 shadow-sm shadow-black/20" />
+          <div className="absolute bottom-[20%] left-[40%] w-2 h-1.5 bg-slate-500/14" />
+          <div className="absolute bottom-[24%] left-[58%] w-3 h-2 bg-slate-500/18" />
+          <div className="absolute bottom-[16%] left-[72%] w-2 h-1.5 bg-slate-500/12" />
+        </div>
+        {/* Smoke plume (drifts separately) */}
+        <div className="absolute top-0 right-0 w-full h-full pointer-events-none" style={{ animation: 'driftSmoke 18s ease-in-out infinite' }}>
+          <div className="absolute top-[3%] right-[8%] w-40 h-52 rotate-[-15deg] opacity-22"
+            style={{ background: 'radial-gradient(ellipse at 50% 80%, #94a3b8 0%, transparent 60%)' }} />
+          <div className="absolute top-[12%] right-[15%] w-24 h-32 rotate-[-22deg] opacity-14"
+            style={{ background: 'radial-gradient(ellipse at 50% 70%, #cbd5e1 0%, transparent 55%)' }} />
+          <div className="absolute top-[8%] right-[5%] w-16 h-20 rotate-[-10deg] opacity-10"
+            style={{ background: 'radial-gradient(ellipse at 50% 60%, #e2e8f0 0%, transparent 60%)' }} />
+        </div>
+        {/* Ember glow (pulses) */}
+        <div className="absolute bottom-[26%] right-[20%] w-10 h-8 rounded-full"
+          style={{ background: 'radial-gradient(circle, #dc2626 0%, #991b1b 30%, transparent 65%)', animation: 'pulseEmber 3s ease-in-out infinite' }} />
 
         {/* === HUD OVERLAY === */}
         <div className="absolute inset-0 pointer-events-none">
@@ -369,15 +381,23 @@ function IRFeed() {
         </div>
       </div>
       <div className="flex-1 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, #0f0f0f 50%, #141414 100%)' }}>
-        {/* Ambient thermal noise */}
-        <div className="absolute inset-0 opacity-[0.08]"
-          style={{ background: 'radial-gradient(ellipse at 30% 60%, #1a1a1a, transparent 50%), radial-gradient(ellipse at 70% 30%, #1a1a1a, transparent 40%)' }} />
-
-        {/* Cool terrain (very faint warm tones) */}
-        <div className="absolute bottom-[10%] left-0 right-0 h-[20%] opacity-[0.08]"
-          style={{ background: 'linear-gradient(180deg, transparent, #4a2810)' }} />
-        {/* Road (slightly warmer than terrain) */}
-        <div className="absolute bottom-[16%] left-[2%] w-[55%] h-0.5 bg-amber-900/10 rotate-[-4deg]" />
+        {/* ── ANIMATED THERMAL TERRAIN (slow drift) ── */}
+        <div className="absolute inset-0" style={{ animation: 'panThermal 30s linear infinite' }}>
+          {/* Ambient thermal noise pattern */}
+          <div className="absolute inset-0 opacity-[0.06]"
+            style={{ background: 'radial-gradient(ellipse at 30% 60%, #1a1a1a, transparent 50%), radial-gradient(ellipse at 70% 30%, #1a1a1a, transparent 40%)' }} />
+          {/* Cool terrain base */}
+          <div className="absolute bottom-[8%] left-[-10%] right-[-10%] h-[22%] opacity-[0.07]"
+            style={{ background: 'linear-gradient(180deg, transparent, #4a2810)' }} />
+          {/* Roads (warm from sun absorption) */}
+          <div className="absolute bottom-[15%] left-[-5%] w-[65%] h-0.5 bg-amber-900/08 rotate-[-3deg]" />
+          <div className="absolute bottom-[19%] left-[30%] w-[35%] h-0.5 bg-amber-900/06 rotate-[10deg]" />
+          {/* Warm structures */}
+          <div className="absolute bottom-[21%] left-[38%] w-3 h-2 rounded-sm opacity-20"
+            style={{ background: 'radial-gradient(ellipse, #92400e, transparent)' }} />
+          <div className="absolute bottom-[17%] left-[65%] w-2.5 h-1.5 rounded-sm opacity-15"
+            style={{ background: 'radial-gradient(ellipse, #78350f, transparent)' }} />
+        </div>
 
         {/* === FIRE / HOTSPOT RENDERING === */}
         {/* Primary fire — large irregular hotspot */}
@@ -684,17 +704,158 @@ function CommsLog() {
   );
 }
 
+// ─── EMERGENCY CHECKLIST ────────────────────────────────────
+
+function EmergencyChecklist({ onClose }: { onClose: () => void }) {
+  const [checked, setChecked] = useState<Set<number>>(new Set());
+
+  const toggle = (idx: number) => {
+    setChecked((prev) => {
+      const next = new Set(prev);
+      if (next.has(idx)) next.delete(idx); else next.add(idx);
+      return next;
+    });
+  };
+
+  const checklists = [
+    {
+      title: 'RETURN TO BASE (RTB)',
+      color: 'text-blue-400 border-blue-500/30',
+      items: [
+        'Notify IC: "Demo-1 RTB initiated"',
+        'Set waypoint: DIRECT TO staging',
+        'Climb to transit altitude (1500ft)',
+        'Verify Starlink link stable',
+        'Monitor battery — confirm sufficient for RTB',
+        'Cancel remaining survey waypoints',
+        'Notify CTRL on approach',
+        'Execute landing checklist',
+      ],
+    },
+    {
+      title: 'EMERGENCY LANDING',
+      color: 'text-red-400 border-red-500/30',
+      items: [
+        'DECLARE EMERGENCY on guard 121.500',
+        'Notify IC: "Demo-1 emergency landing"',
+        'Identify nearest safe landing zone',
+        'Reduce airspeed to Vmin (35kts)',
+        'Begin controlled descent — 500ft/min max',
+        'Activate emergency beacon',
+        'If uncontrollable: initiate ballistic parachute',
+        'Mark GPS coordinates of landing site',
+        'Notify ground crew for recovery',
+      ],
+    },
+    {
+      title: 'LOST LINK PROCEDURE',
+      color: 'text-amber-400 border-amber-500/30',
+      items: [
+        'Aircraft auto-enters HOLD at current position',
+        'Verify Starlink antenna orientation',
+        'Attempt reconnect on backup frequency',
+        'If no link in 60s: aircraft auto-RTB',
+        'If no link in 5min: aircraft auto-lands at nearest safe zone',
+        'Notify IC: "Demo-1 lost link — auto-RTB in progress"',
+        'Monitor guard frequency for aircraft beacon',
+      ],
+    },
+  ];
+
+  let itemIndex = 0;
+
+  return (
+    <div className="fixed inset-0 z-[200] flex">
+      {/* Backdrop */}
+      <div className="flex-1 bg-black/60" onClick={onClose} />
+      {/* Panel */}
+      <div className="w-[380px] bg-slate-900 border-l border-slate-700 overflow-y-auto p-4">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <ShieldAlert className="w-5 h-5 text-red-500" />
+            <span className="font-mono text-sm text-white font-bold uppercase">Emergency Procedures</span>
+          </div>
+          <button onClick={onClose} className="text-slate-500 hover:text-white"><X className="w-5 h-5" /></button>
+        </div>
+
+        <div className="space-y-4">
+          {checklists.map((list) => (
+            <div key={list.title} className={`border rounded-lg p-3 ${list.color}`}>
+              <h4 className="font-mono text-[10px] font-bold uppercase tracking-wider mb-2">{list.title}</h4>
+              <div className="space-y-1.5">
+                {list.items.map((item) => {
+                  const idx = itemIndex++;
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => toggle(idx)}
+                      className="w-full flex items-start gap-2 text-left group"
+                    >
+                      <div className={`w-4 h-4 rounded border flex-shrink-0 mt-0.5 flex items-center justify-center ${
+                        checked.has(idx) ? 'bg-green-600 border-green-500' : 'border-slate-600 group-hover:border-slate-400'
+                      }`}>
+                        {checked.has(idx) && <CheckCircle2 className="w-3 h-3 text-white" />}
+                      </div>
+                      <span className={`font-mono text-[10px] ${
+                        checked.has(idx) ? 'text-slate-500 line-through' : 'text-slate-300'
+                      }`}>
+                        {item}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── MAIN SCREEN ────────────────────────────────────────────
 
 export default function MissionControlScreen({ pilotCallsign }: { pilotCallsign: string }) {
+  const [showChecklist, setShowChecklist] = useState(false);
+
   const handleExit = useCallback(() => {
     document.exitFullscreen?.().catch(() => {});
-    // Force reload to exit the mission view
     window.location.reload();
   }, []);
 
   return (
     <div className="fixed inset-0 z-[100] bg-slate-950 text-slate-200 flex flex-col overflow-hidden">
+      {/* CSS animations for video feeds */}
+      <style>{`
+        @keyframes panTerrain {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-15%); }
+        }
+        @keyframes driftSmoke {
+          0% { transform: translate(0, 0); }
+          50% { transform: translate(-8px, 3px); }
+          100% { transform: translate(0, 0); }
+        }
+        @keyframes pulseEmber {
+          0%, 100% { opacity: 0.15; }
+          50% { opacity: 0.3; }
+        }
+        @keyframes panThermal {
+          0% { transform: translateX(0) translateY(0); }
+          50% { transform: translateX(-5%) translateY(-2%); }
+          100% { transform: translateX(0) translateY(0); }
+        }
+        @keyframes thermalFlicker {
+          0%, 100% { filter: brightness(1); }
+          25% { filter: brightness(1.02); }
+          50% { filter: brightness(0.98); }
+          75% { filter: brightness(1.01); }
+        }
+      `}</style>
+
+      {/* Emergency Checklist */}
+      {showChecklist && <EmergencyChecklist onClose={() => setShowChecklist(false)} />}
+
       {/* Top Bar */}
       <div className="h-10 bg-slate-900 border-b border-slate-700/50 flex-shrink-0">
         <TopBar onExit={handleExit} />
@@ -707,6 +868,14 @@ export default function MissionControlScreen({ pilotCallsign }: { pilotCallsign:
           <AircraftStatus />
           <CountdownTimers />
           <AssetQueue />
+          {/* Emergency checklist button */}
+          <button
+            onClick={() => setShowChecklist(true)}
+            className="bg-red-900/30 border border-red-500/40 rounded-lg p-2.5 flex items-center gap-2 hover:bg-red-900/50 transition-colors group"
+          >
+            <ShieldAlert className="w-4 h-4 text-red-500 group-hover:animate-pulse" />
+            <span className="font-mono text-[10px] text-red-400 font-bold uppercase">Emergency Procedures</span>
+          </button>
         </div>
 
         {/* CENTER COLUMN */}
