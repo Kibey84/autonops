@@ -57,7 +57,7 @@ function TopBar({ onExit }: { onExit: () => void }) {
         <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-red-400 font-bold">Mission Control</span>
       </div>
       <div className="font-mono text-[11px] text-slate-400 hidden md:block">
-        OHIO DEMO — Springfield, OH
+        RIO VERDE DEMO — Rio Verde, AZ
       </div>
       <div className="flex items-center gap-4">
         <span className="font-mono text-[11px] text-slate-300 tabular-nums">{utc}</span>
@@ -82,7 +82,7 @@ function TopBar({ onExit }: { onExit: () => void }) {
 function AircraftStatus() {
   const [alt, setAlt] = useState(1200);
   const [speed, setSpeed] = useState(68);
-  const [heading, setHeading] = useState(315);
+  const [heading, setHeading] = useState(45);
 
   useInterval(() => {
     setAlt((p) => p + Math.round((Math.random() - 0.48) * 8));
@@ -309,13 +309,13 @@ function EOFeed() {
 
           {/* ── Bottom HUD data ── */}
           <div className="absolute bottom-2 left-3 font-mono text-[7px] text-green-400/60 leading-tight">
-            <div>39.9340°N 83.8230°W</div>
-            <div>WP3 TRANSIT · 1.2nm to WP4</div>
+            <div>33.5620°N 111.8050°W</div>
+            <div>WP4 SURVEY-N · 0.8nm to WP5</div>
             <div>G: {gLoad.toFixed(1)} · BAT: 74%</div>
           </div>
           <div className="absolute bottom-2 right-3 font-mono text-[7px] text-green-400/60 text-right leading-tight">
-            <div>TGT BRG: 315° · 2.1nm</div>
-            <div>WIND: 270/12G18</div>
+            <div>TGT BRG: 045° · 0.4nm</div>
+            <div>WIND: 225/12G18</div>
             <div>STARLINK: 34ms</div>
           </div>
 
@@ -438,7 +438,7 @@ function IRFeed() {
         <div className="absolute top-2 left-2 font-mono text-[7px] text-cyan-400/50 leading-tight">
           <div>DEMO-1 · THERMAL/IR</div>
           <div>FLIR · WHITE-HOT</div>
-          <div>39.9340°N 83.8230°W</div>
+          <div>33.5620°N 111.8050°W</div>
         </div>
         <div className="absolute bottom-2 left-2 font-mono text-[7px] text-cyan-400/50 leading-tight">
           <div>HOTSPOTS: 3 tracked</div>
@@ -480,7 +480,7 @@ function PilotAlerts() {
     'Thermal anomaly detected — possible secondary ignition point',
     'Battery cell temp elevated — monitoring C3 at 42°C',
     'Wind shift: now 290° at 14kts — recalculating spread model',
-    'Structure identified 0.4nm SW of fire front — single family',
+    'Ranch structure identified 0.4nm SW of fire front — isolated property',
     'AI recommends altitude increase to 1400ft for wider survey',
     'Smoke density increasing — EO visibility degraded to 40%',
     'NOTAM update: TFR extension through 2100Z',
@@ -536,7 +536,7 @@ function WeatherPanel() {
     async function fetchWeather() {
       try {
         const res = await fetch(
-          'https://api.open-meteo.com/v1/forecast?latitude=39.9242&longitude=-83.8088&current=temperature_2m,wind_speed_10m,wind_direction_10m,weather_code&temperature_unit=fahrenheit&wind_speed_unit=kn'
+          'https://api.open-meteo.com/v1/forecast?latitude=33.535&longitude=-111.855&current=temperature_2m,wind_speed_10m,wind_direction_10m,weather_code&temperature_unit=fahrenheit&wind_speed_unit=kn'
         );
         if (!res.ok) throw new Error();
         const data = await res.json();
@@ -564,7 +564,7 @@ function WeatherPanel() {
   return (
     <div className="bg-slate-900 border border-slate-700/50 rounded-lg p-3">
       <div className="text-[9px] font-mono text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-        <Cloud className="w-3 h-3" /> Weather — Springfield, OH
+        <Cloud className="w-3 h-3" /> Weather — Rio Verde, AZ
       </div>
       {error ? (
         <div className="text-[10px] text-slate-500 font-mono">Weather data unavailable</div>
@@ -595,15 +595,15 @@ function AIMissionPlan() {
       <div className="space-y-2 text-[9px] font-mono">
         <div>
           <div className="text-slate-500 mb-0.5">INCIDENT</div>
-          <div className="text-slate-300">Structure fire reported at 1247 Oak Ridge Rd, Springfield OH. Smoke visible from multiple stations. Winds NW at 12kts.</div>
+          <div className="text-slate-300">Desert brush fire reported 5nm NE of Rio Verde, AZ. Remote terrain, limited road access. Winds SW at 12kts, dry conditions, 8% humidity. Fire spreading NE toward Tonto National Forest boundary.</div>
         </div>
         <div>
           <div className="text-slate-500 mb-0.5">PHASES</div>
-          <div className="text-slate-300">1. Launch from staging → 2. Transit NW 2.8nm → 3. Perimeter survey (dual feed) → 4. Hotspot mapping → 5. Loiter for IC directives → 6. RTB</div>
+          <div className="text-slate-300">1. Launch from Station 1 → 2. Climb to 1200ft → 3. Transit NE 5nm → 4. Survey north flank → 5. Survey east flank → 6. Survey south flank → 7. Loiter for IC → 8. RTB</div>
         </div>
         <div className="grid grid-cols-2 gap-2">
-          <div><span className="text-slate-500">Civilians</span><span className="text-amber-400 ml-1">3 structures in path</span></div>
-          <div><span className="text-slate-500">Crew staging</span><span className="text-slate-300 ml-1">Station 4, N side</span></div>
+          <div><span className="text-slate-500">Structures</span><span className="text-amber-400 ml-1">2 ranches in fire path</span></div>
+          <div><span className="text-slate-500">Crew staging</span><span className="text-slate-300 ml-1">Rio Verde FD Stn 1</span></div>
         </div>
       </div>
     </div>
@@ -617,9 +617,9 @@ function CommsLog() {
     { time: '14:31:00', from: 'CTRL', text: 'Demo-1, clear for departure. Winds 270 at 12.' },
     { time: '14:31:22', from: 'PLT', text: 'Demo-1 rolling, departure runway 24.' },
     { time: '14:31:45', from: 'SYS', text: 'FAA automated clearance confirmed. Flight plan active.' },
-    { time: '14:32:10', from: 'IC', text: 'Control, Springfield IC. Smoke intensifying NW. Need eyes ASAP.' },
-    { time: '14:32:13', from: 'CTRL', text: 'Copy IC. ETE 3 minutes. Dual feed coming up.' },
-    { time: '14:33:00', from: 'AI', text: 'Fire spread model initialized. NW at 8mph. 3 structures flagged.' },
+    { time: '14:32:10', from: 'IC', text: 'Control, Rio Verde IC. Fire heading NE toward Tonto boundary. Need eyes on the north flank.' },
+    { time: '14:32:13', from: 'CTRL', text: 'Copy IC. Commencing survey leg north. Dual feed on your devices now.' },
+    { time: '14:33:00', from: 'AI', text: 'Fire spread model: NE at 8mph toward Tonto boundary. 2 ranches, 1 spot fire flagged.' },
     { time: '14:33:47', from: 'PLT', text: 'Demo-1 on station. Survey altitude 1200. Feeds active.' },
   ]);
   const [counter, setCounter] = useState(8);
@@ -629,12 +629,12 @@ function CommsLog() {
     { from: 'PLT', text: 'Demo-1, slight turbulence at 1200. Manageable.' },
     { from: 'CTRL', text: 'Copy. Maintain altitude. IC wants another pass on the west flank.' },
     { from: 'AI', text: 'Hotspot A expanding. Recommend IC be advised.' },
-    { from: 'IC', text: 'Control, can you pan the IR camera 30 degrees west?' },
+    { from: 'IC', text: 'Control, can you survey the east flank? Spot fire reported by ground crew.' },
     { from: 'CTRL', text: 'Adjusting. Stand by for updated feed.' },
     { from: 'PLT', text: 'Demo-1, battery at 68%. Estimated 35 minutes remaining.' },
     { from: 'SYS', text: 'Waypoint 4 reached. Beginning survey pass 2.' },
     { from: 'AI', text: 'Heat signature resolved: vehicle exhaust, not person. Downgrading.' },
-    { from: 'IC', text: 'Good copy on the heat sig. Ground crew confirms no civilians in sector.' },
+    { from: 'IC', text: 'Good copy. Ground crew has no access road to the east — all intel from your feed.' },
     { from: 'CTRL', text: 'Demo-2 preflight complete. Ready for launch on your call.' },
   ];
 

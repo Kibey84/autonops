@@ -5,10 +5,10 @@ import { MapContainer, TileLayer, Marker, Polyline, Circle, useMap } from 'react
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const basePos: [number, number] = [39.9242, -83.8088];
-const incidentPos: [number, number] = [39.9480, -83.8420];
+const basePos: [number, number] = [33.5350, -111.8550];
+const incidentPos: [number, number] = [33.5590, -111.8030];
 const flightPath: [number, number][] = [
-  basePos, [39.9290, -83.8150], [39.9340, -83.8230], [39.9390, -83.8300], [39.9430, -83.8360], incidentPos,
+  basePos, [33.5400, -111.8480], [33.5520, -111.8300], [33.5680, -111.8100], [33.5600, -111.7950], incidentPos,
 ];
 
 const droneIcon = L.divIcon({
@@ -19,7 +19,7 @@ const droneIcon = L.divIcon({
 function FitBounds() {
   const map = useMap();
   useEffect(() => {
-    map.fitBounds(L.latLngBounds([[39.85, -83.92], [40.00, -83.72]]), { padding: [10, 10] });
+    map.fitBounds(L.latLngBounds([[33.49, -111.90], [33.60, -111.76]]), { padding: [10, 10] });
   }, [map]);
   return null;
 }
@@ -76,7 +76,7 @@ export default function WeatherMapClient() {
   return (
     <div className="h-full w-full rounded-lg overflow-hidden relative">
       <MapContainer
-        center={[39.93, -83.82]}
+        center={[33.55, -111.83]}
         zoom={11}
         style={{ height: '100%', width: '100%' }}
         scrollWheelZoom={false}
