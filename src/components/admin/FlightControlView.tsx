@@ -154,37 +154,23 @@ function PilotTelemetry() {
   );
 }
 
-// ─── CAMERA FEED (switchable EO/Thermal) ────────────────────
+// ─── EO/RGB CAMERA FEED ─────────────────────────────────────
 
-function CameraFeedPanel() {
-  const [mode, setMode] = useState<'eo' | 'thermal'>('eo');
+function EOFeedPanel() {
   const [angle, setAngle] = useState('nadir');
   const [fullscreen, setFullscreen] = useState(false);
 
   return (
     <DashboardPanel
-      title={mode === 'eo' ? 'CAM-1 · EO/RGB' : 'CAM-2 · THERMAL/IR'}
+      title="CAM-1 · EO/RGB"
       statusColor="red"
       headerRight={
-        <div className="flex items-center gap-2">
-          <div className="flex bg-slate-700 rounded overflow-hidden">
-            <button
-              onClick={() => setMode('eo')}
-              className={`px-2 py-0.5 text-[9px] font-mono ${mode === 'eo' ? 'bg-red-600 text-white' : 'text-slate-400 hover:text-white'}`}
-            >EO</button>
-            <button
-              onClick={() => setMode('thermal')}
-              className={`px-2 py-0.5 text-[9px] font-mono ${mode === 'thermal' ? 'bg-red-600 text-white' : 'text-slate-400 hover:text-white'}`}
-            >IR</button>
-          </div>
-          <span className="flex items-center gap-1 font-mono text-[9px] text-red-400">
-            <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />LIVE
-          </span>
-        </div>
+        <span className="flex items-center gap-1 font-mono text-[9px] text-red-400">
+          <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />LIVE
+        </span>
       }
     >
       <div className="space-y-2">
-        {/* Camera angle */}
         <div className="flex items-center gap-2">
           <select
             value={angle}
@@ -201,72 +187,35 @@ function CameraFeedPanel() {
           <span className="text-[9px] text-slate-500 font-mono">ZOOM: 1.0x</span>
         </div>
 
-        {/* Feed */}
         <div className={`relative rounded-lg overflow-hidden border border-slate-600 ${fullscreen ? 'fixed inset-4 z-50' : ''}`}>
-          {mode === 'eo' ? (
-            <>
-              <div className="bg-slate-700/50 px-3 py-1 flex items-center justify-between font-mono text-[9px] text-slate-400">
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />
-                  <span>REC</span><span>|</span><span>EO/RGB</span><span>|</span><span>4K</span>
-                </div>
-                <span>{angle.toUpperCase()}</span>
-              </div>
-              <div className="relative h-52" style={{ background: 'radial-gradient(ellipse at center, #475569 0%, #1e293b 100%)' }}>
-                <div className="absolute bottom-10 left-0 right-0 h-3 bg-slate-700/60" />
-                <div className="absolute bottom-16 left-0 right-0 h-2.5 bg-slate-700/40" />
-                <div className="absolute bottom-22 left-[8%] right-[15%] h-2 bg-slate-700/30" />
-                <div className="absolute top-6 right-[18%] w-28 h-36 rotate-[-25deg] opacity-35" style={{ background: 'linear-gradient(135deg, transparent 30%, #e2e8f0 50%, transparent 70%)' }} />
-                <div className="absolute bottom-14 left-[5%] w-[55%] h-0.5 bg-slate-400/25 rotate-[-6deg]" />
-                {/* Crosshair */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <Crosshair className="w-8 h-8 text-red-500/40" />
-                </div>
-                {/* Overlay info */}
-                <div className="absolute top-2 left-2 font-mono text-[8px] text-green-400/70 space-y-0.5">
-                  <div>AC-001 BLACKFLY-01</div>
-                  <div>EO/RGB · {angle.toUpperCase()}</div>
-                </div>
-                <div className="absolute top-2 right-2 font-mono text-[8px] text-green-400/70 text-right space-y-0.5">
-                  <div>33.5128°N 111.8287°W</div>
-                  <div>ALT 1200ft · HDG 220°</div>
-                </div>
-              </div>
-              <div className="bg-slate-700/50 px-3 py-1 font-mono text-[9px] text-slate-400 flex justify-between">
-                <span>ALT: 1,200ft</span><span>SPD: 68kts</span><span>BRG: 220°</span>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="bg-slate-800/80 px-3 py-1 flex items-center justify-between font-mono text-[9px] text-slate-400">
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />
-                  <span>REC</span><span>|</span><span>THERMAL/IR</span><span>|</span><span>FLIR</span>
-                </div>
-                <span>{angle.toUpperCase()}</span>
-              </div>
-              <div className="relative h-52 bg-slate-950">
-                <div className="absolute top-[18%] left-[22%] w-24 h-24 rounded-full opacity-70" style={{ background: 'radial-gradient(circle, #ea580c 0%, #dc2626 40%, transparent 70%)' }} />
-                <div className="absolute top-[38%] right-[18%] w-16 h-16 rounded-full opacity-60" style={{ background: 'radial-gradient(circle, #f59e0b 0%, #ea580c 40%, transparent 70%)' }} />
-                <div className="absolute bottom-[22%] left-[42%] w-12 h-12 rounded-full opacity-50" style={{ background: 'radial-gradient(circle, #fbbf24 0%, #f59e0b 40%, transparent 70%)' }} />
-                <div className="absolute top-[33%] left-[12%] w-[50%] h-0.5 rotate-[-12deg] opacity-60" style={{ background: 'linear-gradient(90deg, #dc2626, #ea580c, #f59e0b, transparent)' }} />
-                <div className="absolute top-[14%] left-[16%] bg-orange-500/90 text-white text-[8px] font-mono px-1.5 py-0.5 rounded">847°F</div>
-                <div className="absolute top-[33%] right-[14%] bg-amber-500/90 text-white text-[8px] font-mono px-1.5 py-0.5 rounded">612°F</div>
-                <div className="absolute bottom-[18%] left-[38%] bg-red-600/90 text-white text-[8px] font-mono px-1.5 py-0.5 rounded animate-pulse">⚠ HEAT SIG</div>
-                {/* Crosshair */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <Crosshair className="w-8 h-8 text-cyan-400/40" />
-                </div>
-                <div className="absolute top-2 left-2 font-mono text-[8px] text-cyan-400/70 space-y-0.5">
-                  <div>AC-001 BLACKFLY-01</div>
-                  <div>THERMAL/IR · FLIR</div>
-                </div>
-              </div>
-              <div className="bg-slate-800/80 px-3 py-1 font-mono text-[9px] text-slate-400 flex justify-between">
-                <span>TEMP: 200°F–900°F</span><span>SENS: 0.05°C</span><span>PALETTE: WHITE-HOT</span>
-              </div>
-            </>
-          )}
+          <div className="bg-slate-700/50 px-3 py-1 flex items-center justify-between font-mono text-[9px] text-slate-400">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />
+              <span>REC</span><span>|</span><span>EO/RGB</span><span>|</span><span>4K</span>
+            </div>
+            <span>{angle.toUpperCase()}</span>
+          </div>
+          <div className="relative h-48 lg:h-56" style={{ background: 'radial-gradient(ellipse at center, #475569 0%, #1e293b 100%)' }}>
+            <div className="absolute bottom-10 left-0 right-0 h-3 bg-slate-700/60" />
+            <div className="absolute bottom-16 left-0 right-0 h-2.5 bg-slate-700/40" />
+            <div className="absolute bottom-22 left-[8%] right-[15%] h-2 bg-slate-700/30" />
+            <div className="absolute top-6 right-[18%] w-28 h-36 rotate-[-25deg] opacity-35" style={{ background: 'linear-gradient(135deg, transparent 30%, #e2e8f0 50%, transparent 70%)' }} />
+            <div className="absolute bottom-14 left-[5%] w-[55%] h-0.5 bg-slate-400/25 rotate-[-6deg]" />
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <Crosshair className="w-8 h-8 text-red-500/40" />
+            </div>
+            <div className="absolute top-2 left-2 font-mono text-[8px] text-green-400/70 space-y-0.5">
+              <div>AC-001 BLACKFLY-01</div>
+              <div>EO/RGB · {angle.toUpperCase()}</div>
+            </div>
+            <div className="absolute top-2 right-2 font-mono text-[8px] text-green-400/70 text-right space-y-0.5">
+              <div>33.5128°N 111.8287°W</div>
+              <div>ALT 1200ft · HDG 220°</div>
+            </div>
+          </div>
+          <div className="bg-slate-700/50 px-3 py-1 font-mono text-[9px] text-slate-400 flex justify-between">
+            <span>ALT: 1,200ft</span><span>SPD: 68kts</span><span>BRG: 220°</span>
+          </div>
         </div>
 
         <button
@@ -274,7 +223,100 @@ function CameraFeedPanel() {
           className="w-full text-center text-[10px] font-mono text-slate-400 hover:text-white border border-slate-600 rounded px-2 py-1 hover:bg-slate-700 transition-colors flex items-center justify-center gap-1"
         >
           {fullscreen ? <Minimize2 className="w-3 h-3" /> : <Maximize2 className="w-3 h-3" />}
-          {fullscreen ? 'EXIT FULL SCREEN' : 'FULL SCREEN'}
+          {fullscreen ? 'EXIT' : 'FULL SCREEN'}
+        </button>
+      </div>
+    </DashboardPanel>
+  );
+}
+
+// ─── THERMAL/IR CAMERA FEED ─────────────────────────────────
+
+function ThermalFeedPanel() {
+  const [palette, setPalette] = useState('white-hot');
+  const [fullscreen, setFullscreen] = useState(false);
+
+  return (
+    <DashboardPanel
+      title="CAM-2 · THERMAL/IR"
+      statusColor="red"
+      headerRight={
+        <span className="flex items-center gap-1 font-mono text-[9px] text-red-400">
+          <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />LIVE
+        </span>
+      }
+    >
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <select
+            value={palette}
+            onChange={(e) => setPalette(e.target.value)}
+            className="bg-slate-700 border border-slate-600 text-slate-300 text-[10px] font-mono rounded px-2 py-0.5 focus:outline-none focus:ring-1 focus:ring-red-500"
+          >
+            <option value="white-hot">White Hot</option>
+            <option value="black-hot">Black Hot</option>
+            <option value="ironbow">Ironbow</option>
+            <option value="rainbow">Rainbow</option>
+          </select>
+          <span className="text-[9px] text-slate-500 font-mono">SENS: 0.05°C</span>
+        </div>
+
+        <div className={`relative rounded-lg overflow-hidden border border-slate-600 ${fullscreen ? 'fixed inset-4 z-50' : ''}`}>
+          <div className="bg-slate-800/80 px-3 py-1 flex items-center justify-between font-mono text-[9px] text-slate-400">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-red-500 rounded-full" />
+              <span>REC</span><span>|</span><span>THERMAL/IR</span><span>|</span><span>FLIR</span>
+            </div>
+            <span>{palette.toUpperCase()}</span>
+          </div>
+          <div className="relative h-48 lg:h-56 bg-slate-950">
+            {/* Hotspots */}
+            <div className="absolute top-[18%] left-[22%] w-24 h-24 rounded-full opacity-70" style={{ background: 'radial-gradient(circle, #ea580c 0%, #dc2626 40%, transparent 70%)' }} />
+            <div className="absolute top-[38%] right-[18%] w-16 h-16 rounded-full opacity-60" style={{ background: 'radial-gradient(circle, #f59e0b 0%, #ea580c 40%, transparent 70%)' }} />
+            <div className="absolute bottom-[22%] left-[42%] w-12 h-12 rounded-full opacity-50" style={{ background: 'radial-gradient(circle, #fbbf24 0%, #f59e0b 40%, transparent 70%)' }} />
+            {/* Fire line */}
+            <div className="absolute top-[33%] left-[12%] w-[50%] h-0.5 rotate-[-12deg] opacity-60" style={{ background: 'linear-gradient(90deg, #dc2626, #ea580c, #f59e0b, transparent)' }} />
+            {/* Temp badges */}
+            <div className="absolute top-[14%] left-[16%] bg-orange-500/90 text-white text-[8px] font-mono px-1.5 py-0.5 rounded">
+              Hotspot A · 847°F
+            </div>
+            <div className="absolute top-[33%] right-[14%] bg-amber-500/90 text-white text-[8px] font-mono px-1.5 py-0.5 rounded">
+              Hotspot B · 612°F
+            </div>
+            <div className="absolute bottom-[18%] left-[38%] bg-red-600/90 text-white text-[8px] font-mono px-1.5 py-0.5 rounded animate-pulse">
+              ⚠ HEAT SIG · Person?
+            </div>
+            {/* Temp scale bar */}
+            <div className="absolute right-2 top-[15%] bottom-[15%] w-3 rounded-full overflow-hidden">
+              <div className="h-full w-full" style={{ background: 'linear-gradient(to bottom, #dc2626, #ea580c, #f59e0b, #fbbf24, #1e293b)' }} />
+            </div>
+            <div className="absolute right-7 top-[14%] font-mono text-[7px] text-slate-400">900°F</div>
+            <div className="absolute right-7 bottom-[14%] font-mono text-[7px] text-slate-400">200°F</div>
+            {/* Crosshair */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <Crosshair className="w-8 h-8 text-cyan-400/40" />
+            </div>
+            {/* Overlay */}
+            <div className="absolute top-2 left-2 font-mono text-[8px] text-cyan-400/70 space-y-0.5">
+              <div>AC-001 BLACKFLY-01</div>
+              <div>THERMAL/IR · FLIR</div>
+            </div>
+            <div className="absolute top-2 right-10 font-mono text-[8px] text-cyan-400/70 text-right space-y-0.5">
+              <div>33.5128°N 111.8287°W</div>
+              <div>MAX: 847°F · AVG: 340°F</div>
+            </div>
+          </div>
+          <div className="bg-slate-800/80 px-3 py-1 font-mono text-[9px] text-slate-400 flex justify-between">
+            <span>TEMP: 200°F–900°F</span><span>3 hotspots</span><span>1 heat sig</span>
+          </div>
+        </div>
+
+        <button
+          onClick={() => setFullscreen(!fullscreen)}
+          className="w-full text-center text-[10px] font-mono text-slate-400 hover:text-white border border-slate-600 rounded px-2 py-1 hover:bg-slate-700 transition-colors flex items-center justify-center gap-1"
+        >
+          {fullscreen ? <Minimize2 className="w-3 h-3" /> : <Maximize2 className="w-3 h-3" />}
+          {fullscreen ? 'EXIT' : 'FULL SCREEN'}
         </button>
       </div>
     </DashboardPanel>
@@ -545,21 +587,24 @@ export default function FlightControlView() {
       {/* Mission status bar */}
       <MissionStatusBar />
 
-      {/* Row 1: Map (large) + Camera Feed */}
+      {/* Row 1: Map + Dual Camera Feeds */}
       <div className="grid grid-cols-12 gap-3" style={{ minHeight: '380px' }}>
-        <div className="col-span-12 lg:col-span-7">
+        <div className="col-span-12 xl:col-span-4">
           <DashboardPanel
             title="Mission Map"
             statusColor="green"
             headerRight={<span className="font-mono text-[9px] text-orange-400 animate-pulse">SIMULATION MODE</span>}
           >
-            <div className="h-[340px]">
+            <div className="h-[320px]">
               <FlightMapClient />
             </div>
           </DashboardPanel>
         </div>
-        <div className="col-span-12 lg:col-span-5">
-          <CameraFeedPanel />
+        <div className="col-span-12 sm:col-span-6 xl:col-span-4">
+          <EOFeedPanel />
+        </div>
+        <div className="col-span-12 sm:col-span-6 xl:col-span-4">
+          <ThermalFeedPanel />
         </div>
       </div>
 
