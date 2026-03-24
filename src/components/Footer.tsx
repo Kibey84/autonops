@@ -33,8 +33,8 @@ export default function Footer() {
               />
             </div>
             <p className="text-sm text-slate-400 mb-4 max-w-md">
-              Professional drone flight operations for emergency response, reconnaissance,
-              and mission-critical applications. Based in Ohio, serving organizations nationwide.
+              AutonOps LLP — Flight operations partner of Aeryl AI. Ohio-based pilots,
+              aircraft, and mission controllers powering Aeryl&apos;s emergency response platform.
             </p>
             <div className="flex flex-col gap-2 text-sm">
               <a

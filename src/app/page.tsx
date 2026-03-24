@@ -38,27 +38,27 @@ const proofPoints = [
   {
     icon: Clock,
     title: 'Rapid Deployment',
-    description: 'Mission-ready teams that mobilize quickly when time is critical.',
+    description: 'Mission-ready crews that mobilize for Aeryl missions when time is critical.',
   },
   {
     icon: Shield,
     title: 'Safety First',
-    description: 'Rigorous protocols and trained operators for every mission.',
+    description: 'Rigorous protocols and trained operators on every Aeryl deployment.',
   },
   {
     icon: Target,
-    title: 'Mission Planning',
-    description: 'Detailed pre-mission analysis and coordination with stakeholders.',
+    title: 'Mission Execution',
+    description: 'We handle the flight plan, the aircraft, and the crew so Aeryl AI can focus on intelligence.',
   },
   {
     icon: Users,
-    title: 'Trained Operators',
-    description: 'Professional pilots and mission controllers with operational experience.',
+    title: 'Certified Pilots',
+    description: 'FAA Part 107 certified pilots and mission controllers embedded in Aeryl operations.',
   },
   {
     icon: Lock,
-    title: 'Secure Data Handling',
-    description: 'Protected data transmission and storage for sensitive operations.',
+    title: 'Secure Operations',
+    description: 'Protected data handling and field operations supported by Starlink connectivity.',
   },
 ];
 
@@ -66,29 +66,29 @@ const services = [
   {
     title: 'Flight Operations',
     description:
-      'End-to-end drone flight operations including pilots, mission controllers, and aircraft.',
-    href: '/services#flight-operations',
+      'We fly the missions. Aircraft, pilots, and controllers deployed for every Aeryl operation.',
+    href: '/how-it-works',
     icon: Plane,
   },
   {
-    title: 'Mission Planning',
+    title: 'Mission Execution',
     description:
-      'Comprehensive pre-mission planning, risk assessment, and stakeholder coordination.',
-    href: '/services#mission-planning',
+      'Pre-mission planning, risk assessment, and on-site coordination. Aeryl AI handles intelligence, we handle the field.',
+    href: '/how-it-works',
     icon: Target,
   },
   {
-    title: 'Emergency Response',
+    title: 'Emergency Deployment',
     description:
-      'Rapid deployment capabilities for fire, rescue, and disaster response scenarios.',
-    href: '/services#emergency-response',
+      'Rapid crew mobilization for Aeryl-coordinated fire, rescue, and disaster response missions.',
+    href: '/how-it-works',
     icon: AlertTriangle,
   },
   {
-    title: 'Reconnaissance',
+    title: 'Aerial Reconnaissance',
     description:
-      'Aerial surveillance and situational awareness for tactical decision-making.',
-    href: '/services#reconnaissance',
+      'Sensor operations and situational awareness flights feeding Aeryl AI\'s analysis platform.',
+    href: '/how-it-works',
     icon: Eye,
   },
 ];
@@ -123,26 +123,26 @@ const operationSteps = [
 const useCases = [
   {
     icon: Flame,
-    title: 'Fire Response',
-    description: 'Aerial assessment of active fires, hotspot identification, and perimeter mapping.',
+    title: 'Wildfire Operations',
+    description: 'We fly the fire missions. Aeryl AI identifies hotspots and fire lines from our feeds.',
     color: 'from-orange-500 to-red-600',
   },
   {
     icon: Search,
-    title: 'Search and Rescue',
-    description: 'Thermal imaging and visual search across difficult terrain.',
+    title: 'Search & Rescue Flights',
+    description: 'Thermal and visual search sorties executed by AutonOps pilots for Aeryl-coordinated SAR.',
     color: 'from-blue-500 to-cyan-600',
   },
   {
     icon: Eye,
-    title: 'Reconnaissance',
-    description: 'Situational awareness and tactical intelligence gathering.',
+    title: 'Reconnaissance Sorties',
+    description: 'Sensor flights feeding Aeryl AI\'s situational awareness and intelligence platform.',
     color: 'from-purple-500 to-indigo-600',
   },
   {
     icon: AlertTriangle,
-    title: 'Disaster Assessment',
-    description: 'Rapid damage evaluation and infrastructure inspection post-event.',
+    title: 'Disaster Response',
+    description: 'Rapid aerial deployment for Aeryl-coordinated damage assessment and infrastructure review.',
     color: 'from-amber-500 to-orange-600',
   },
 ];
@@ -156,8 +156,8 @@ const missionFlowSteps = [
   },
   {
     step: '02',
-    title: 'Request Routed to AutonOps',
-    description: 'Aerial support request forwarded to our operations center.',
+    title: 'Aeryl AI Activates AutonOps',
+    description: 'Aeryl routes the aerial support request to our flight operations team.',
     icon: Radio,
   },
   {
@@ -230,7 +230,7 @@ export default function Home() {
           <div className="absolute top-32 right-[15%] float-slow" style={{ animationDelay: '0s' }}>
             <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-xl px-4 py-2 flex items-center gap-2">
               <Wifi className="w-4 h-4 text-green-400" />
-              <span className="text-sm text-slate-300">Starlink Connected</span>
+              <span className="text-sm text-slate-300">Starlink Field Ops</span>
             </div>
           </div>
           <div className="absolute bottom-40 left-[10%] float-medium hidden lg:block" style={{ animationDelay: '2s' }}>
@@ -254,13 +254,13 @@ export default function Home() {
             <div className="animate-fade-in">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full text-red-400 text-sm mb-6">
                 <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                Mission-Ready Operations
+                Aeryl AI Flight Operations
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-                Professional Drone
+                Powering Aeryl&apos;s
                 <span className="block text-shimmer">
                   <Typewriter
-                    words={['Flight Operations', 'Emergency Response', 'Reconnaissance', 'Mission Support']}
+                    words={['Rapid Response', 'Emergency Missions', 'Aerial Intelligence', 'Field Operations']}
                     typingSpeed={80}
                     deletingSpeed={40}
                     delayBetweenWords={3000}
@@ -268,22 +268,22 @@ export default function Home() {
                 </span>
               </h1>
               <p className="text-lg sm:text-xl text-slate-300 mb-8 max-w-xl">
-                We provide pilots, mission controllers, aircraft, and complete mission execution
-                for emergency response, reconnaissance, and mission-critical applications.
+                AutonOps puts aircraft, pilots, and mission controllers in the field
+                for Aeryl AI&apos;s emergency response platform.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
-                  href="/contact"
+                  href="/login"
                   className="group inline-flex items-center justify-center px-8 py-4 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-all duration-300 btn-glow"
                 >
-                  Contact Operations
+                  View Platform
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
-                  href="/services"
+                  href="/how-it-works"
                   className="inline-flex items-center justify-center px-8 py-4 border border-slate-500 text-white font-medium rounded-lg hover:bg-white/5 hover:border-slate-400 transition-all duration-300"
                 >
-                  View Services
+                  Learn More
                 </Link>
               </div>
             </div>
@@ -337,10 +337,10 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-              <span className="text-shimmer-slow">Operational Excellence</span>
+              <span className="text-shimmer-slow">Flight Operations Excellence</span>
             </h2>
             <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">
-              Built on discipline, training, and proven processes.
+              The operational backbone behind Aeryl AI&apos;s emergency response platform.
             </p>
           </div>
           <ScrollAnimation animation="stagger">
@@ -369,16 +369,16 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-12">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-2">Our Services</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-2">What We Bring to Aeryl Missions</h2>
               <p className="text-slate-600 dark:text-slate-400 text-lg">
-                Complete drone operations capabilities for your mission requirements.
+                We fly the missions. Aeryl AI coordinates them.
               </p>
             </div>
             <Link
-              href="/services"
+              href="/how-it-works"
               className="group inline-flex items-center text-red-600 font-medium hover:text-red-700 transition-colors"
             >
-              View all services
+              Learn more
               <ChevronRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -432,7 +432,7 @@ export default function Home() {
                 <span className="text-shimmer-white">How We Operate</span>
               </h2>
               <p className="text-slate-400 text-lg">
-                A structured approach to every mission.
+                How AutonOps executes Aeryl AI missions in the field.
               </p>
             </div>
             <Link
@@ -484,7 +484,7 @@ export default function Home() {
               From <span className="text-shimmer-slow">911 Call</span> to After Action Report
             </h2>
             <p className="text-slate-600 dark:text-slate-400 max-w-3xl mx-auto text-lg">
-              A complete mission lifecycle, from initial emergency dispatch to final documentation.
+              Aeryl AI coordinates the response. AutonOps flies the mission. From dispatch to debrief.
             </p>
           </div>
 
@@ -521,7 +521,7 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-bold text-white mb-2">Incident Command Always Retains Control</h3>
                 <p className="text-slate-300">
-                  AutonOps provides situational awareness and aerial intelligence. All tactical decisions remain with the Incident Commander. Our operators follow IC directives and never take autonomous action that affects ground operations.
+                  AutonOps provides the aircraft and crew. Aeryl AI provides the intelligence. All tactical decisions remain with the Incident Commander. Our operators follow IC directives and never take autonomous action that affects ground operations.
                 </p>
               </div>
             </div>
@@ -540,16 +540,16 @@ export default function Home() {
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-600 dark:text-blue-400 text-sm mb-6">
                 <Cpu className="w-4 h-4" />
-                Technology Partnership
+                Flight Operations Partner
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-6">
-                Technology Partner: <span className="text-shimmer-slow">Aeryl AI</span>
+                The Ops Team Behind <span className="text-shimmer-slow">Aeryl AI</span>
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-400 mb-6">
-                AutonOps partners with Aeryl AI, a leader in edge-computing solutions for real-time wildfire detection. Aeryl's AI-powered sensors enable onboard analysis of thermal imagery, surface temps, and smoke drift, delivering actionable intelligence in seconds rather than minutes.
+                AutonOps is the flight operations arm of Aeryl AI. While Aeryl builds the AI-powered detection and analysis platform, AutonOps puts the aircraft, pilots, and mission controllers in the field to execute every mission.
               </p>
               <p className="text-lg text-slate-600 dark:text-slate-400 mb-8">
-                Together, we bridge the gap between cutting-edge detection technology and mission-grade flight operations.
+                Aeryl provides the intelligence. AutonOps provides the operations. Together, one integrated response platform.
               </p>
               <a
                 href="https://aeryl.base44.app/"
@@ -586,9 +586,9 @@ export default function Home() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">Use Cases</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">Mission Types We Fly</h2>
             <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">
-              Supporting critical operations across emergency services and beyond.
+              Operational capabilities AutonOps brings to every Aeryl deployment.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -629,24 +629,24 @@ export default function Home() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Ready to discuss your <span className="text-shimmer">mission requirements</span>?
+            See the <span className="text-shimmer">platform in action</span>
           </h2>
           <p className="text-slate-300 mb-10 max-w-xl mx-auto text-lg">
-            Request a capability brief or connect directly with our operations team.
+            Explore the Aeryl + AutonOps mission control platform or connect with our operations team.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
-              href="/contact"
+              href="/login"
               className="group inline-flex items-center justify-center px-8 py-4 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-all duration-300 btn-glow"
             >
-              Request a Capability Brief
+              View Platform
               <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="/contact"
               className="inline-flex items-center justify-center px-8 py-4 border border-slate-500 text-white font-medium rounded-lg hover:bg-white/5 hover:border-slate-400 transition-all duration-300"
             >
-              Talk to Operations
+              Learn More
             </Link>
           </div>
         </div>
