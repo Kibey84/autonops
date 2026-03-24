@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import {
   LayoutDashboard,
+  Radio,
   PlusCircle,
   Crosshair,
   FileText,
@@ -16,16 +17,18 @@ import { getSession, clearSession } from '@/lib/data/auth';
 import type { AuthSession } from '@/lib/data/types';
 import LiveClock from '@/components/dashboard/LiveClock';
 import CustomerOverview from '@/components/dashboard/CustomerOverview';
+import LiveMissionTab from '@/components/dashboard/LiveMissionTab';
 import RequestMissionForm from '@/components/dashboard/RequestMissionForm';
 import CustomerMissionsView from '@/components/dashboard/CustomerMissionsView';
 import CustomerDeliverablesView from '@/components/dashboard/CustomerDeliverablesView';
 import CustomerBillingView from '@/components/dashboard/CustomerBillingView';
 import CustomerMessagesView from '@/components/dashboard/CustomerMessagesView';
 
-type View = 'overview' | 'request' | 'missions' | 'deliverables' | 'billing' | 'messages';
+type View = 'overview' | 'live' | 'request' | 'missions' | 'deliverables' | 'billing' | 'messages';
 
-const sidebarItems: { key: View; label: string; icon: typeof LayoutDashboard }[] = [
+const sidebarItems: { key: View; label: string; icon: typeof LayoutDashboard; accent?: boolean }[] = [
   { key: 'overview', label: 'Overview', icon: LayoutDashboard },
+  { key: 'live', label: 'Live Mission', icon: Radio, accent: true },
   { key: 'request', label: 'Request Mission', icon: PlusCircle },
   { key: 'missions', label: 'My Missions', icon: Crosshair },
   { key: 'deliverables', label: 'Deliverables', icon: FileText },
@@ -52,7 +55,6 @@ export default function DashboardPage() {
     router.push('/login');
   };
 
-  // Loading state while checking auth
   if (!session) {
     return (
       <div className="dark min-h-screen bg-slate-950 flex items-center justify-center">
@@ -63,6 +65,7 @@ export default function DashboardPage() {
 
   const views: Record<View, React.ReactNode> = {
     overview: <CustomerOverview session={session} onNavigate={(v) => setActiveView(v as View)} />,
+    live: <LiveMissionTab session={session} />,
     request: <RequestMissionForm session={session} />,
     missions: <CustomerMissionsView session={session} />,
     deliverables: <CustomerDeliverablesView session={session} />,
@@ -95,28 +98,33 @@ export default function DashboardPage() {
       </header>
 
       {/* Sidebar — Desktop */}
-      <aside className="fixed top-14 left-0 bottom-0 w-[220px] bg-slate-900 border-r border-slate-800 py-4 hidden lg:block">
+      <aside className="fixed top-14 left-0 bottom-0 w-[220px] bg-slate-900 border-r border-slate-800 py-4 hidden lg:flex flex-col">
         <div className="px-4 mb-4">
-          <p className="font-mono text-[10px] uppercase tracking-wider text-slate-500 mb-1">
-            Account
-          </p>
+          <p className="font-mono text-[10px] uppercase tracking-wider text-slate-500 mb-1">Account</p>
           <p className="text-sm text-white font-medium truncate">{session.accountName}</p>
           <p className="text-xs text-slate-500 truncate">{session.userName}</p>
         </div>
         <div className="border-t border-slate-800 mx-3 mb-3" />
-        <nav className="space-y-1 px-3">
+        <nav className="space-y-1 px-3 flex-1">
           {sidebarItems.map((item) => (
             <button
               key={item.key}
               onClick={() => setActiveView(item.key)}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
                 activeView === item.key
-                  ? 'bg-red-600/20 text-red-400 font-medium'
-                  : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
+                  ? item.accent
+                    ? 'bg-red-600/30 text-red-400 font-medium'
+                    : 'bg-red-600/20 text-red-400 font-medium'
+                  : item.accent
+                    ? 'text-red-400/70 hover:bg-red-600/10 hover:text-red-400'
+                    : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
               }`}
             >
-              <item.icon className="w-4 h-4" />
+              <item.icon className={`w-4 h-4 ${item.accent && activeView !== item.key ? 'animate-pulse' : ''}`} />
               {item.label}
+              {item.accent && activeView !== item.key && (
+                <span className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              )}
             </button>
           ))}
         </nav>
@@ -131,7 +139,9 @@ export default function DashboardPage() {
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs whitespace-nowrap transition-colors ${
               activeView === item.key
                 ? 'bg-red-600/20 text-red-400 font-medium'
-                : 'text-slate-400 hover:bg-slate-800'
+                : item.accent
+                  ? 'text-red-400/70 hover:bg-red-600/10'
+                  : 'text-slate-400 hover:bg-slate-800'
             }`}
           >
             <item.icon className="w-3.5 h-3.5" />
