@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { Camera, Flame, Eye, AlertTriangle } from 'lucide-react';
+import { Camera, Flame, Eye, AlertTriangle, Target } from 'lucide-react';
 import type { AuthSession } from '@/lib/data/types';
 
 const LiveMapEmbed = dynamic(() => import('@/components/LiveMapEmbed'), {
@@ -89,6 +89,85 @@ function CameraFeed() {
   );
 }
 
+// ─── TIME TO TARGET ─────────────────────────────────────────
+
+function TimeToTarget() {
+  const [seconds, setSeconds] = useState(167); // 2:47
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  const display = seconds <= 0 ? 'ON TARGET' : `${m}:${String(s).padStart(2, '0')}`;
+  const color = seconds <= 0 ? 'text-red-500 animate-pulse' : seconds <= 30 ? 'text-amber-400' : 'text-green-400';
+
+  return (
+    <div className="bg-slate-900 border border-slate-700/50 rounded-lg p-3 text-center">
+      <div className="text-[9px] font-mono text-slate-500 uppercase tracking-wider mb-1 flex items-center justify-center gap-1">
+        <Target className="w-3 h-3" /> Time to Target
+      </div>
+      <div className={`font-mono text-2xl font-bold tabular-nums ${color}`}>
+        {display}
+      </div>
+    </div>
+  );
+}
+
+// ─── WAYPOINT TRACKER ───────────────────────────────────────
+
+function WaypointTracker() {
+  const waypoints = [
+    { wp: 1, name: 'Launch', alt: '0ft', status: 'complete' as const },
+    { wp: 2, name: 'Climb', alt: '800ft', status: 'complete' as const },
+    { wp: 3, name: 'Transit', alt: '1,200ft', status: 'active' as const },
+    { wp: 4, name: 'Survey-N', alt: '1,000ft', status: 'planned' as const },
+    { wp: 5, name: 'Survey-E', alt: '1,000ft', status: 'planned' as const },
+    { wp: 6, name: 'Survey-S', alt: '800ft', status: 'planned' as const },
+    { wp: 7, name: 'Loiter', alt: '1,000ft', status: 'planned' as const },
+    { wp: 8, name: 'RTB', alt: '1,200ft', status: 'planned' as const },
+    { wp: 9, name: 'Land', alt: '0ft', status: 'planned' as const },
+  ];
+
+  return (
+    <div className="bg-slate-800/80 border border-slate-700 rounded-xl p-3">
+      <div className="font-mono text-[10px] text-slate-400 uppercase tracking-wider mb-2">Waypoints</div>
+      <div className="space-y-1">
+        {waypoints.map((wp) => (
+          <div
+            key={wp.wp}
+            className={`flex items-center gap-2 px-2 py-1 rounded text-[10px] font-mono ${
+              wp.status === 'active'
+                ? 'bg-red-500/10 border-l-2 border-l-red-500'
+                : wp.status === 'complete'
+                  ? 'opacity-50'
+                  : ''
+            }`}
+          >
+            <span className="w-4 text-center">
+              {wp.status === 'complete' && <span className="text-green-400">✓</span>}
+              {wp.status === 'active' && <span className="text-red-400 animate-pulse">●</span>}
+              {wp.status === 'planned' && <span className="text-slate-600">○</span>}
+            </span>
+            <span className={`flex-1 ${wp.status === 'active' ? 'text-white' : 'text-slate-400'}`}>
+              {wp.name}
+            </span>
+            <span className="text-slate-500">{wp.alt}</span>
+          </div>
+        ))}
+      </div>
+      <div className="mt-2 pt-2 border-t border-slate-700/50 flex items-center justify-between text-[9px] font-mono">
+        <span className="text-slate-500">WP 3 of 9</span>
+        <span className="text-amber-400">Next: Survey-N · 1.2nm</span>
+      </div>
+    </div>
+  );
+}
+
 // ─── MAIN COMPONENT ─────────────────────────────────────────
 
 export default function LiveMissionTab({ session }: { session: AuthSession }) {
@@ -118,8 +197,14 @@ export default function LiveMissionTab({ session }: { session: AuthSession }) {
           </div>
         </div>
 
-        {/* Countdown */}
-        <CountdownTimer />
+        {/* Timers */}
+        <div className="grid grid-cols-2 gap-2">
+          <CountdownTimer />
+          <TimeToTarget />
+        </div>
+
+        {/* Waypoints */}
+        <WaypointTracker />
 
         {/* Camera Feed */}
         <CameraFeed />
