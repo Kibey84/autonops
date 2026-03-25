@@ -42,8 +42,8 @@ const faqs = [
     color: 'blue',
     questions: [
       {
-        q: 'What is the M3 Platform?',
-        a: 'The M3 Multi-Mission Platform is our AI-powered command and control system developed in partnership with Aeryl AI. It handles mission planning, real-time sensor feeds, waypoint navigation, and generates automated after-action reports.',
+        q: 'What is the M2 Platform?',
+        a: 'The M2 Multi-Mission Platform is our AI-powered command and control system developed in partnership with Aeryl AI. It handles mission planning, real-time sensor feeds, waypoint navigation, and generates automated after-action reports.',
       },
       {
         q: 'How does remote piloting work?',
@@ -66,7 +66,7 @@ const faqs = [
     questions: [
       {
         q: 'How do we get started?',
-        a: 'Contact us to discuss your mission requirements. We\'ll assess your needs, explain our capabilities, and develop a service agreement tailored to your operations. We can arrange a demonstration to show you the M3 platform in action.',
+        a: 'Contact us to discuss your mission requirements. We\'ll assess your needs, explain our capabilities, and develop a service agreement tailored to your operations. We can arrange a demonstration to show you the M2 platform in action.',
       },
       {
         q: 'Do you work with government agencies?',
@@ -97,7 +97,7 @@ const faqs = [
       },
       {
         q: 'How do you handle FAA compliance?',
-        a: 'The M3 platform integrates with FAA systems for automated flight plan filing and airspace clearance. We handle all regulatory requirements so you can focus on your mission objectives.',
+        a: 'The M2 platform integrates with FAA systems for automated flight plan filing and airspace clearance. We handle all regulatory requirements so you can focus on your mission objectives.',
       },
       {
         q: 'What safety protocols do you follow?',
@@ -105,7 +105,7 @@ const faqs = [
       },
       {
         q: 'What happens if there\'s an equipment failure?',
-        a: 'Our aircraft have redundant systems and failsafe protocols. The M3 platform monitors all systems in real-time. In case of any anomaly, automated safety procedures activate, and our pilots are trained to handle contingencies.',
+        a: 'Our aircraft have redundant systems and failsafe protocols. The M2 platform monitors all systems in real-time. In case of any anomaly, automated safety procedures activate, and our pilots are trained to handle contingencies.',
       },
     ],
   },

@@ -34,14 +34,14 @@ import { RadarPulse } from '@/components/AnimatedDrone';
 export const metadata: Metadata = {
   title: 'Technology',
   description:
-    'AutonOps leverages the Aeryl M3 Multi-Mission Platform for AI-powered drone operations, real-time sensor analysis, and intelligent mission coordination.',
+    'AutonOps leverages the Aeryl M2 Multi-Mission Platform for AI-powered drone operations, real-time sensor analysis, and intelligent mission coordination.',
   alternates: {
     canonical: 'https://autonops.com/technology',
   },
   openGraph: {
     title: 'Technology | AutonOps',
-    description: 'AI-powered M3 platform for drone operations with real-time sensor feeds, mission planning, and intelligent coordination.',
-    images: [{ url: '/m2-dashboard.jpg', width: 1200, height: 630, alt: 'M3 Platform Dashboard' }],
+    description: 'AI-powered M2 platform for drone operations with real-time sensor feeds, mission planning, and intelligent coordination.',
+    images: [{ url: '/m2-dashboard.jpg', width: 1200, height: 630, alt: 'M2 Platform Dashboard' }],
   },
 };
 
@@ -191,14 +191,14 @@ export default function TechnologyPage() {
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-500/10 border border-red-500/20 rounded-full text-red-400 text-sm mb-6">
               <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
               <Cpu className="w-4 h-4" />
-              Aeryl M3 Platform
+              Aeryl M2 Platform
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
               Technology That Powers
               <span className="block text-shimmer">Mission Success</span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-300">
-              AutonOps operates on the Aeryl M3 Multi-Mission Platform—an AI-powered
+              AutonOps operates on the Aeryl M2 Multi-Mission Platform—an AI-powered
               command and control system designed for complex drone operations in
               emergency response and critical mission environments.
             </p>
@@ -216,7 +216,7 @@ export default function TechnologyPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-              M3 Platform Capabilities
+              M2 Platform Capabilities
             </h2>
             <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">
               A comprehensive mission management system built for operational excellence.
@@ -411,7 +411,7 @@ export default function TechnologyPage() {
                 Integrated Operations Management
               </h2>
               <p className="text-slate-600 dark:text-slate-400 mb-8">
-                The M3 platform provides end-to-end visibility and control across all
+                The M2 platform provides end-to-end visibility and control across all
                 aspects of drone operations. From client relationship management to
                 real-time mission execution, every component works together seamlessly.
               </p>
@@ -428,7 +428,7 @@ export default function TechnologyPage() {
               <div className="rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-700">
                 <Image
                   src="/m2-dashboard.jpg"
-                  alt="M3 Platform Dashboard - Live fire tracking and mission management"
+                  alt="M2 Platform Dashboard - Live fire tracking and mission management"
                   width={800}
                   height={500}
                   className="w-full h-auto"
@@ -567,7 +567,7 @@ export default function TechnologyPage() {
             See the technology <span className="text-shimmer">in action</span>
           </h2>
           <p className="text-slate-300 mb-8 max-w-xl mx-auto">
-            Schedule a demonstration to see how the M3 platform can support your operations.
+            Schedule a demonstration to see how the M2 platform can support your operations.
           </p>
           <Link
             href="/contact"
