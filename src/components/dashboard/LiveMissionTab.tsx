@@ -1,14 +1,20 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import { Camera, Flame, Eye, AlertTriangle, Target } from 'lucide-react';
+import { Camera, Flame, Eye, AlertTriangle, Target, Users } from 'lucide-react';
 import type { AuthSession } from '@/lib/data/types';
 
 const LiveMapEmbed = dynamic(() => import('@/components/LiveMapEmbed'), {
   ssr: false,
   loading: () => <div className="h-full w-full bg-slate-900 animate-pulse rounded-lg" />,
 });
+
+interface AlertEntry {
+  time: string;
+  text: string;
+  type: 'warning' | 'detection' | 'info';
+}
 
 // ─── COUNTDOWN TIMER ────────────────────────────────────────
 
@@ -168,18 +174,98 @@ function WaypointTracker() {
   );
 }
 
+// ─── ALERTS PANEL ───────────────────────────────────────────
+
+function AlertsPanel({ alerts }: { alerts: AlertEntry[] }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [alerts]);
+
+  return (
+    <div className="bg-slate-800/80 border border-slate-700 rounded-xl p-4">
+      <div className="flex items-center justify-between mb-2">
+        <div className="font-mono text-[10px] text-red-600 uppercase tracking-[0.2em] font-bold">Alerts</div>
+        {alerts.length > 0 && (
+          <span className="font-mono text-[9px] text-red-400 bg-red-500/20 px-1.5 py-0.5 rounded">
+            {alerts.length}
+          </span>
+        )}
+      </div>
+      <div ref={scrollRef} className="bg-slate-950 border border-slate-800 rounded-lg overflow-hidden max-h-[140px] overflow-y-auto">
+        {alerts.length === 0 ? (
+          <div className="px-3 py-2.5 font-mono text-[10px] text-slate-500">No active alerts</div>
+        ) : (
+          alerts.map((alert, i) => (
+            <div key={i} className={`flex items-start gap-2 px-3 py-2 border-l-2 ${
+              alert.type === 'detection' ? 'border-l-red-500 bg-red-500/5' : 'border-l-amber-500'
+            } ${i > 0 ? 'border-t border-slate-800' : ''}`}>
+              {alert.type === 'detection' ? (
+                <Users className="w-3.5 h-3.5 text-red-500 flex-shrink-0 mt-0.5" />
+              ) : (
+                <AlertTriangle className="w-3.5 h-3.5 text-amber-500 flex-shrink-0 mt-0.5" />
+              )}
+              <div>
+                <span className="font-mono text-[10px] text-slate-500">{alert.time}</span>
+                <span className={`font-mono text-[10px] ml-2 ${
+                  alert.type === 'detection' ? 'text-red-400 font-bold' : 'text-slate-300'
+                }`}>
+                  {alert.text}
+                </span>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── MAIN COMPONENT ─────────────────────────────────────────
 
 export default function LiveMissionTab({ session }: { session: AuthSession }) {
+  const [alerts, setAlerts] = useState<AlertEntry[]>([
+    { time: '14:32:07', text: 'Aircraft entering restricted airspace buffer zone', type: 'warning' },
+  ]);
+  const [phase, setPhase] = useState('transit');
+
+  const handleDetection = useCallback((det: { lat: number; lng: number; label: string }) => {
+    const now = new Date();
+    const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+    setAlerts((prev) => [
+      ...prev,
+      {
+        time,
+        text: `Human located at ${det.lat.toFixed(4)}°N, ${Math.abs(det.lng).toFixed(4)}°W`,
+        type: 'detection',
+      },
+    ]);
+  }, []);
+
+  const handlePhaseChange = useCallback((newPhase: string) => {
+    setPhase(newPhase);
+    const now = new Date();
+    const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+    if (newPhase === 'search') {
+      setAlerts((prev) => [...prev, { time, text: 'Aircraft on station — beginning search pattern', type: 'info' as const }]);
+    } else if (newPhase === 'rtb') {
+      setAlerts((prev) => [...prev, { time, text: 'Search complete — aircraft returning to base', type: 'info' as const }]);
+    } else if (newPhase === 'landed') {
+      setAlerts((prev) => [...prev, { time, text: 'Aircraft landed safely at staging', type: 'info' as const }]);
+    }
+  }, []);
+
   return (
     <div className="h-[calc(100vh-8rem)] flex gap-4">
       {/* Left panel */}
-      <div className="w-[300px] flex-shrink-0 flex flex-col gap-3">
+      <div className="w-[300px] flex-shrink-0 flex flex-col gap-3 overflow-y-auto pr-1">
         {/* Mission Info */}
         <div className="bg-slate-800/80 border border-slate-700 rounded-xl p-4">
           <div className="flex items-center gap-2 mb-3">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
             <span className="font-mono text-[10px] text-red-600 uppercase tracking-[0.2em] font-bold">Active Mission</span>
+            <span className="ml-auto font-mono text-[9px] text-slate-500 uppercase">{phase}</span>
           </div>
           <div className="space-y-2">
             {[
@@ -209,26 +295,17 @@ export default function LiveMissionTab({ session }: { session: AuthSession }) {
         {/* Camera Feed */}
         <CameraFeed />
 
-        {/* Alerts */}
-        <div className="bg-slate-800/80 border border-slate-700 rounded-xl p-4">
-          <div className="font-mono text-[10px] text-red-600 uppercase tracking-[0.2em] font-bold mb-2">Alerts</div>
-          <div className="bg-slate-950 border border-slate-800 rounded-lg overflow-hidden">
-            <div className="flex items-start gap-2 px-3 py-2.5 border-l-2 border-l-red-500">
-              <AlertTriangle className="w-3.5 h-3.5 text-red-500 flex-shrink-0 mt-0.5" />
-              <div>
-                <span className="font-mono text-[10px] text-slate-500">14:32:07</span>
-                <span className="font-mono text-[10px] text-slate-300 ml-2">
-                  Aircraft entering restricted airspace buffer zone
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Alerts — now live */}
+        <AlertsPanel alerts={alerts} />
       </div>
 
       {/* Map */}
       <div className="flex-1 rounded-xl overflow-hidden border border-slate-700">
-        <LiveMapEmbed />
+        <LiveMapEmbed
+          onDetection={handleDetection}
+          onPhaseChange={handlePhaseChange}
+          searchDuration={167}
+        />
       </div>
     </div>
   );
