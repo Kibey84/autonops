@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import {
-  MessageCircle, X, Send, Mic, MicOff, Volume2, VolumeX,
+  MessageCircle, X, Send, Mic, MicOff, Volume2, VolumeX, Square,
   Loader2, ChevronRight, Sparkles,
 } from 'lucide-react';
 
@@ -44,60 +44,190 @@ function getInitialChips(pathname: string): string[] {
 
 // ─── VOICE SUPPORT ──────────────────────────────────────────
 
+function stripMarkdown(text: string): string {
+  return text
+    .replace(/#{1,6}\s?/g, '')        // headings
+    .replace(/\*{1,3}([^*]+)\*{1,3}/g, '$1') // bold/italic
+    .replace(/`{1,3}[^`]*`{1,3}/g, '') // code
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links
+    .replace(/^[-*]\s/gm, '')          // list bullets
+    .replace(/^\d+\.\s/gm, '')         // numbered lists
+    .replace(/\n{2,}/g, '. ')          // paragraph breaks → pause
+    .replace(/\n/g, ' ')
+    .trim();
+}
+
 function useVoice() {
   const [isListening, setIsListening] = useState(false);
+  const [interimText, setInterimText] = useState('');
   const [speechEnabled, setSpeechEnabled] = useState(false);
-  const [ttsEnabled, setTtsEnabled] = useState(false);
+  const [ttsEnabled, setTtsEnabled] = useState(true);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recognitionRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const selectedVoiceRef = useRef<any>(null);
+  const finalTranscriptRef = useRef('');
+  const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const onFinalizeRef = useRef<((text: string) => void) | null>(null);
 
+  // Initialize speech recognition
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (SR) {
       setSpeechEnabled(true);
       const recognition = new SR();
-      recognition.continuous = false;
-      recognition.interimResults = false;
+      recognition.continuous = true;
+      recognition.interimResults = true;
       recognition.lang = 'en-US';
       recognitionRef.current = recognition;
     }
   }, []);
 
-  const startListening = useCallback((onResult: (text: string) => void) => {
+  // Initialize TTS voice — handle Chrome's async getVoices()
+  useEffect(() => {
+    if (!window.speechSynthesis) return;
+
+    function pickVoice() {
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length === 0) return;
+
+      // Filter to en-US voices only
+      const enUS = voices.filter((v) => v.lang === 'en-US');
+      const pool = enUS.length > 0 ? enUS : voices.filter((v) => v.lang.startsWith('en'));
+      if (pool.length === 0) { selectedVoiceRef.current = voices[0]; return; }
+
+      // Priority order by name
+      const preferred = ['Samantha', 'Google US English', 'Microsoft Zira', 'Karen'];
+      for (const name of preferred) {
+        const match = pool.find((v) => v.name.includes(name));
+        if (match) { selectedVoiceRef.current = match; return; }
+      }
+
+      // Fallback: last en-US voice (higher quality voices tend to be listed last)
+      selectedVoiceRef.current = pool[pool.length - 1];
+    }
+
+    // getVoices() returns empty on first call in Chrome — must use event
+    pickVoice();
+    window.speechSynthesis.onvoiceschanged = pickVoice;
+
+    // Cleanup: cancel speech on unmount
+    return () => {
+      window.speechSynthesis.onvoiceschanged = null;
+      window.speechSynthesis.cancel();
+    };
+  }, []);
+
+  const startListening = useCallback((onInterim: (text: string) => void, onFinalize: (text: string) => void) => {
     if (!recognitionRef.current) return;
     const rec = recognitionRef.current;
+
+    finalTranscriptRef.current = '';
+    setInterimText('');
+    onFinalizeRef.current = onFinalize;
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     rec.onresult = (event: any) => {
-      const text = event.results[0][0].transcript;
-      onResult(text);
-      setIsListening(false);
+      let interim = '';
+      let final = '';
+
+      for (let i = 0; i < event.results.length; i++) {
+        const result = event.results[i];
+        if (result.isFinal) {
+          final += result[0].transcript;
+        } else {
+          interim += result[0].transcript;
+        }
+      }
+
+      if (final) {
+        finalTranscriptRef.current += final;
+      }
+
+      const display = finalTranscriptRef.current + interim;
+      setInterimText(display);
+      onInterim(display);
+
+      // Reset silence debounce timer on every result
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+      silenceTimerRef.current = setTimeout(() => {
+        // 1200ms of silence — finalize
+        rec.stop();
+      }, 1200);
     };
-    rec.onerror = () => setIsListening(false);
-    rec.onend = () => setIsListening(false);
+
+    rec.onerror = () => {
+      setIsListening(false);
+      setInterimText('');
+    };
+
+    rec.onend = () => {
+      setIsListening(false);
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+      // Finalize with whatever we have
+      const text = finalTranscriptRef.current.trim();
+      setInterimText('');
+      if (text && onFinalizeRef.current) {
+        onFinalizeRef.current(text);
+      }
+    };
+
     rec.start();
     setIsListening(true);
   }, []);
 
   const stopListening = useCallback(() => {
+    if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
     recognitionRef.current?.stop();
     setIsListening(false);
   }, []);
 
   const speak = useCallback((text: string) => {
     if (!ttsEnabled || !window.speechSynthesis) return;
+    // Cancel any ongoing speech first
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 1.05;
-    utterance.pitch = 1.0;
-    // Try to find a female voice
-    const voices = window.speechSynthesis.getVoices();
-    const female = voices.find((v) => /female|samantha|victoria|karen|moira/i.test(v.name));
-    if (female) utterance.voice = female;
-    window.speechSynthesis.speak(utterance);
+
+    const clean = stripMarkdown(text);
+
+    // Split into sentences for more natural intonation
+    const sentences = clean
+      .split(/(?<=[.?!])\s+/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+
+    if (sentences.length === 0) return;
+
+    setIsSpeaking(true);
+
+    sentences.forEach((sentence, i) => {
+      const utterance = new SpeechSynthesisUtterance(sentence);
+      utterance.rate = 0.88;
+      utterance.pitch = 1.08;
+      utterance.volume = 1;
+      if (selectedVoiceRef.current) {
+        utterance.voice = selectedVoiceRef.current;
+      }
+      // Track when the last sentence finishes
+      if (i === sentences.length - 1) {
+        utterance.onend = () => setIsSpeaking(false);
+        utterance.onerror = () => setIsSpeaking(false);
+      }
+      window.speechSynthesis.speak(utterance);
+    });
   }, [ttsEnabled]);
 
-  return { isListening, speechEnabled, ttsEnabled, setTtsEnabled, startListening, stopListening, speak };
+  const cancelSpeech = useCallback(() => {
+    window.speechSynthesis?.cancel();
+    setIsSpeaking(false);
+  }, []);
+
+  return {
+    isListening, interimText, speechEnabled, ttsEnabled, setTtsEnabled,
+    isSpeaking, startListening, stopListening, speak, cancelSpeech,
+  };
 }
 
 // ─── MAIN COMPONENT ────────────────────────────────────────
@@ -140,6 +270,9 @@ export default function AskAeryl() {
   }, [isOpen]);
 
   const sendMessage = useCallback(async (text: string) => {
+    // Always cancel ongoing speech when user sends anything
+    voice.cancelSpeech();
+
     if (!text.trim() || isLoading) return;
 
     const userMsg: Message = { role: 'user', content: text.trim(), timestamp: getTimestamp() };
@@ -193,10 +326,15 @@ export default function AskAeryl() {
     if (voice.isListening) {
       voice.stopListening();
     } else {
-      voice.startListening((text) => {
-        setInput(text);
-        sendMessage(text);
-      });
+      voice.startListening(
+        // onInterim: show live transcription in input field
+        (interim) => setInput(interim),
+        // onFinalize: submit the final transcript
+        (final) => {
+          setInput('');
+          sendMessage(final);
+        }
+      );
     }
   }, [voice, sendMessage]);
 
@@ -237,9 +375,19 @@ export default function AskAeryl() {
               </div>
             </div>
             <div className="flex items-center gap-1.5">
+              {/* Stop speaking button — only visible when speaking */}
+              {voice.isSpeaking && (
+                <button
+                  onClick={voice.cancelSpeech}
+                  className="p-1.5 rounded text-red-400 bg-red-500/10 hover:bg-red-500/20 transition-colors"
+                  title="Stop speaking"
+                >
+                  <Square className="w-3.5 h-3.5" />
+                </button>
+              )}
               {/* TTS toggle */}
               <button
-                onClick={() => voice.setTtsEnabled(!voice.ttsEnabled)}
+                onClick={() => { voice.setTtsEnabled(!voice.ttsEnabled); if (voice.ttsEnabled) voice.cancelSpeech(); }}
                 className={`p-1.5 rounded transition-colors ${voice.ttsEnabled ? 'text-red-400 bg-red-500/10' : 'text-slate-500 hover:text-slate-300'}`}
                 title={voice.ttsEnabled ? 'Mute voice' : 'Enable voice'}
               >
@@ -352,11 +500,14 @@ export default function AskAeryl() {
                 ref={inputRef}
                 type="text"
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && sendMessage(input)}
+                onChange={(e) => { if (!voice.isListening) setInput(e.target.value); }}
+                onKeyDown={(e) => e.key === 'Enter' && !voice.isListening && sendMessage(input)}
                 placeholder={voice.isListening ? 'Listening...' : 'Ask Aeryl...'}
-                className="flex-1 px-3 py-2 bg-slate-700 border-0 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-red-500"
-                disabled={isLoading || voice.isListening}
+                className={`flex-1 px-3 py-2 bg-slate-700 border-0 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-red-500 ${
+                  voice.isListening ? 'ring-1 ring-red-500/50' : ''
+                }`}
+                readOnly={voice.isListening}
+                disabled={isLoading}
               />
               <button
                 onClick={() => sendMessage(input)}
