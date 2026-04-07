@@ -3,7 +3,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { Camera, Flame, Eye, AlertTriangle, Target, Users } from 'lucide-react';
-import type { AuthSession } from '@/lib/data/types';
+import type { AuthSession, Mission, MissionRole } from '@/lib/data/types';
+import CommsLogPanel from './CommsLogPanel';
+import VideoCallPanel from './VideoCallPanel';
+import EvidencePanel from './EvidencePanel';
 
 const LiveMapEmbed = dynamic(() => import('@/components/LiveMapEmbed'), {
   ssr: false,
@@ -224,7 +227,13 @@ function AlertsPanel({ alerts }: { alerts: AlertEntry[] }) {
 
 // ─── MAIN COMPONENT ─────────────────────────────────────────
 
-export default function LiveMissionTab({ session }: { session: AuthSession }) {
+interface LiveMissionTabProps {
+  session: AuthSession;
+  role: MissionRole;
+  mission: Mission;
+}
+
+export default function LiveMissionTab({ session, role, mission }: LiveMissionTabProps) {
   const [alerts, setAlerts] = useState<AlertEntry[]>([
     { time: '14:32:07', text: 'Aircraft entering restricted airspace buffer zone', type: 'warning' },
   ]);
@@ -256,6 +265,12 @@ export default function LiveMissionTab({ session }: { session: AuthSession }) {
     }
   }, []);
 
+  const roleBadge = {
+    commander: 'bg-red-500/20 text-red-400 border-red-500/30',
+    operator: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+    observer: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+  }[role];
+
   return (
     <div className="h-[calc(100vh-8rem)] flex gap-4">
       {/* Left panel */}
@@ -269,10 +284,10 @@ export default function LiveMissionTab({ session }: { session: AuthSession }) {
           </div>
           <div className="space-y-2">
             {[
-              { label: 'Aircraft', value: 'Blackfly' },
-              { label: 'Pilot', value: 'Jaderic D.' },
-              { label: 'Mission ID', value: 'MSN 2025-001' },
-              { label: 'Location', value: 'Rio Verde, AZ' },
+              { label: 'Aircraft', value: mission.aircraftName || 'Blackfly' },
+              { label: 'Pilot', value: mission.commanderName || 'Jaderic D.' },
+              { label: 'Mission ID', value: mission.displayId },
+              { label: 'Location', value: mission.location },
               { label: 'FAA Control', value: 'TBD' },
             ].map((row) => (
               <div key={row.label} className="flex items-center justify-between">
@@ -280,6 +295,13 @@ export default function LiveMissionTab({ session }: { session: AuthSession }) {
                 <span className="font-mono text-[11px] text-white">{row.value}</span>
               </div>
             ))}
+          </div>
+          {/* Role badge */}
+          <div className="mt-3 pt-3 border-t border-slate-700 flex items-center justify-between">
+            <span className="font-mono text-[10px] text-slate-500 uppercase">Your Role</span>
+            <span className={`font-mono text-[9px] px-2 py-0.5 rounded border ${roleBadge}`}>
+              {role.toUpperCase()}
+            </span>
           </div>
         </div>
 
@@ -294,6 +316,19 @@ export default function LiveMissionTab({ session }: { session: AuthSession }) {
 
         {/* Camera Feed */}
         <CameraFeed />
+
+        {/* Mission Call (Daily.co video) */}
+        <VideoCallPanel
+          dailyRoomUrl={mission.dailyRoomUrl}
+          role={role}
+          missionDisplayId={mission.displayId}
+        />
+
+        {/* Evidence Capture */}
+        <EvidencePanel missionId={mission.id} role={role} session={session} />
+
+        {/* Realtime Comms Log */}
+        <CommsLogPanel missionId={mission.id} role={role} session={session} />
 
         {/* Alerts — now live */}
         <AlertsPanel alerts={alerts} />

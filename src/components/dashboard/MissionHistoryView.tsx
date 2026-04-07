@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { FileText, Loader2, Sparkles } from 'lucide-react';
+import { generateAAR } from '@/app/actions/missions';
 
 interface Mission {
   id: string;
@@ -17,6 +19,7 @@ interface Mission {
   cost: string;
   price: string;
   profit: string;
+  aarReport?: string | null;
 }
 
 const missions: Mission[] = [
@@ -79,6 +82,26 @@ const statusBadge = (status: string) => {
 
 export default function MissionHistoryView() {
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [aarReports, setAarReports] = useState<Record<string, string>>({});
+  const [generating, setGenerating] = useState<string | null>(null);
+  const [aarError, setAarError] = useState<string | null>(null);
+
+  const handleGenerateAAR = async (missionId: string) => {
+    setGenerating(missionId);
+    setAarError(null);
+    try {
+      const result = await generateAAR(missionId);
+      if (result.success && result.report) {
+        setAarReports((prev) => ({ ...prev, [missionId]: result.report! }));
+      } else {
+        setAarError(result.error || 'Generation failed');
+      }
+    } catch (err) {
+      setAarError(err instanceof Error ? err.message : 'Generation failed');
+    } finally {
+      setGenerating(null);
+    }
+  };
 
   return (
     <div>
@@ -168,6 +191,48 @@ export default function MissionHistoryView() {
                                 </span>
                               </div>
                             </>
+                          )}
+                          {/* ── AFTER ACTION REPORT ── */}
+                          {(m.status === 'Closed' || m.status === 'Complete') && (
+                            <div className="mt-4 pt-4 border-t border-slate-700">
+                              <div className="flex items-center justify-between mb-2">
+                                <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                                  <FileText className="w-3.5 h-3.5 text-cyan-400" />
+                                  After Action Report
+                                </h4>
+                                {!aarReports[m.id] && !m.aarReport && (
+                                  <button
+                                    onClick={(e) => { e.stopPropagation(); handleGenerateAAR(m.id); }}
+                                    disabled={generating === m.id}
+                                    className="flex items-center gap-1.5 px-3 py-1 bg-red-600 hover:bg-red-700 disabled:bg-slate-700 disabled:text-slate-500 text-white text-[10px] font-mono font-bold rounded transition-colors"
+                                  >
+                                    {generating === m.id ? (
+                                      <>
+                                        <Loader2 className="w-3 h-3 animate-spin" />
+                                        GENERATING...
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Sparkles className="w-3 h-3" />
+                                        GENERATE REPORT
+                                      </>
+                                    )}
+                                  </button>
+                                )}
+                              </div>
+                              {aarError && generating === null && (
+                                <div className="bg-red-500/10 border border-red-500/30 rounded px-3 py-2 text-[10px] text-red-400 font-mono mb-2">
+                                  {aarError}
+                                </div>
+                              )}
+                              {(aarReports[m.id] || m.aarReport) && (
+                                <div className="bg-slate-900 border border-slate-700 rounded-lg p-4 max-h-96 overflow-y-auto">
+                                  <pre className="font-mono text-[10px] text-slate-300 whitespace-pre-wrap leading-relaxed">
+                                    {aarReports[m.id] || m.aarReport}
+                                  </pre>
+                                </div>
+                              )}
+                            </div>
                           )}
                         </div>
                       </td>

@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import DashboardPanel from './DashboardPanel';
+import type { Feature, FeatureCollection, GeoJsonObject } from 'geojson';
 
 const MapContent = dynamic(() => import('./MissionMapPanelClient'), {
   ssr: false,
@@ -10,7 +11,19 @@ const MapContent = dynamic(() => import('./MissionMapPanelClient'), {
   ),
 });
 
-export default function MissionMapPanel() {
+interface MissionMapPanelProps {
+  waypointGeoJSON?: Feature | FeatureCollection | GeoJsonObject | null;
+  fireBoundaryGeoJSON?: Feature | FeatureCollection | GeoJsonObject | null;
+  livePosition?: { lat: number; lng: number } | null;
+  showLayerToggles?: boolean;
+}
+
+export default function MissionMapPanel({
+  waypointGeoJSON = null,
+  fireBoundaryGeoJSON = null,
+  livePosition = null,
+  showLayerToggles = false,
+}: MissionMapPanelProps) {
   return (
     <DashboardPanel
       title="Mission Map"
@@ -21,7 +34,12 @@ export default function MissionMapPanel() {
         </span>
       }
     >
-      <MapContent />
+      <MapContent
+        waypointGeoJSON={waypointGeoJSON}
+        fireBoundaryGeoJSON={fireBoundaryGeoJSON}
+        livePosition={livePosition}
+        showLayerToggles={showLayerToggles}
+      />
     </DashboardPanel>
   );
 }

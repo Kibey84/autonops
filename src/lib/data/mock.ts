@@ -2,6 +2,7 @@ import type {
   Account, Contact, MissionRequest, Mission, Sortie, Aircraft,
   Pilot, Invoice, Expense, Report, Message, AuditLog,
   FinancialSummary, OperationsSummary,
+  MissionChatEntry, MissionEvidence,
 } from './types';
 
 // ============================================================
@@ -94,6 +95,9 @@ export const missions: Mission[] = [
     aircraftId: 'ac-001', aircraftName: 'Blackfly-01',
     score: null, startTime: '2025-03-16T14:30:00Z', endTime: null,
     aarSummary: null, createdAt: '2025-03-16T14:28:00Z',
+    cmdrId: 'usr-001',
+    dailyRoomUrl: 'https://autonops.daily.co/msn-2025-0001',
+    aarReport: null,
   },
   {
     id: 'msn-002', displayId: 'MSN-2024-0004', requestId: 'req-003', accountId: 'acct-001',
@@ -228,6 +232,30 @@ export const messages: Message[] = [
 ];
 
 // ============================================================
+// MISSION CHAT (realtime comms log)
+// ============================================================
+
+export const missionChat: MissionChatEntry[] = [
+  { id: 'mc-001', missionId: 'msn-001', userId: null, userName: 'SYSTEM', role: 'system', message: 'Mission MSN-2025-0001 initiated. Aircraft Blackfly assigned.', createdAt: '2025-03-16T14:30:00Z' },
+  { id: 'mc-002', missionId: 'msn-001', userId: 'plt-003', userName: 'Jaderic D.', role: 'commander', message: 'Demo-1, clear for departure. Winds 270 at 12.', createdAt: '2025-03-16T14:31:00Z' },
+  { id: 'mc-003', missionId: 'msn-001', userId: 'plt-001', userName: 'Jared K.', role: 'operator', message: 'Copy. Demo-1 rolling, runway 24.', createdAt: '2025-03-16T14:31:22Z' },
+  { id: 'mc-004', missionId: 'msn-001', userId: null, userName: 'SYSTEM', role: 'system', message: 'Sortie 1 launched. Climbing to 1200ft.', createdAt: '2025-03-16T14:31:45Z' },
+  { id: 'mc-005', missionId: 'msn-001', userId: 'usr-001', userName: 'Chief Malone', role: 'observer', message: 'Eyes on smoke from Station 1. Need ETE to fire zone.', createdAt: '2025-03-16T14:32:10Z' },
+  { id: 'mc-006', missionId: 'msn-001', userId: 'plt-003', userName: 'Jaderic D.', role: 'commander', message: 'ETE 4 minutes. Dual feed live on your devices shortly.', createdAt: '2025-03-16T14:32:13Z' },
+  { id: 'mc-007', missionId: 'msn-001', userId: null, userName: 'SYSTEM', role: 'system', message: 'Waypoint 3 (Transit) reached.', createdAt: '2025-03-16T14:33:00Z' },
+];
+
+// ============================================================
+// MISSION EVIDENCE (capture moments)
+// ============================================================
+
+export const missionEvidence: MissionEvidence[] = [
+  { id: 'ev-001', missionId: 'msn-001', createdBy: 'plt-003', createdByName: 'Jaderic D.', label: 'Initial fire line capture', notes: 'EO frame at WP3 transit. Smoke plume bearing 045°.', capturedAt: '2025-03-16T14:32:30Z' },
+  { id: 'ev-002', missionId: 'msn-001', createdBy: 'plt-003', createdByName: 'Jaderic D.', label: 'Hotspot A — IR confirmation', notes: 'Thermal capture of primary hotspot, 847°F surface temp. AI flagged as priority target.', capturedAt: '2025-03-16T14:34:15Z' },
+  { id: 'ev-003', missionId: 'msn-001', createdBy: 'usr-001', createdByName: 'Chief Malone', label: 'Structure in fire path', notes: 'Ranch property visible 0.4nm SW of fire front. Coordinated with ground team.', capturedAt: '2025-03-16T14:36:00Z' },
+];
+
+// ============================================================
 // AUDIT LOGS
 // ============================================================
 
@@ -309,4 +337,37 @@ export function getMessagesForAccount(accountId: string, includeInternal: boolea
 
 export function getContactsForAccount(accountId: string): Contact[] {
   return contacts.filter(c => c.accountId === accountId);
+}
+
+// ─── Mission command helpers ────────────────────────────────
+
+export function getActiveMissionForAccount(accountId: string): Mission | undefined {
+  return missions.find(m => m.accountId === accountId && m.status === 'active');
+}
+
+export function getChatForMission(missionId: string): MissionChatEntry[] {
+  return missionChat
+    .filter(c => c.missionId === missionId)
+    .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+}
+
+export function getEvidenceForMission(missionId: string): MissionEvidence[] {
+  return missionEvidence
+    .filter(e => e.missionId === missionId)
+    .sort((a, b) => new Date(a.capturedAt).getTime() - new Date(b.capturedAt).getTime());
+}
+
+/**
+ * Derive the user's role within a specific mission.
+ * commander → user is the cmdr_id (or commanderId for legacy demo)
+ * operator  → user is the controllerId (assigned operator)
+ * observer  → everything else (read-only)
+ */
+export function deriveMissionRole(
+  userId: string,
+  mission: Mission
+): 'commander' | 'operator' | 'observer' {
+  if (mission.cmdrId === userId || mission.commanderId === userId) return 'commander';
+  if (mission.controllerId === userId) return 'operator';
+  return 'observer';
 }

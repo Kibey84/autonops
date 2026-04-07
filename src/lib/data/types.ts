@@ -92,6 +92,35 @@ export interface Mission {
   endTime: string | null;
   aarSummary: string | null;
   createdAt: string;
+  // Mission command extensions
+  cmdrId?: string;
+  dailyRoomUrl?: string | null;
+  aarReport?: string | null;
+}
+
+// Role of a user within a specific mission (derived from session vs mission row)
+export type MissionRole = 'commander' | 'operator' | 'observer';
+
+export type ChatRole = 'commander' | 'operator' | 'observer' | 'system';
+
+export interface MissionChatEntry {
+  id: string;
+  missionId: string;
+  userId: string | null;
+  userName: string;
+  role: ChatRole;
+  message: string;
+  createdAt: string;
+}
+
+export interface MissionEvidence {
+  id: string;
+  missionId: string;
+  createdBy: string | null;
+  createdByName: string;
+  label: string;
+  notes: string;
+  capturedAt: string;
 }
 
 export interface Sortie {

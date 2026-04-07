@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Mission Control | AutonOps',
+  title: 'Client Portal | AutonOps',
 };
 
 export default function DashboardLayout({

@@ -14,7 +14,8 @@ import {
   LogOut,
 } from 'lucide-react';
 import { getSession, clearSession } from '@/lib/data/auth';
-import type { AuthSession } from '@/lib/data/types';
+import type { AuthSession, Mission } from '@/lib/data/types';
+import { getActiveMissionForAccount, deriveMissionRole, missions } from '@/lib/data/mock';
 import LiveClock from '@/components/dashboard/LiveClock';
 import CustomerOverview from '@/components/dashboard/CustomerOverview';
 import LiveMissionTab from '@/components/dashboard/LiveMissionTab';
@@ -63,9 +64,25 @@ export default function DashboardPage() {
     );
   }
 
+  // Resolve the active mission for the customer's account, then derive
+  // the user's role within that mission. Falls back to the first mission
+  // if no active one is found (for demo continuity).
+  const activeMission: Mission | undefined =
+    (session.accountId && getActiveMissionForAccount(session.accountId)) ||
+    missions.find((m) => m.accountId === session.accountId) ||
+    missions[0];
+
+  const missionRole = activeMission
+    ? deriveMissionRole(session.userId, activeMission)
+    : 'observer';
+
   const views: Record<View, React.ReactNode> = {
     overview: <CustomerOverview session={session} onNavigate={(v) => setActiveView(v as View)} />,
-    live: <LiveMissionTab session={session} />,
+    live: activeMission ? (
+      <LiveMissionTab session={session} role={missionRole} mission={activeMission} />
+    ) : (
+      <div className="text-slate-500 font-mono text-sm p-8">No active mission found.</div>
+    ),
     request: <RequestMissionForm session={session} />,
     missions: <CustomerMissionsView session={session} />,
     deliverables: <CustomerDeliverablesView session={session} />,
